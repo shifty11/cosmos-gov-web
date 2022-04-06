@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:cosmos_gov_web/api/protobuf/dart/auth_service.pbgrpc.dart';
-import 'package:cosmos_gov_web/core/services/jwt_manager.dart';
+import 'package:cosmos_gov_web/services/jwt_manager.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/foundation.dart';
 import 'package:grpc/grpc_web.dart';

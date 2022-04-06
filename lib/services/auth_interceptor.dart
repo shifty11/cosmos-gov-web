@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:cosmos_gov_web/core/services/jwt_manager.dart';
+import 'package:cosmos_gov_web/services/jwt_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:grpc/grpc.dart';
 
