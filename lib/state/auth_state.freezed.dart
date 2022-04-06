@@ -18,10 +18,6 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$AuthStateTearOff {
   const _$AuthStateTearOff();
 
-  Initial initial() {
-    return const Initial();
-  }
-
   Loading loading() {
     return const Loading();
   }
@@ -48,7 +44,6 @@ const $AuthState = _$AuthStateTearOff();
 mixin _$AuthState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() authorized,
     required TResult Function() unauthorized,
@@ -57,7 +52,6 @@ mixin _$AuthState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? authorized,
     TResult Function()? unauthorized,
@@ -66,7 +60,6 @@ mixin _$AuthState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? authorized,
     TResult Function()? unauthorized,
@@ -76,7 +69,6 @@ mixin _$AuthState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Initial value) initial,
     required TResult Function(Loading value) loading,
     required TResult Function(Authorized value) authorized,
     required TResult Function(Unauthorized value) unauthorized,
@@ -85,7 +77,6 @@ mixin _$AuthState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
     TResult Function(Loading value)? loading,
     TResult Function(Authorized value)? authorized,
     TResult Function(Unauthorized value)? unauthorized,
@@ -94,7 +85,6 @@ mixin _$AuthState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
     TResult Function(Loading value)? loading,
     TResult Function(Authorized value)? authorized,
     TResult Function(Unauthorized value)? unauthorized,
@@ -117,133 +107,6 @@ class _$AuthStateCopyWithImpl<$Res> implements $AuthStateCopyWith<$Res> {
   final AuthState _value;
   // ignore: unused_field
   final $Res Function(AuthState) _then;
-}
-
-/// @nodoc
-abstract class $InitialCopyWith<$Res> {
-  factory $InitialCopyWith(Initial value, $Res Function(Initial) then) =
-      _$InitialCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class _$InitialCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
-    implements $InitialCopyWith<$Res> {
-  _$InitialCopyWithImpl(Initial _value, $Res Function(Initial) _then)
-      : super(_value, (v) => _then(v as Initial));
-
-  @override
-  Initial get _value => super._value as Initial;
-}
-
-/// @nodoc
-
-class _$Initial extends Initial with DiagnosticableTreeMixin {
-  const _$Initial() : super._();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AuthState.initial()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'AuthState.initial'));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is Initial);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() authorized,
-    required TResult Function() unauthorized,
-    required TResult Function(String? message) error,
-  }) {
-    return initial();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? authorized,
-    TResult Function()? unauthorized,
-    TResult Function(String? message)? error,
-  }) {
-    return initial?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? authorized,
-    TResult Function()? unauthorized,
-    TResult Function(String? message)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(Initial value) initial,
-    required TResult Function(Loading value) loading,
-    required TResult Function(Authorized value) authorized,
-    required TResult Function(Unauthorized value) unauthorized,
-    required TResult Function(Error value) error,
-  }) {
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Loading value)? loading,
-    TResult Function(Authorized value)? authorized,
-    TResult Function(Unauthorized value)? unauthorized,
-    TResult Function(Error value)? error,
-  }) {
-    return initial?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Loading value)? loading,
-    TResult Function(Authorized value)? authorized,
-    TResult Function(Unauthorized value)? unauthorized,
-    TResult Function(Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class Initial extends AuthState {
-  const factory Initial() = _$Initial;
-  const Initial._() : super._();
 }
 
 /// @nodoc
@@ -290,7 +153,6 @@ class _$Loading extends Loading with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() authorized,
     required TResult Function() unauthorized,
@@ -302,7 +164,6 @@ class _$Loading extends Loading with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? authorized,
     TResult Function()? unauthorized,
@@ -314,7 +175,6 @@ class _$Loading extends Loading with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? authorized,
     TResult Function()? unauthorized,
@@ -330,7 +190,6 @@ class _$Loading extends Loading with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Initial value) initial,
     required TResult Function(Loading value) loading,
     required TResult Function(Authorized value) authorized,
     required TResult Function(Unauthorized value) unauthorized,
@@ -342,7 +201,6 @@ class _$Loading extends Loading with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
     TResult Function(Loading value)? loading,
     TResult Function(Authorized value)? authorized,
     TResult Function(Unauthorized value)? unauthorized,
@@ -354,7 +212,6 @@ class _$Loading extends Loading with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
     TResult Function(Loading value)? loading,
     TResult Function(Authorized value)? authorized,
     TResult Function(Unauthorized value)? unauthorized,
@@ -418,7 +275,6 @@ class _$Authorized extends Authorized with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() authorized,
     required TResult Function() unauthorized,
@@ -430,7 +286,6 @@ class _$Authorized extends Authorized with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? authorized,
     TResult Function()? unauthorized,
@@ -442,7 +297,6 @@ class _$Authorized extends Authorized with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? authorized,
     TResult Function()? unauthorized,
@@ -458,7 +312,6 @@ class _$Authorized extends Authorized with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Initial value) initial,
     required TResult Function(Loading value) loading,
     required TResult Function(Authorized value) authorized,
     required TResult Function(Unauthorized value) unauthorized,
@@ -470,7 +323,6 @@ class _$Authorized extends Authorized with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
     TResult Function(Loading value)? loading,
     TResult Function(Authorized value)? authorized,
     TResult Function(Unauthorized value)? unauthorized,
@@ -482,7 +334,6 @@ class _$Authorized extends Authorized with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
     TResult Function(Loading value)? loading,
     TResult Function(Authorized value)? authorized,
     TResult Function(Unauthorized value)? unauthorized,
@@ -547,7 +398,6 @@ class _$Unauthorized extends Unauthorized with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() authorized,
     required TResult Function() unauthorized,
@@ -559,7 +409,6 @@ class _$Unauthorized extends Unauthorized with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? authorized,
     TResult Function()? unauthorized,
@@ -571,7 +420,6 @@ class _$Unauthorized extends Unauthorized with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? authorized,
     TResult Function()? unauthorized,
@@ -587,7 +435,6 @@ class _$Unauthorized extends Unauthorized with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Initial value) initial,
     required TResult Function(Loading value) loading,
     required TResult Function(Authorized value) authorized,
     required TResult Function(Unauthorized value) unauthorized,
@@ -599,7 +446,6 @@ class _$Unauthorized extends Unauthorized with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
     TResult Function(Loading value)? loading,
     TResult Function(Authorized value)? authorized,
     TResult Function(Unauthorized value)? unauthorized,
@@ -611,7 +457,6 @@ class _$Unauthorized extends Unauthorized with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
     TResult Function(Loading value)? loading,
     TResult Function(Authorized value)? authorized,
     TResult Function(Unauthorized value)? unauthorized,
@@ -700,7 +545,6 @@ class _$Error extends Error with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() authorized,
     required TResult Function() unauthorized,
@@ -712,7 +556,6 @@ class _$Error extends Error with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? authorized,
     TResult Function()? unauthorized,
@@ -724,7 +567,6 @@ class _$Error extends Error with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? authorized,
     TResult Function()? unauthorized,
@@ -740,7 +582,6 @@ class _$Error extends Error with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Initial value) initial,
     required TResult Function(Loading value) loading,
     required TResult Function(Authorized value) authorized,
     required TResult Function(Unauthorized value) unauthorized,
@@ -752,7 +593,6 @@ class _$Error extends Error with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
     TResult Function(Loading value)? loading,
     TResult Function(Authorized value)? authorized,
     TResult Function(Unauthorized value)? unauthorized,
@@ -764,7 +604,6 @@ class _$Error extends Error with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
     TResult Function(Loading value)? loading,
     TResult Function(Authorized value)? authorized,
     TResult Function(Unauthorized value)? unauthorized,

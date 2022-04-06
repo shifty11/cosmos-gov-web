@@ -21,7 +21,6 @@ class MyApp extends StatelessWidget {
             builder: (BuildContext context, WidgetRef ref, Widget? child) {
               AuthState state = ref.watch(authStatusProvider);
               return state.when(
-                initial: () => Text("Initial"),
                 loading: () => Text("loading"),
                 error: (err) => Text("error: " + err.toString()),
                 unauthorized: () => Text("unauthorized"),

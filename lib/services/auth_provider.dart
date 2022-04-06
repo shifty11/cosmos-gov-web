@@ -12,7 +12,7 @@ final authStatusProvider = StateNotifierProvider<AuthNotifier, AuthState>(
 class AuthNotifier extends StateNotifier<AuthState> {
   final AuthService _authService;
 
-  AuthNotifier(this._authService) : super(const AuthState.initial()) {
+  AuthNotifier(this._authService) : super(const AuthState.loading()) {
     login();
     _authService.addListener(() {
       if (!_authService.isAuthenticated) {
