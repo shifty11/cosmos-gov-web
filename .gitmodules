@@ -1,0 +1,3 @@
+[submodule "lib/api/cosmos-gov-grpc"]
+	path = lib/api/protobuf
+	url = git@github.com:shifty11/cosmos-gov-grpc.git
