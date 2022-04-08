@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 part 'auth_state.freezed.dart';
 
 @freezed
-abstract class AuthState with _$AuthState {
+class AuthState with _$AuthState {
   const AuthState._();
 
   const factory AuthState.loading() = Loading;

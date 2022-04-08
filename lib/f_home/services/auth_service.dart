@@ -1,24 +1,22 @@
 import 'dart:async';
 
 import 'package:cosmos_gov_web/api/protobuf/dart/auth_service.pbgrpc.dart';
-import 'package:cosmos_gov_web/services/jwt_manager.dart';
+import 'package:cosmos_gov_web/f_home/services/jwt_manager.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/foundation.dart';
-import 'package:grpc/grpc_web.dart';
-
-import 'auth_interceptor.dart';
+import 'package:grpc/grpc.dart';
+import 'package:grpc/grpc_connection_interface.dart';
 
 class AuthService extends AuthServiceClient with ChangeNotifier {
   static AuthService? _singleton;
 
   static const refreshBeforeExpDuration = Duration(seconds: 235);
-  static final channel = GrpcWebClientChannel.xhr(Uri.parse('http://localhost:8080'));
-  static final authInterceptor = AuthInterceptor(JwtManager());
-  static final jwtManager = JwtManager();
+  final JwtManager jwtManager;
 
-  factory AuthService() => _singleton ??= AuthService._internal();
+  factory AuthService(ClientChannelBase channel, Iterable<ClientInterceptor> interceptors, JwtManager jwtManager) =>
+      _singleton ??= AuthService._internal(channel, interceptors, jwtManager);
 
-  AuthService._internal() : super(channel, interceptors: [authInterceptor]);
+  AuthService._internal(ClientChannelBase channel, Iterable<ClientInterceptor> interceptors, this.jwtManager) : super(channel, interceptors: interceptors);
 
   init() async {
     if (!isAuthenticated) {
