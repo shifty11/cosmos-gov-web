@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'subscription_state.dart';
+part of 'subscription_list_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,12 +15,16 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$SubscriptionStateTearOff {
-  const _$SubscriptionStateTearOff();
+class _$SubscriptionListStateTearOff {
+  const _$SubscriptionListStateTearOff();
 
-  Loaded loaded({required Subscription subscription}) {
+  Loading loading() {
+    return const Loading();
+  }
+
+  Loaded loaded([List<Subscription> subscriptions = const []]) {
     return Loaded(
-      subscription: subscription,
+      subscriptions,
     );
   }
 
@@ -32,43 +36,49 @@ class _$SubscriptionStateTearOff {
 }
 
 /// @nodoc
-const $SubscriptionState = _$SubscriptionStateTearOff();
+const $SubscriptionListState = _$SubscriptionListStateTearOff();
 
 /// @nodoc
-mixin _$SubscriptionState {
+mixin _$SubscriptionListState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Subscription subscription) loaded,
+    required TResult Function() loading,
+    required TResult Function(List<Subscription> subscriptions) loaded,
     required TResult Function(String? message) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(Subscription subscription)? loaded,
+    TResult Function()? loading,
+    TResult Function(List<Subscription> subscriptions)? loaded,
     TResult Function(String? message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Subscription subscription)? loaded,
+    TResult Function()? loading,
+    TResult Function(List<Subscription> subscriptions)? loaded,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(Loading value) loading,
     required TResult Function(Loaded value) loaded,
     required TResult Function(Error value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(Loading value)? loading,
     TResult Function(Loaded value)? loaded,
     TResult Function(Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(Loading value)? loading,
     TResult Function(Loaded value)? loaded,
     TResult Function(Error value)? error,
     required TResult orElse(),
@@ -77,31 +87,142 @@ mixin _$SubscriptionState {
 }
 
 /// @nodoc
-abstract class $SubscriptionStateCopyWith<$Res> {
-  factory $SubscriptionStateCopyWith(
-          SubscriptionState value, $Res Function(SubscriptionState) then) =
-      _$SubscriptionStateCopyWithImpl<$Res>;
+abstract class $SubscriptionListStateCopyWith<$Res> {
+  factory $SubscriptionListStateCopyWith(SubscriptionListState value,
+          $Res Function(SubscriptionListState) then) =
+      _$SubscriptionListStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$SubscriptionStateCopyWithImpl<$Res>
-    implements $SubscriptionStateCopyWith<$Res> {
-  _$SubscriptionStateCopyWithImpl(this._value, this._then);
+class _$SubscriptionListStateCopyWithImpl<$Res>
+    implements $SubscriptionListStateCopyWith<$Res> {
+  _$SubscriptionListStateCopyWithImpl(this._value, this._then);
 
-  final SubscriptionState _value;
+  final SubscriptionListState _value;
   // ignore: unused_field
-  final $Res Function(SubscriptionState) _then;
+  final $Res Function(SubscriptionListState) _then;
+}
+
+/// @nodoc
+abstract class $LoadingCopyWith<$Res> {
+  factory $LoadingCopyWith(Loading value, $Res Function(Loading) then) =
+      _$LoadingCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$LoadingCopyWithImpl<$Res>
+    extends _$SubscriptionListStateCopyWithImpl<$Res>
+    implements $LoadingCopyWith<$Res> {
+  _$LoadingCopyWithImpl(Loading _value, $Res Function(Loading) _then)
+      : super(_value, (v) => _then(v as Loading));
+
+  @override
+  Loading get _value => super._value as Loading;
+}
+
+/// @nodoc
+
+class _$Loading extends Loading {
+  const _$Loading() : super._();
+
+  @override
+  String toString() {
+    return 'SubscriptionListState.loading()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is Loading);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loading,
+    required TResult Function(List<Subscription> subscriptions) loaded,
+    required TResult Function(String? message) error,
+  }) {
+    return loading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? loading,
+    TResult Function(List<Subscription> subscriptions)? loaded,
+    TResult Function(String? message)? error,
+  }) {
+    return loading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loading,
+    TResult Function(List<Subscription> subscriptions)? loaded,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Loading value) loading,
+    required TResult Function(Loaded value) loaded,
+    required TResult Function(Error value) error,
+  }) {
+    return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(Loading value)? loading,
+    TResult Function(Loaded value)? loaded,
+    TResult Function(Error value)? error,
+  }) {
+    return loading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Loading value)? loading,
+    TResult Function(Loaded value)? loaded,
+    TResult Function(Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class Loading extends SubscriptionListState {
+  const factory Loading() = _$Loading;
+  const Loading._() : super._();
 }
 
 /// @nodoc
 abstract class $LoadedCopyWith<$Res> {
   factory $LoadedCopyWith(Loaded value, $Res Function(Loaded) then) =
       _$LoadedCopyWithImpl<$Res>;
-  $Res call({Subscription subscription});
+  $Res call({List<Subscription> subscriptions});
 }
 
 /// @nodoc
-class _$LoadedCopyWithImpl<$Res> extends _$SubscriptionStateCopyWithImpl<$Res>
+class _$LoadedCopyWithImpl<$Res>
+    extends _$SubscriptionListStateCopyWithImpl<$Res>
     implements $LoadedCopyWith<$Res> {
   _$LoadedCopyWithImpl(Loaded _value, $Res Function(Loaded) _then)
       : super(_value, (v) => _then(v as Loaded));
@@ -111,13 +232,13 @@ class _$LoadedCopyWithImpl<$Res> extends _$SubscriptionStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? subscription = freezed,
+    Object? subscriptions = freezed,
   }) {
     return _then(Loaded(
-      subscription: subscription == freezed
-          ? _value.subscription
-          : subscription // ignore: cast_nullable_to_non_nullable
-              as Subscription,
+      subscriptions == freezed
+          ? _value.subscriptions
+          : subscriptions // ignore: cast_nullable_to_non_nullable
+              as List<Subscription>,
     ));
   }
 }
@@ -125,14 +246,15 @@ class _$LoadedCopyWithImpl<$Res> extends _$SubscriptionStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$Loaded extends Loaded {
-  _$Loaded({required this.subscription}) : super._();
+  _$Loaded([this.subscriptions = const []]) : super._();
 
+  @JsonKey()
   @override
-  final Subscription subscription;
+  final List<Subscription> subscriptions;
 
   @override
   String toString() {
-    return 'SubscriptionState.loaded(subscription: $subscription)';
+    return 'SubscriptionListState.loaded(subscriptions: $subscriptions)';
   }
 
   @override
@@ -141,12 +263,12 @@ class _$Loaded extends Loaded {
         (other.runtimeType == runtimeType &&
             other is Loaded &&
             const DeepCollectionEquality()
-                .equals(other.subscription, subscription));
+                .equals(other.subscriptions, subscriptions));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(subscription));
+      runtimeType, const DeepCollectionEquality().hash(subscriptions));
 
   @JsonKey(ignore: true)
   @override
@@ -156,30 +278,33 @@ class _$Loaded extends Loaded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Subscription subscription) loaded,
+    required TResult Function() loading,
+    required TResult Function(List<Subscription> subscriptions) loaded,
     required TResult Function(String? message) error,
   }) {
-    return loaded(subscription);
+    return loaded(subscriptions);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(Subscription subscription)? loaded,
+    TResult Function()? loading,
+    TResult Function(List<Subscription> subscriptions)? loaded,
     TResult Function(String? message)? error,
   }) {
-    return loaded?.call(subscription);
+    return loaded?.call(subscriptions);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Subscription subscription)? loaded,
+    TResult Function()? loading,
+    TResult Function(List<Subscription> subscriptions)? loaded,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(subscription);
+      return loaded(subscriptions);
     }
     return orElse();
   }
@@ -187,6 +312,7 @@ class _$Loaded extends Loaded {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(Loading value) loading,
     required TResult Function(Loaded value) loaded,
     required TResult Function(Error value) error,
   }) {
@@ -196,6 +322,7 @@ class _$Loaded extends Loaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(Loading value)? loading,
     TResult Function(Loaded value)? loaded,
     TResult Function(Error value)? error,
   }) {
@@ -205,6 +332,7 @@ class _$Loaded extends Loaded {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(Loading value)? loading,
     TResult Function(Loaded value)? loaded,
     TResult Function(Error value)? error,
     required TResult orElse(),
@@ -216,11 +344,11 @@ class _$Loaded extends Loaded {
   }
 }
 
-abstract class Loaded extends SubscriptionState {
-  factory Loaded({required Subscription subscription}) = _$Loaded;
+abstract class Loaded extends SubscriptionListState {
+  factory Loaded([List<Subscription> subscriptions]) = _$Loaded;
   Loaded._() : super._();
 
-  Subscription get subscription;
+  List<Subscription> get subscriptions;
   @JsonKey(ignore: true)
   $LoadedCopyWith<Loaded> get copyWith => throw _privateConstructorUsedError;
 }
@@ -233,7 +361,8 @@ abstract class $ErrorCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ErrorCopyWithImpl<$Res> extends _$SubscriptionStateCopyWithImpl<$Res>
+class _$ErrorCopyWithImpl<$Res>
+    extends _$SubscriptionListStateCopyWithImpl<$Res>
     implements $ErrorCopyWith<$Res> {
   _$ErrorCopyWithImpl(Error _value, $Res Function(Error) _then)
       : super(_value, (v) => _then(v as Error));
@@ -264,7 +393,7 @@ class _$Error extends Error {
 
   @override
   String toString() {
-    return 'SubscriptionState.error(message: $message)';
+    return 'SubscriptionListState.error(message: $message)';
   }
 
   @override
@@ -287,7 +416,8 @@ class _$Error extends Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Subscription subscription) loaded,
+    required TResult Function() loading,
+    required TResult Function(List<Subscription> subscriptions) loaded,
     required TResult Function(String? message) error,
   }) {
     return error(message);
@@ -296,7 +426,8 @@ class _$Error extends Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(Subscription subscription)? loaded,
+    TResult Function()? loading,
+    TResult Function(List<Subscription> subscriptions)? loaded,
     TResult Function(String? message)? error,
   }) {
     return error?.call(message);
@@ -305,7 +436,8 @@ class _$Error extends Error {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Subscription subscription)? loaded,
+    TResult Function()? loading,
+    TResult Function(List<Subscription> subscriptions)? loaded,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) {
@@ -318,6 +450,7 @@ class _$Error extends Error {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(Loading value) loading,
     required TResult Function(Loaded value) loaded,
     required TResult Function(Error value) error,
   }) {
@@ -327,6 +460,7 @@ class _$Error extends Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(Loading value)? loading,
     TResult Function(Loaded value)? loaded,
     TResult Function(Error value)? error,
   }) {
@@ -336,6 +470,7 @@ class _$Error extends Error {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(Loading value)? loading,
     TResult Function(Loaded value)? loaded,
     TResult Function(Error value)? error,
     required TResult orElse(),
@@ -347,7 +482,7 @@ class _$Error extends Error {
   }
 }
 
-abstract class Error extends SubscriptionState {
+abstract class Error extends SubscriptionListState {
   factory Error([String? message]) = _$Error;
   Error._() : super._();
 

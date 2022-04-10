@@ -10,13 +10,13 @@ import 'package:grpc/grpc_connection_interface.dart';
 class AuthService extends AuthServiceClient with ChangeNotifier {
   static AuthService? _singleton;
 
-  static const refreshBeforeExpDuration = Duration(seconds: 235);
+  final Duration refreshBeforeExpDuration;
   final JwtManager jwtManager;
 
-  factory AuthService(ClientChannelBase channel, Iterable<ClientInterceptor> interceptors, JwtManager jwtManager) =>
-      _singleton ??= AuthService._internal(channel, interceptors, jwtManager);
+  factory AuthService(ClientChannelBase channel, Iterable<ClientInterceptor> interceptors, JwtManager jwtManager, refreshBeforeExpDuration) =>
+      _singleton ??= AuthService._internal(channel, interceptors, jwtManager, refreshBeforeExpDuration);
 
-  AuthService._internal(ClientChannelBase channel, Iterable<ClientInterceptor> interceptors, this.jwtManager) : super(channel, interceptors: interceptors);
+  AuthService._internal(ClientChannelBase channel, Iterable<ClientInterceptor> interceptors, this.jwtManager, this.refreshBeforeExpDuration) : super(channel, interceptors: interceptors);
 
   init() async {
     if (!isAuthenticated) {
