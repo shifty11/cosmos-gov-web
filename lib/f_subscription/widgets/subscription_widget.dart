@@ -5,7 +5,6 @@ import 'package:cosmos_gov_web/f_subscription/services/subscription_provider.dar
 import 'package:cosmos_gov_web/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SubscriptionPage extends StatelessWidget {
   const SubscriptionPage({Key? key}) : super(key: key);
@@ -54,7 +53,7 @@ class SubscriptionPage extends StatelessWidget {
                         padding: const EdgeInsets.only(left: sidePadding),
                         child: Text(
                           subscription.displayName,
-                          style: TextStyle(fontSize: 20.sp),
+                          style: const TextStyle(fontSize: 20),
                         ),
                       ),
                       subscription.isSubscribed
@@ -78,18 +77,16 @@ class SubscriptionPage extends StatelessWidget {
   Widget searchWidget(BuildContext context) {
     return ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 300),
-      child: Consumer(
-        builder: (BuildContext context, WidgetRef ref, Widget? child)  {
-          return TextField(
-            onChanged: (value) => ref.watch(searchProvider.notifier).state = value,
-            decoration: const InputDecoration(
-              prefixIcon: Icon(Icons.search),
-              border: OutlineInputBorder(),
-              hintText: "Search",
-            ),
-          );
-        }
-      ),
+      child: Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
+        return TextField(
+          onChanged: (value) => ref.watch(searchProvider.notifier).state = value,
+          decoration: const InputDecoration(
+            prefixIcon: Icon(Icons.search),
+            border: OutlineInputBorder(),
+            hintText: "Search",
+          ),
+        );
+      }),
     );
   }
 
