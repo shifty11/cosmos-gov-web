@@ -38,6 +38,7 @@ dependencies:
   grpc: ^3.0.2
   fixnum: ^1.0.0
   freezed_annotation:
+  flutter_screenutil: ^5.3.1
 
 dev_dependencies:
   flutter_test:
