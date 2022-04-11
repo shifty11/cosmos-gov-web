@@ -78,12 +78,17 @@ class SubscriptionPage extends StatelessWidget {
   Widget searchWidget(BuildContext context) {
     return ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 300),
-      child: const TextField(
-        decoration: InputDecoration(
-          prefixIcon: Icon(Icons.search),
-          border: OutlineInputBorder(),
-          hintText: "Search",
-        ),
+      child: Consumer(
+        builder: (BuildContext context, WidgetRef ref, Widget? child)  {
+          return TextField(
+            onChanged: (value) => ref.watch(searchProvider.notifier).state = value,
+            decoration: const InputDecoration(
+              prefixIcon: Icon(Icons.search),
+              border: OutlineInputBorder(),
+              hintText: "Search",
+            ),
+          );
+        }
       ),
     );
   }
@@ -107,7 +112,7 @@ class SubscriptionPage extends StatelessWidget {
               final state = ref.watch(subscriptionListStateProvider);
               return state.when(
                 loading: () => const CircularProgressIndicator(),
-                loaded: (subscriptions) => subscriptionWidget(context, subscriptions),
+                loaded: (subscriptions) => subscriptionWidget(context, ref.watch(searchedSubsProvider)),
                 error: (err) => Text("error: " + err.toString()),
               );
             },

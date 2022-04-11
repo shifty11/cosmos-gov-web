@@ -49,3 +49,18 @@ class SubscriptionNotifier extends StateNotifier<SubscriptionState> {
     }
   }
 }
+
+final searchProvider = StateProvider((ref) => "");
+
+final searchedSubsProvider = Provider<List<Subscription>>((ref) {
+  final search = ref.watch(searchProvider);
+  final subs = ref.watch(subscriptionListStateProvider);
+  return subs.whenOrNull(loaded: (subscriptions) {
+    if (search.isEmpty) {
+      return subscriptions;
+    }
+    return subscriptions.where((sub) {
+      return sub.displayName.toLowerCase().contains(search.toLowerCase());
+    }).toList();
+  }) ?? [];
+});
