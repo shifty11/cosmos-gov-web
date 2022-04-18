@@ -1,14 +1,24 @@
 import 'package:cosmos_gov_web/config.dart';
 import 'package:cosmos_gov_web/f_home/services/state/auth_state.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'auth_service.dart';
 
 final authProvider = Provider<AuthService>((ref) => authService);
 
-final authStatusProvider = StateNotifierProvider<AuthNotifier, AuthState>(
+final authStateProvider = StateNotifierProvider<AuthNotifier, AuthState>(
   (ref) => AuthNotifier(ref.watch(authProvider)),
 );
+
+final authStateValueProvider = Provider<ValueNotifier<AuthState>>((ref) {
+  final notifier = ValueNotifier<AuthState>(const AuthState.loading());
+  ref.listen(authStateProvider, (_, next) {
+    notifier.value = next as AuthState;
+    notifier.notifyListeners();
+  });
+  return notifier;
+});
 
 class AuthNotifier extends StateNotifier<AuthState> {
   final AuthService _authService;

@@ -1,10 +1,12 @@
 import 'dart:math';
 
 import 'package:cosmos_gov_web/api/protobuf/dart/subscription_service.pb.dart';
+import 'package:cosmos_gov_web/config.dart';
 import 'package:cosmos_gov_web/f_subscription/services/subscription_provider.dart';
 import 'package:cosmos_gov_web/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class SubscriptionPage extends StatelessWidget {
   const SubscriptionPage({Key? key}) : super(key: key);
@@ -93,28 +95,30 @@ class SubscriptionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double margin = max((MediaQuery.of(context).size.width - 1200) / 2, 0);
-    return Container(
-      padding: const EdgeInsets.all(40),
-      margin: EdgeInsets.symmetric(horizontal: margin),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text("Subscriptions", style: Theme.of(context).primaryTextTheme.headline2),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: searchWidget(context),
-          ),
-          Consumer(
-            builder: (BuildContext context, WidgetRef ref, Widget? child) {
-              final state = ref.watch(subscriptionListStateProvider);
-              return state.when(
-                loading: () => const CircularProgressIndicator(),
-                loaded: (subscriptions) => subscriptionWidget(context, ref.watch(searchedSubsProvider)),
-                error: (err) => Text("error: " + err.toString()),
-              );
-            },
-          ),
-        ],
+    return Scaffold(
+      body: Container(
+        padding: const EdgeInsets.all(40),
+        margin: EdgeInsets.symmetric(horizontal: margin),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Subscriptions", style: Theme.of(context).primaryTextTheme.headline2),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: searchWidget(context),
+            ),
+            Consumer(
+              builder: (BuildContext context, WidgetRef ref, Widget? child) {
+                final state = ref.watch(subscriptionListStateProvider);
+                return state.when(
+                  loading: () => const CircularProgressIndicator(),
+                  loaded: (subscriptions) => subscriptionWidget(context, ref.watch(searchedSubsProvider)),
+                  error: (err) => Text("error: " + err.toString()),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

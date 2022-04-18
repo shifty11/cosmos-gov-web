@@ -11,3 +11,14 @@ final jwtManager = JwtManager();
 final authInterceptor = AuthInterceptor(jwtManager);
 final authService = AuthService(channel, [authInterceptor], jwtManager, refreshBeforeExpDuration);
 final subsService = SubscriptionService(channel, [authInterceptor]);
+
+class RouteData {
+  final String name;
+  final String path;
+
+  const RouteData(this.name, this.path);
+}
+
+const rRoot = RouteData("root", "/");
+const rUnauthorized = RouteData("unauthorized", "/login");
+const rSubscriptions = RouteData("subscriptions", "/subscriptions");
