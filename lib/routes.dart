@@ -3,6 +3,7 @@ import 'package:cosmos_gov_web/f_home/services/auth_provider.dart';
 import 'package:cosmos_gov_web/f_home/services/state/auth_state.dart';
 import 'package:cosmos_gov_web/f_home/widgets/home.dart';
 import 'package:cosmos_gov_web/f_subscription/widgets/subscription_widget.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -16,7 +17,7 @@ class MyRouter {
 
   late final router = GoRouter(
     refreshListenable: authStateListener,
-    debugLogDiagnostics: true,
+    debugLogDiagnostics: kDebugMode,
     urlPathStrategy: UrlPathStrategy.path,
 
     routes: [
