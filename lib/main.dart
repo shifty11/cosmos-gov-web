@@ -19,6 +19,9 @@ void main() {
         headline1: const TextStyle().copyWith(fontSize: 64),
         headline2: const TextStyle().copyWith(fontSize: 40),
         headline3: const TextStyle().copyWith(fontSize: 24),
+        headline4: const TextStyle().copyWith(fontSize: 22),
+        headline5: const TextStyle().copyWith(fontSize: 20),
+        headline6: const TextStyle().copyWith(fontSize: 18),
         bodyText1: const TextStyle(),
         bodyText2: const TextStyle(),
         subtitle1: const TextStyle(),
@@ -28,6 +31,7 @@ void main() {
         button: const TextStyle(),
       ).apply(
         bodyColor: textColor,
+        displayColor: textColor,
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(

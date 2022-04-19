@@ -109,7 +109,7 @@ class SubscriptionPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Subscriptions", style: Theme.of(context).primaryTextTheme.headline2),
+                Text("Subscriptions", style: Theme.of(context).textTheme.headline2),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: searchWidget(context),
