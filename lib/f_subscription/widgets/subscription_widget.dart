@@ -1,14 +1,16 @@
 import 'dart:math';
 
 import 'package:cosmos_gov_web/api/protobuf/dart/subscription_service.pb.dart';
-import 'package:cosmos_gov_web/config.dart';
+import 'package:cosmos_gov_web/f_home/widgets/sidebar_widget.dart';
 import 'package:cosmos_gov_web/f_subscription/services/subscription_provider.dart';
 import 'package:cosmos_gov_web/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class SubscriptionPage extends StatelessWidget {
+  final double sideBarWith = 300;
+
   const SubscriptionPage({Key? key}) : super(key: key);
 
   int getCrossAxisCount(BuildContext context) {
@@ -24,7 +26,9 @@ class SubscriptionPage extends StatelessWidget {
   Widget subscriptionWidget(BuildContext context, List<Subscription> subscriptions) {
     return SizedBox(
       height: 600,
+      width: ResponsiveWrapper.of(context).isLargerThan(TABLET) ? 1100 - sideBarWith : null,
       child: GridView.builder(
+        shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: getCrossAxisCount(context),
           crossAxisSpacing: 10,
@@ -68,7 +72,7 @@ class SubscriptionPage extends StatelessWidget {
                   ),
                 ),
               ),
-              error: (err) => Text("error: " + err.toString()),
+              error: (err) => ErrorWidget(err.toString()),
             );
           });
         },
@@ -96,29 +100,34 @@ class SubscriptionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     double margin = max((MediaQuery.of(context).size.width - 1200) / 2, 0);
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.all(40),
-        margin: EdgeInsets.symmetric(horizontal: margin),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Subscriptions", style: Theme.of(context).primaryTextTheme.headline2),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: searchWidget(context),
+      body: Row(
+        children: [
+          const SidebarWidget(),
+          Container(
+            padding: const EdgeInsets.all(40),
+            // margin: EdgeInsets.symmetric(horizontal: margin),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Subscriptions", style: Theme.of(context).primaryTextTheme.headline2),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: searchWidget(context),
+                ),
+                Consumer(
+                  builder: (BuildContext context, WidgetRef ref, Widget? child) {
+                    final state = ref.watch(subscriptionListStateProvider);
+                    return state.when(
+                      loading: () => const CircularProgressIndicator(),
+                      loaded: (subscriptions) => subscriptionWidget(context, ref.watch(searchedSubsProvider)),
+                      error: (err) => ErrorWidget(err.toString()),
+                    );
+                  },
+                ),
+              ],
             ),
-            Consumer(
-              builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                final state = ref.watch(subscriptionListStateProvider);
-                return state.when(
-                  loading: () => const CircularProgressIndicator(),
-                  loaded: (subscriptions) => subscriptionWidget(context, ref.watch(searchedSubsProvider)),
-                  error: (err) => Text("error: " + err.toString()),
-                );
-              },
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:cosmos_gov_web/f_home/services/auth_provider.dart';
 import 'package:cosmos_gov_web/f_home/services/state/auth_state.dart';
 import 'package:cosmos_gov_web/f_home/widgets/loading_widget.dart';
 import 'package:cosmos_gov_web/f_subscription/widgets/subscription_widget.dart';
+import 'package:cosmos_gov_web/f_voting/widgets/voting_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,7 +12,7 @@ import 'package:go_router/go_router.dart';
 final routerProvider = Provider<MyRouter>((ref) => MyRouter(ref.watch(authStateValueProvider)));
 
 class MyRouter {
-  ValueNotifier<AuthState> authStateListener;
+  final ValueNotifier<AuthState> authStateListener;
 
   MyRouter(this.authStateListener);
 
@@ -19,7 +20,6 @@ class MyRouter {
     refreshListenable: authStateListener,
     debugLogDiagnostics: kDebugMode,
     urlPathStrategy: UrlPathStrategy.path,
-
     routes: [
       GoRoute(
         name: rRoot.name,
@@ -45,6 +45,14 @@ class MyRouter {
           child: const SubscriptionPage(),
         ),
       ),
+      GoRoute(
+        name: rVoting.name,
+        path: rVoting.path,
+        pageBuilder: (context, state) => MaterialPage<void>(
+          key: state.pageKey,
+          child: const VotingPage(),
+        ),
+      ),
     ],
     errorPageBuilder: (context, state) => MaterialPage<void>(
       key: state.pageKey,
@@ -55,7 +63,7 @@ class MyRouter {
       return authStateListener.value.when(
         loading: () => null,
         authorized: () => state.location == rRoot.path ? state.namedLocation(rSubscriptions.name) : null,
-        unauthorized: () =>  state.location == rUnauthorized.path ? null : state.namedLocation(rUnauthorized.name),
+        unauthorized: () => state.location == rUnauthorized.path ? null : state.namedLocation(rUnauthorized.name),
         error: (err) => null,
       );
     },
