@@ -18,7 +18,7 @@ class MyRouter {
 
   late final router = GoRouter(
     refreshListenable: authStateListener,
-    debugLogDiagnostics: kDebugMode,
+    // debugLogDiagnostics: kDebugMode,
     urlPathStrategy: UrlPathStrategy.path,
     routes: [
       GoRoute(

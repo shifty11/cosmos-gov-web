@@ -7,6 +7,7 @@ import 'package:cosmos_gov_web/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:tuple/tuple.dart';
 
 class SubscriptionPage extends StatelessWidget {
   final double sideBarWith = 300;
@@ -23,7 +24,7 @@ class SubscriptionPage extends StatelessWidget {
     }
   }
 
-  Widget subscriptionWidget(BuildContext context, List<Subscription> subscriptions) {
+  Widget subscriptionWidget(BuildContext context, ChatRoom chatRoom) {
     return SizedBox(
       height: 600,
       width: ResponsiveWrapper.of(context).isLargerThan(TABLET) ? 1100 - sideBarWith : null,
@@ -35,10 +36,11 @@ class SubscriptionPage extends StatelessWidget {
           mainAxisSpacing: 10,
           mainAxisExtent: 50,
         ),
-        itemCount: subscriptions.length,
+        itemCount: chatRoom.subscriptions.length,
         itemBuilder: (BuildContext context, int index) {
           return Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
-            final state = ref.watch(subscriptionStateProvider(subscriptions[index]));
+            final data = Tuple2(chatRoom.subscriptions[index], chatRoom.id);
+            final state = ref.watch(subscriptionStateProvider(data));
             const double sidePadding = 12;
             return state.when(
               loaded: (subscription) => Container(
@@ -50,7 +52,7 @@ class SubscriptionPage extends StatelessWidget {
                     borderRadius: const BorderRadius.all(Radius.circular(5))),
                 child: InkWell(
                   onTap: () {
-                    ref.read(subscriptionStateProvider(subscriptions[index]).notifier).toggleSubscription();
+                    ref.read(subscriptionStateProvider(data).notifier).toggleSubscription();
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -96,6 +98,41 @@ class SubscriptionPage extends StatelessWidget {
     );
   }
 
+  Widget chatDropdownWidget(BuildContext context) {
+    return Consumer(
+      builder: (BuildContext context, WidgetRef ref, Widget? child) {
+        final state = ref.watch(chatroomListStateProvider);
+        return state.when(
+          loading: () => Container(),
+          loaded: (chatRooms) {
+            if (chatRooms.isEmpty) {
+              return Container();
+            }
+            if (chatRooms.length == 1) {
+              return Text(chatRooms.first.name);
+            }
+            return DropdownButton<ChatRoom>(
+              value: ref.watch(chatRoomProvider) ?? chatRooms.first,
+              icon: const Icon(Icons.person),
+              onChanged: (ChatRoom? newValue) {
+                print("new state");
+                print(newValue);
+                ref.watch(chatRoomProvider.notifier).state = newValue;
+              },
+              items: chatRooms.map<DropdownMenuItem<ChatRoom>>((ChatRoom chatRoom) {
+                return DropdownMenuItem<ChatRoom>(
+                  value: chatRoom,
+                  child: Text(chatRoom.name),
+                );
+              }).toList(),
+            );
+          },
+          error: (err) => ErrorWidget(err.toString()),
+        );
+      }
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double margin = max((MediaQuery.of(context).size.width - 1200) / 2, 0);
@@ -104,6 +141,7 @@ class SubscriptionPage extends StatelessWidget {
         children: [
           const SidebarWidget(),
           Container(
+            width: 800, // TODO fix width
             padding: const EdgeInsets.all(40),
             // margin: EdgeInsets.symmetric(horizontal: margin),
             child: Column(
@@ -112,14 +150,22 @@ class SubscriptionPage extends StatelessWidget {
                 Text("Subscriptions", style: Theme.of(context).textTheme.headline2),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: searchWidget(context),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      searchWidget(context),
+                      const Spacer(flex: 20),
+                      chatDropdownWidget(context),
+                    ],
+                  ),
                 ),
                 Consumer(
                   builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                    final state = ref.watch(subscriptionListStateProvider);
+                    final state = ref.watch(chatroomListStateProvider);
                     return state.when(
                       loading: () => const CircularProgressIndicator(),
-                      loaded: (subscriptions) => subscriptionWidget(context, ref.watch(searchedSubsProvider)),
+                      loaded: (chatRooms) => subscriptionWidget(context, ref.watch(searchedSubsProvider)),
                       error: (err) => ErrorWidget(err.toString()),
                     );
                   },

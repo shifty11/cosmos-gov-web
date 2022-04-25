@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'subscription_list_state.dart';
+part of 'vote_permission_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,16 +15,12 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$SubscriptionListStateTearOff {
-  const _$SubscriptionListStateTearOff();
+class _$VotePermissionStateTearOff {
+  const _$VotePermissionStateTearOff();
 
-  Loading loading() {
-    return const Loading();
-  }
-
-  Loaded loaded([List<Subscription> subscriptions = const []]) {
+  Loaded loaded({required VotePermission votePermission}) {
     return Loaded(
-      subscriptions,
+      votePermission: votePermission,
     );
   }
 
@@ -36,49 +32,43 @@ class _$SubscriptionListStateTearOff {
 }
 
 /// @nodoc
-const $SubscriptionListState = _$SubscriptionListStateTearOff();
+const $VotePermissionState = _$VotePermissionStateTearOff();
 
 /// @nodoc
-mixin _$SubscriptionListState {
+mixin _$VotePermissionState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
-    required TResult Function(List<Subscription> subscriptions) loaded,
+    required TResult Function(VotePermission votePermission) loaded,
     required TResult Function(String? message) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(List<Subscription> subscriptions)? loaded,
+    TResult Function(VotePermission votePermission)? loaded,
     TResult Function(String? message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(List<Subscription> subscriptions)? loaded,
+    TResult Function(VotePermission votePermission)? loaded,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Loading value) loading,
     required TResult Function(Loaded value) loaded,
     required TResult Function(Error value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Loading value)? loading,
     TResult Function(Loaded value)? loaded,
     TResult Function(Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Loading value)? loading,
     TResult Function(Loaded value)? loaded,
     TResult Function(Error value)? error,
     required TResult orElse(),
@@ -87,142 +77,31 @@ mixin _$SubscriptionListState {
 }
 
 /// @nodoc
-abstract class $SubscriptionListStateCopyWith<$Res> {
-  factory $SubscriptionListStateCopyWith(SubscriptionListState value,
-          $Res Function(SubscriptionListState) then) =
-      _$SubscriptionListStateCopyWithImpl<$Res>;
+abstract class $VotePermissionStateCopyWith<$Res> {
+  factory $VotePermissionStateCopyWith(
+          VotePermissionState value, $Res Function(VotePermissionState) then) =
+      _$VotePermissionStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$SubscriptionListStateCopyWithImpl<$Res>
-    implements $SubscriptionListStateCopyWith<$Res> {
-  _$SubscriptionListStateCopyWithImpl(this._value, this._then);
+class _$VotePermissionStateCopyWithImpl<$Res>
+    implements $VotePermissionStateCopyWith<$Res> {
+  _$VotePermissionStateCopyWithImpl(this._value, this._then);
 
-  final SubscriptionListState _value;
+  final VotePermissionState _value;
   // ignore: unused_field
-  final $Res Function(SubscriptionListState) _then;
-}
-
-/// @nodoc
-abstract class $LoadingCopyWith<$Res> {
-  factory $LoadingCopyWith(Loading value, $Res Function(Loading) then) =
-      _$LoadingCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class _$LoadingCopyWithImpl<$Res>
-    extends _$SubscriptionListStateCopyWithImpl<$Res>
-    implements $LoadingCopyWith<$Res> {
-  _$LoadingCopyWithImpl(Loading _value, $Res Function(Loading) _then)
-      : super(_value, (v) => _then(v as Loading));
-
-  @override
-  Loading get _value => super._value as Loading;
-}
-
-/// @nodoc
-
-class _$Loading extends Loading {
-  const _$Loading() : super._();
-
-  @override
-  String toString() {
-    return 'SubscriptionListState.loading()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is Loading);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() loading,
-    required TResult Function(List<Subscription> subscriptions) loaded,
-    required TResult Function(String? message) error,
-  }) {
-    return loading();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(List<Subscription> subscriptions)? loaded,
-    TResult Function(String? message)? error,
-  }) {
-    return loading?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(List<Subscription> subscriptions)? loaded,
-    TResult Function(String? message)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(Loading value) loading,
-    required TResult Function(Loaded value) loaded,
-    required TResult Function(Error value) error,
-  }) {
-    return loading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Loading value)? loading,
-    TResult Function(Loaded value)? loaded,
-    TResult Function(Error value)? error,
-  }) {
-    return loading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(Loading value)? loading,
-    TResult Function(Loaded value)? loaded,
-    TResult Function(Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class Loading extends SubscriptionListState {
-  const factory Loading() = _$Loading;
-  const Loading._() : super._();
+  final $Res Function(VotePermissionState) _then;
 }
 
 /// @nodoc
 abstract class $LoadedCopyWith<$Res> {
   factory $LoadedCopyWith(Loaded value, $Res Function(Loaded) then) =
       _$LoadedCopyWithImpl<$Res>;
-  $Res call({List<Subscription> subscriptions});
+  $Res call({VotePermission votePermission});
 }
 
 /// @nodoc
-class _$LoadedCopyWithImpl<$Res>
-    extends _$SubscriptionListStateCopyWithImpl<$Res>
+class _$LoadedCopyWithImpl<$Res> extends _$VotePermissionStateCopyWithImpl<$Res>
     implements $LoadedCopyWith<$Res> {
   _$LoadedCopyWithImpl(Loaded _value, $Res Function(Loaded) _then)
       : super(_value, (v) => _then(v as Loaded));
@@ -232,13 +111,13 @@ class _$LoadedCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? subscriptions = freezed,
+    Object? votePermission = freezed,
   }) {
     return _then(Loaded(
-      subscriptions == freezed
-          ? _value.subscriptions
-          : subscriptions // ignore: cast_nullable_to_non_nullable
-              as List<Subscription>,
+      votePermission: votePermission == freezed
+          ? _value.votePermission
+          : votePermission // ignore: cast_nullable_to_non_nullable
+              as VotePermission,
     ));
   }
 }
@@ -246,15 +125,14 @@ class _$LoadedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$Loaded extends Loaded {
-  _$Loaded([this.subscriptions = const []]) : super._();
+  _$Loaded({required this.votePermission}) : super._();
 
-  @JsonKey()
   @override
-  final List<Subscription> subscriptions;
+  final VotePermission votePermission;
 
   @override
   String toString() {
-    return 'SubscriptionListState.loaded(subscriptions: $subscriptions)';
+    return 'VotePermissionState.loaded(votePermission: $votePermission)';
   }
 
   @override
@@ -263,12 +141,12 @@ class _$Loaded extends Loaded {
         (other.runtimeType == runtimeType &&
             other is Loaded &&
             const DeepCollectionEquality()
-                .equals(other.subscriptions, subscriptions));
+                .equals(other.votePermission, votePermission));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(subscriptions));
+      runtimeType, const DeepCollectionEquality().hash(votePermission));
 
   @JsonKey(ignore: true)
   @override
@@ -278,33 +156,30 @@ class _$Loaded extends Loaded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
-    required TResult Function(List<Subscription> subscriptions) loaded,
+    required TResult Function(VotePermission votePermission) loaded,
     required TResult Function(String? message) error,
   }) {
-    return loaded(subscriptions);
+    return loaded(votePermission);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(List<Subscription> subscriptions)? loaded,
+    TResult Function(VotePermission votePermission)? loaded,
     TResult Function(String? message)? error,
   }) {
-    return loaded?.call(subscriptions);
+    return loaded?.call(votePermission);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(List<Subscription> subscriptions)? loaded,
+    TResult Function(VotePermission votePermission)? loaded,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(subscriptions);
+      return loaded(votePermission);
     }
     return orElse();
   }
@@ -312,7 +187,6 @@ class _$Loaded extends Loaded {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Loading value) loading,
     required TResult Function(Loaded value) loaded,
     required TResult Function(Error value) error,
   }) {
@@ -322,7 +196,6 @@ class _$Loaded extends Loaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Loading value)? loading,
     TResult Function(Loaded value)? loaded,
     TResult Function(Error value)? error,
   }) {
@@ -332,7 +205,6 @@ class _$Loaded extends Loaded {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Loading value)? loading,
     TResult Function(Loaded value)? loaded,
     TResult Function(Error value)? error,
     required TResult orElse(),
@@ -344,11 +216,11 @@ class _$Loaded extends Loaded {
   }
 }
 
-abstract class Loaded extends SubscriptionListState {
-  factory Loaded([List<Subscription> subscriptions]) = _$Loaded;
+abstract class Loaded extends VotePermissionState {
+  factory Loaded({required VotePermission votePermission}) = _$Loaded;
   Loaded._() : super._();
 
-  List<Subscription> get subscriptions;
+  VotePermission get votePermission;
   @JsonKey(ignore: true)
   $LoadedCopyWith<Loaded> get copyWith => throw _privateConstructorUsedError;
 }
@@ -361,8 +233,7 @@ abstract class $ErrorCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ErrorCopyWithImpl<$Res>
-    extends _$SubscriptionListStateCopyWithImpl<$Res>
+class _$ErrorCopyWithImpl<$Res> extends _$VotePermissionStateCopyWithImpl<$Res>
     implements $ErrorCopyWith<$Res> {
   _$ErrorCopyWithImpl(Error _value, $Res Function(Error) _then)
       : super(_value, (v) => _then(v as Error));
@@ -393,7 +264,7 @@ class _$Error extends Error {
 
   @override
   String toString() {
-    return 'SubscriptionListState.error(message: $message)';
+    return 'VotePermissionState.error(message: $message)';
   }
 
   @override
@@ -416,8 +287,7 @@ class _$Error extends Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
-    required TResult Function(List<Subscription> subscriptions) loaded,
+    required TResult Function(VotePermission votePermission) loaded,
     required TResult Function(String? message) error,
   }) {
     return error(message);
@@ -426,8 +296,7 @@ class _$Error extends Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(List<Subscription> subscriptions)? loaded,
+    TResult Function(VotePermission votePermission)? loaded,
     TResult Function(String? message)? error,
   }) {
     return error?.call(message);
@@ -436,8 +305,7 @@ class _$Error extends Error {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(List<Subscription> subscriptions)? loaded,
+    TResult Function(VotePermission votePermission)? loaded,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) {
@@ -450,7 +318,6 @@ class _$Error extends Error {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Loading value) loading,
     required TResult Function(Loaded value) loaded,
     required TResult Function(Error value) error,
   }) {
@@ -460,7 +327,6 @@ class _$Error extends Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Loading value)? loading,
     TResult Function(Loaded value)? loaded,
     TResult Function(Error value)? error,
   }) {
@@ -470,7 +336,6 @@ class _$Error extends Error {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Loading value)? loading,
     TResult Function(Loaded value)? loaded,
     TResult Function(Error value)? error,
     required TResult orElse(),
@@ -482,7 +347,7 @@ class _$Error extends Error {
   }
 }
 
-abstract class Error extends SubscriptionListState {
+abstract class Error extends VotePermissionState {
   factory Error([String? message]) = _$Error;
   Error._() : super._();
 

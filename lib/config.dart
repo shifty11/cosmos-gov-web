@@ -2,6 +2,7 @@ import 'package:cosmos_gov_web/f_home/services/auth_interceptor.dart';
 import 'package:cosmos_gov_web/f_home/services/auth_service.dart';
 import 'package:cosmos_gov_web/f_home/services/jwt_manager.dart';
 import 'package:cosmos_gov_web/f_subscription/services/subscription_service.dart';
+import 'package:cosmos_gov_web/f_voting/services/vote_permission_service.dart';
 import 'package:flutter/material.dart';
 import 'package:grpc/grpc_web.dart';
 
@@ -12,6 +13,7 @@ final jwtManager = JwtManager();
 final authInterceptor = AuthInterceptor(jwtManager);
 final authService = AuthService(channel, [authInterceptor], jwtManager, refreshBeforeExpDuration);
 final subsService = SubscriptionService(channel, [authInterceptor]);
+final votePermissionService = VotePermissionService(channel, [authInterceptor]);
 
 class RouteData {
   final String name;
