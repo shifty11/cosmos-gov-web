@@ -64,7 +64,7 @@ class MyRouter {
         loading: () => null,
         authorized: () => state.location == rRoot.path ? state.namedLocation(rSubscriptions.name) : null,
         unauthorized: () => state.location == rUnauthorized.path ? null : state.namedLocation(rUnauthorized.name),
-        error: (err) => null,
+        error: (err) => state.location == rUnauthorized.path ? null : state.namedLocation(rUnauthorized.name),
       );
     },
   );

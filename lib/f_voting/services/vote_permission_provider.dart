@@ -43,7 +43,7 @@ class VotePermissionNotifier extends StateNotifier<VotePermissionState> {
 
   Future<void> refreshVotePermission() async {
     try {
-      final response = await _votePermissionService.refreshVotePermission(RefreshVotePermissionRequest(address: _votePermission.address));
+      final response = await _votePermissionService.refreshVotePermission(RefreshVotePermissionRequest(votePermission: _votePermission));
       state = VotePermissionState.loaded(votePermission: _votePermission);
     } catch (e) {
       state = VotePermissionState.error(e.toString());

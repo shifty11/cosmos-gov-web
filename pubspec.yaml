@@ -43,6 +43,7 @@ dependencies:
   go_router: ^3.0.7
   intl: ^0.17.0
   tuple: ^2.0.0
+  js: ^0.6.3
 
 dev_dependencies:
   flutter_test:
