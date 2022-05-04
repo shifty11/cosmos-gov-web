@@ -8,7 +8,7 @@ import 'package:grpc/grpc_web.dart';
 
 const refreshBeforeExpDuration = Duration(seconds: 10 * 60);
 
-final channel = GrpcWebClientChannel.xhr(Uri.parse('http://localhost:8080'));
+final channel = GrpcWebClientChannel.xhr(Uri.parse('http://test.mydomain.com:8080'));
 final jwtManager = JwtManager();
 final authInterceptor = AuthInterceptor(jwtManager);
 final authService = AuthService(channel, [authInterceptor], jwtManager, refreshBeforeExpDuration);

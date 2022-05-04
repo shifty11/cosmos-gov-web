@@ -50,7 +50,7 @@ class AuthInterceptor extends ClientInterceptor {
   Map<String, bool> authMethod() {
     const path = "/cosmosgov_grpc.AuthService/";
 
-    return {path + "TokenLogin": false, path + "RefreshAccessToken": false};
+    return {path + "TelegramLogin": false, path + "TokenLogin": false, path + "RefreshAccessToken": false};
   }
 
   bool isAuthNeeded(String method) {

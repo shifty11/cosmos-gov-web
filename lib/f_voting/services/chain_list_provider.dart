@@ -22,9 +22,6 @@ class ChainListNotifier extends StateNotifier<ChainListState> {
     try {
       state = const ChainListState.loading();
       final response = await _votePermissionService.getSupportedChains(Empty());
-      for (var element in response.chains) {
-        print(element.denom);
-      }
       state = ChainListState.loaded(chains: response.chains);
     } catch (e) {
       state = ChainListState.error(e.toString());

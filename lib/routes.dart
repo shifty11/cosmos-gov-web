@@ -62,9 +62,9 @@ class MyRouter {
     redirect: (state) {
       return authStateListener.value.when(
         loading: () => null,
-        authorized: () => state.location == rRoot.path ? state.namedLocation(rSubscriptions.name) : null,
-        unauthorized: () => state.location == rUnauthorized.path ? null : state.namedLocation(rUnauthorized.name),
-        error: (err) => state.location == rUnauthorized.path ? null : state.namedLocation(rUnauthorized.name),
+        authorized: () => state.subloc == rRoot.path ? state.namedLocation(rSubscriptions.name) : null,
+        unauthorized: () => state.subloc == rUnauthorized.path ? null : state.namedLocation(rUnauthorized.name),
+        error: (err) => state.subloc == rUnauthorized.path ? null : state.namedLocation(rUnauthorized.name),
       );
     },
   );
