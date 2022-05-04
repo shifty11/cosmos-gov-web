@@ -115,8 +115,6 @@ class SubscriptionPage extends StatelessWidget {
               value: ref.watch(chatRoomProvider) ?? chatRooms.first,
               icon: const Icon(Icons.person),
               onChanged: (ChatRoom? newValue) {
-                print("new state");
-                print(newValue);
                 ref.watch(chatRoomProvider.notifier).state = newValue;
               },
               items: chatRooms.map<DropdownMenuItem<ChatRoom>>((ChatRoom chatRoom) {

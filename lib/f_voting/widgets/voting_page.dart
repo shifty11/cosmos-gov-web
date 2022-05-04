@@ -89,8 +89,6 @@ class VotingPage extends StatelessWidget {
 
             final vp = VotePermission(chain: chain, granter: address);
 
-            print(vp.chain.name);
-
             await keplr.grantVotePermission(vp, expiration);
             // showPopUp(context, result.success ? "Success" : "Failure", result.success ? result.txHash : result.error);
           },

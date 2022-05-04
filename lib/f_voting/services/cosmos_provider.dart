@@ -2,6 +2,7 @@ import 'package:cosmos_gov_web/api/protobuf/dart/vote_permission_service.pb.dart
 import 'package:cosmos_gov_web/f_voting/services/cosmos_service.dart';
 import 'package:cosmos_gov_web/f_voting/services/state/cosmos_state.dart';
 import 'package:cosmos_gov_web/f_voting/services/vote_permission_provider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // final cosmosProvider = Provider<CosmosService>((ref) => CosmosService());
@@ -20,7 +21,9 @@ class CosmosStateNotifier extends StateNotifier<CosmosState> {
 
   CosmosStateNotifier(this._cosmosService, this.ref) : super(const CosmosState.initial()) {
     _cosmosService.addListener(() {
-      print("keystorage chagned");
+      if (kDebugMode) {
+        print("keystorage chagned");
+      }
       if (_chainId != null) {
         getAddress(_chainId!);
       }
@@ -29,11 +32,15 @@ class CosmosStateNotifier extends StateNotifier<CosmosState> {
 
   Future<String?> getAddress(String chainId) async {
     try {
-      print("getAddress");
+      if (kDebugMode) {
+        print("getAddress");
+      }
       final result = await _cosmosService.getAddress(chainId);
       if (result != null && result is String) {
         _chainId = chainId;
-        print("connected: $result");
+        if (kDebugMode) {
+          print("connected: $result");
+        }
         state = CosmosState.connected(chainId: chainId, address: result);
         return result;
       } else {
@@ -47,14 +54,20 @@ class CosmosStateNotifier extends StateNotifier<CosmosState> {
 
   grantVotePermission(VotePermission vp, int expiration) async {
     try {
-      print("grantVotePermission");
+      if (kDebugMode) {
+        print("grantVotePermission");
+      }
       state = CosmosState.executing(chain: vp.chain);
       final result = await _cosmosService.grantVote(vp.chain.chainId, vp.chain.rpcAddress, vp.granter, vp.chain.grantee, expiration, vp.chain.denom);
       if (result == null) {
-        print("null -> probalby aborted");
+        if (kDebugMode) {
+          print("null -> probalby aborted");
+        }
         state = CosmosState.error(error: "execution was aborted");
       } else if (result != null && result.transactionHash != null) {
-        print("executed");
+        if (kDebugMode) {
+          print("executed");
+        }
         state = CosmosState.executed(success: result.code == 0, txHash: result.transactionHash, rawLog: result.rawLog);
         if (result.code == 0) {
           await ref.read(votePermissionProvider).createVotePermission(CreateVotePermissionRequest(votePermission: vp));
@@ -70,14 +83,20 @@ class CosmosStateNotifier extends StateNotifier<CosmosState> {
 
   revokeVotePermission(VotePermission vp) async {
     try {
-      print("revokeVotePermission");
+      if (kDebugMode) {
+        print("revokeVotePermission");
+      }
       state = CosmosState.executing(chain: vp.chain);
       final result = await _cosmosService.revokeVote(vp.chain.chainId, vp.chain.rpcAddress, vp.granter, vp.chain.grantee);
       if (result == null) {
-        print("null");
+        if (kDebugMode) {
+          print("null -> probalby aborted");
+        }
         state = CosmosState.error(error: "execution was aborted");
       } else if (result != null && result.transactionHash != null) {
-        print("executed");
+        if (kDebugMode) {
+          print("executed");
+        }
         state = CosmosState.executed(success: result.code == 0, txHash: result.transactionHash, rawLog: result.rawLog);
         if (result.code == 0) {
           await ref.read(votePermissionProvider).refreshVotePermission(RefreshVotePermissionRequest(votePermission: vp));
