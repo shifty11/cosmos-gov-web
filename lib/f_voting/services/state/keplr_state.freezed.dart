@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'cosmos_state.dart';
+part of 'keplr_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,8 +15,8 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$CosmosStateTearOff {
-  const _$CosmosStateTearOff();
+class _$KeplrStateTearOff {
+  const _$KeplrStateTearOff();
 
   Initial initial() {
     return const Initial();
@@ -52,10 +52,10 @@ class _$CosmosStateTearOff {
 }
 
 /// @nodoc
-const $CosmosState = _$CosmosStateTearOff();
+const $KeplrState = _$KeplrStateTearOff();
 
 /// @nodoc
-mixin _$CosmosState {
+mixin _$KeplrState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
@@ -116,19 +116,19 @@ mixin _$CosmosState {
 }
 
 /// @nodoc
-abstract class $CosmosStateCopyWith<$Res> {
-  factory $CosmosStateCopyWith(
-          CosmosState value, $Res Function(CosmosState) then) =
-      _$CosmosStateCopyWithImpl<$Res>;
+abstract class $KeplrStateCopyWith<$Res> {
+  factory $KeplrStateCopyWith(
+          KeplrState value, $Res Function(KeplrState) then) =
+      _$KeplrStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$CosmosStateCopyWithImpl<$Res> implements $CosmosStateCopyWith<$Res> {
-  _$CosmosStateCopyWithImpl(this._value, this._then);
+class _$KeplrStateCopyWithImpl<$Res> implements $KeplrStateCopyWith<$Res> {
+  _$KeplrStateCopyWithImpl(this._value, this._then);
 
-  final CosmosState _value;
+  final KeplrState _value;
   // ignore: unused_field
-  final $Res Function(CosmosState) _then;
+  final $Res Function(KeplrState) _then;
 }
 
 /// @nodoc
@@ -138,7 +138,7 @@ abstract class $InitialCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$InitialCopyWithImpl<$Res> extends _$CosmosStateCopyWithImpl<$Res>
+class _$InitialCopyWithImpl<$Res> extends _$KeplrStateCopyWithImpl<$Res>
     implements $InitialCopyWith<$Res> {
   _$InitialCopyWithImpl(Initial _value, $Res Function(Initial) _then)
       : super(_value, (v) => _then(v as Initial));
@@ -154,7 +154,7 @@ class _$Initial extends Initial {
 
   @override
   String toString() {
-    return 'CosmosState.initial()';
+    return 'KeplrState.initial()';
   }
 
   @override
@@ -248,7 +248,7 @@ class _$Initial extends Initial {
   }
 }
 
-abstract class Initial extends CosmosState {
+abstract class Initial extends KeplrState {
   const factory Initial() = _$Initial;
   const Initial._() : super._();
 }
@@ -261,7 +261,7 @@ abstract class $ConnectedCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ConnectedCopyWithImpl<$Res> extends _$CosmosStateCopyWithImpl<$Res>
+class _$ConnectedCopyWithImpl<$Res> extends _$KeplrStateCopyWithImpl<$Res>
     implements $ConnectedCopyWith<$Res> {
   _$ConnectedCopyWithImpl(Connected _value, $Res Function(Connected) _then)
       : super(_value, (v) => _then(v as Connected));
@@ -299,7 +299,7 @@ class _$Connected extends Connected {
 
   @override
   String toString() {
-    return 'CosmosState.connected(chainId: $chainId, address: $address)';
+    return 'KeplrState.connected(chainId: $chainId, address: $address)';
   }
 
   @override
@@ -404,7 +404,7 @@ class _$Connected extends Connected {
   }
 }
 
-abstract class Connected extends CosmosState {
+abstract class Connected extends KeplrState {
   const factory Connected({required String chainId, required String address}) =
       _$Connected;
   const Connected._() : super._();
@@ -424,7 +424,7 @@ abstract class $ExecutingCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ExecutingCopyWithImpl<$Res> extends _$CosmosStateCopyWithImpl<$Res>
+class _$ExecutingCopyWithImpl<$Res> extends _$KeplrStateCopyWithImpl<$Res>
     implements $ExecutingCopyWith<$Res> {
   _$ExecutingCopyWithImpl(Executing _value, $Res Function(Executing) _then)
       : super(_value, (v) => _then(v as Executing));
@@ -455,7 +455,7 @@ class _$Executing extends Executing {
 
   @override
   String toString() {
-    return 'CosmosState.executing(chain: $chain)';
+    return 'KeplrState.executing(chain: $chain)';
   }
 
   @override
@@ -557,7 +557,7 @@ class _$Executing extends Executing {
   }
 }
 
-abstract class Executing extends CosmosState {
+abstract class Executing extends KeplrState {
   factory Executing({required Chain chain}) = _$Executing;
   Executing._() : super._();
 
@@ -575,7 +575,7 @@ abstract class $ExecutedCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ExecutedCopyWithImpl<$Res> extends _$CosmosStateCopyWithImpl<$Res>
+class _$ExecutedCopyWithImpl<$Res> extends _$KeplrStateCopyWithImpl<$Res>
     implements $ExecutedCopyWith<$Res> {
   _$ExecutedCopyWithImpl(Executed _value, $Res Function(Executed) _then)
       : super(_value, (v) => _then(v as Executed));
@@ -622,7 +622,7 @@ class _$Executed extends Executed {
 
   @override
   String toString() {
-    return 'CosmosState.executed(success: $success, txHash: $txHash, rawLog: $rawLog)';
+    return 'KeplrState.executed(success: $success, txHash: $txHash, rawLog: $rawLog)';
   }
 
   @override
@@ -729,7 +729,7 @@ class _$Executed extends Executed {
   }
 }
 
-abstract class Executed extends CosmosState {
+abstract class Executed extends KeplrState {
   factory Executed(
       {required bool success,
       required String txHash,
@@ -752,7 +752,7 @@ abstract class $ErrorCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ErrorCopyWithImpl<$Res> extends _$CosmosStateCopyWithImpl<$Res>
+class _$ErrorCopyWithImpl<$Res> extends _$KeplrStateCopyWithImpl<$Res>
     implements $ErrorCopyWith<$Res> {
   _$ErrorCopyWithImpl(Error _value, $Res Function(Error) _then)
       : super(_value, (v) => _then(v as Error));
@@ -783,7 +783,7 @@ class _$Error extends Error {
 
   @override
   String toString() {
-    return 'CosmosState.error(error: $error)';
+    return 'KeplrState.error(error: $error)';
   }
 
   @override
@@ -885,7 +885,7 @@ class _$Error extends Error {
   }
 }
 
-abstract class Error extends CosmosState {
+abstract class Error extends KeplrState {
   factory Error({required String error}) = _$Error;
   Error._() : super._();
 

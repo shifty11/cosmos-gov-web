@@ -1,7 +1,7 @@
 import 'package:cosmos_gov_web/api/protobuf/dart/vote_permission_service.pb.dart';
 import 'package:cosmos_gov_web/f_home/widgets/sidebar_widget.dart';
 import 'package:cosmos_gov_web/f_voting/services/chain_list_provider.dart';
-import 'package:cosmos_gov_web/f_voting/services/cosmos_provider.dart';
+import 'package:cosmos_gov_web/f_voting/services/keplr_provider.dart';
 import 'package:cosmos_gov_web/f_voting/services/vote_permission_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -82,7 +82,7 @@ class VotingPage extends StatelessWidget {
               return;
             }
 
-            final keplr = ref.watch(cosmosProvider.notifier);
+            final keplr = ref.watch(keplrProvider.notifier);
             final address = await keplr.getAddress(chain.chainId);
             final int secondsSinceEpoch = DateTime.now().toUtc().millisecondsSinceEpoch ~/ Duration.millisecondsPerSecond;
             final expiration = secondsSinceEpoch + 7 * 24 * 60 * 60;
@@ -151,7 +151,7 @@ extension Formatting on VotePermission {
           builder: (BuildContext context, WidgetRef ref, Widget? child) {
             return ElevatedButton(
               onPressed: () async {
-                final keplr = ref.watch(cosmosProvider.notifier);
+                final keplr = ref.watch(keplrProvider.notifier);
                 await keplr.revokeVotePermission(this);
               },
               child: const Text("Revoke"),

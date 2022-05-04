@@ -18,12 +18,12 @@ external dynamic grantMsgVoteJs(String chainId, String rpcAddress, String grante
 @JS()
 external dynamic revokeMsgVoteJs(String chainId, String rpcAddress, String granter, String grantee, bool debug);
 
-class CosmosService with ChangeNotifier {
-  static CosmosService? _singleton;
+class KeplrService with ChangeNotifier {
+  static KeplrService? _singleton;
 
-  factory CosmosService() => _singleton ??= CosmosService._internal();
+  factory KeplrService() => _singleton ??= KeplrService._internal();
 
-  CosmosService._internal() {
+  KeplrService._internal() {
     setProperty(window, 'keplr_keystorechange_dart', js.allowInterop(keplrKeystorechange));
   }
 
