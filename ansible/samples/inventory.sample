@@ -1,0 +1,20 @@
+[decryptopage]
+64.227.69.1
+
+[decryptopage:vars]
+# Promtail
+log_name=cosmosgov-web-log
+log_monitor=http://159.223.5.75:3100
+
+node_exporter=false
+promtail=false
+
+web_url=app.decrypto.online
+
+# Git
+github_access_token=ACCESS_TOKEN
+
+[all:vars]
+ansible_user=ubuntu
+ansible_port=22
+ansible_ssh_private_key_file="~/.ssh/id_rsa"

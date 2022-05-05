@@ -6,6 +6,7 @@ import 'dart:html';
 import 'dart:js' as js;
 import 'dart:js_util';
 
+import 'package:cosmos_gov_web/config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:js/js.dart';
 
@@ -37,10 +38,10 @@ class KeplrService with ChangeNotifier {
   }
 
   Future<dynamic> grantVote(String chainId, String rpcAddress, String granter, String grantee, int expiration, String denom) async {
-    return await promiseToFuture(grantMsgVoteJs(chainId, rpcAddress, granter, grantee, expiration, denom, kDebugMode));
+    return await promiseToFuture(grantMsgVoteJs(chainId, rpcAddress, granter, grantee, expiration, denom, cDebugMode));
   }
 
   Future<dynamic> revokeVote(String chainId, String rpcAddress, String granter, String grantee) async {
-    return await promiseToFuture(revokeMsgVoteJs(chainId, rpcAddress, granter, grantee, kDebugMode));
+    return await promiseToFuture(revokeMsgVoteJs(chainId, rpcAddress, granter, grantee, cDebugMode));
   }
 }

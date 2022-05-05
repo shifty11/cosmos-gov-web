@@ -1,0 +1,9 @@
+---
+- name: Set up cosmosgov_web page
+  hosts: cosmosgov_web
+  become: true
+  gather_facts: false
+  roles:
+    - prepare
+    - page_installation
+

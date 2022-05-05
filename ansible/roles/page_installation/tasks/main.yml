@@ -1,0 +1,9 @@
+---
+- name: cosmosgov setup
+  import_tasks: cosmosgov.yml
+
+- name: envoy setup
+  import_tasks: envoy.yml
+
+- name: caddy setup
+  import_tasks: caddy.yml

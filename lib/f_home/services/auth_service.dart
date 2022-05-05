@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cosmos_gov_web/api/protobuf/dart/auth_service.pbgrpc.dart';
+import 'package:cosmos_gov_web/config.dart';
 import 'package:cosmos_gov_web/f_home/services/jwt_manager.dart';
 import 'package:fixnum/fixnum.dart' as fixnum;
 import 'package:flutter/foundation.dart';
@@ -23,7 +24,7 @@ class AuthService extends AuthServiceClient with ChangeNotifier {
   init() async {
     if (!isAuthenticated) {
       await _login();
-    } else if (kDebugMode) {
+    } else if (cDebugMode) {
       print("AuthService: is authenticated");
     }
     _scheduleRefreshAccessToken();
@@ -34,7 +35,7 @@ class AuthService extends AuthServiceClient with ChangeNotifier {
   }
 
   _login() async {
-    if (kDebugMode) {
+    if (cDebugMode) {
       print("AuthService: login");
     }
     var idStr = Uri.base.queryParameters['id'] ?? "";
@@ -71,7 +72,7 @@ class AuthService extends AuthServiceClient with ChangeNotifier {
   }
 
   _logout() {
-    if (kDebugMode) {
+    if (cDebugMode) {
       print("AuthService: logout");
     }
     jwtManager.accessToken = "";
@@ -86,12 +87,12 @@ class AuthService extends AuthServiceClient with ChangeNotifier {
     if (sleep <= 0) {
       sleep = 0;
     }
-    if (kDebugMode) {
+    if (cDebugMode) {
       print("AuthService: sleep for $sleep seconds");
     }
     Timer(Duration(seconds: sleep), () async {
       try {
-        if (kDebugMode) {
+        if (cDebugMode) {
           print("AuthService: Refresh access token");
         }
         if (jwtManager.refreshToken.isEmpty) {
@@ -102,7 +103,7 @@ class AuthService extends AuthServiceClient with ChangeNotifier {
           _scheduleRefreshAccessToken();
         }
       } catch (e) {
-        if (kDebugMode) {
+        if (cDebugMode) {
           print("AuthService: Error while refreshing access token: $e");
         }
         _logout();

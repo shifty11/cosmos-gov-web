@@ -1,0 +1,26 @@
+---
+# TODO: install envoy (currently this needs to be done manually -> see: https://www.envoyproxy.io/docs/envoy/latest/start/install#install-envoy-on-ubuntu-linux
+
+- name: Copy envoy.yaml
+  copy:
+    src: envoy.yaml
+    dest: '/etc/envoy/cosmosgov/'
+    owner: root
+    group: root
+    mode: '644'
+
+- name: Create cosmosgov envoy service file
+  template:
+    src: 'cosmosgov-envoy.service.j2'
+    dest: '/etc/systemd/system/cosmosgov-envoy.service'
+    owner: root
+    group: root
+    mode: '644'
+
+- name: Start cosmosgov-envoy service
+  systemd:
+    name: cosmosgov-envoy
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  changed_when: false

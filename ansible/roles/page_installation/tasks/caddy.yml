@@ -1,0 +1,90 @@
+---
+- name: Create Caddy user
+  user:
+    name: caddy
+    comment: 'Caddy user'
+    shell: /usr/sbin/nologin
+    groups: ['systemd-journal', 'adm']
+    state: present
+
+- name: grep caddy download url
+  shell:
+    cmd: curl -s -L https://github.com/caddyserver/caddy/releases/latest | egrep -o '/caddyserver/caddy/releases/download/v[0-9.]*/caddy_[0-9.]*_linux_amd64.tar.gz'
+    warn: false
+  register: shell_output
+  changed_when: false
+
+- name: set caddy download url
+  set_fact:
+    caddy_url: "https://github.com/{{ shell_output.stdout }}"
+  changed_when: false
+
+- name: download caddy
+  get_url:
+    url: '{{ caddy_url }}'
+    dest: '/tmp/caddy.linux-amd64.tar.gz'
+    mode: '0700'
+
+- name: unarchive caddy
+  unarchive:
+    src: '/tmp/caddy.linux-amd64.tar.gz'
+    remote_src: yes
+    dest: '/tmp'
+
+- name: Copy caddy binary
+  copy:
+    src: '/tmp/caddy'
+    dest: '/usr/local/bin/'
+    remote_src: true
+    owner: root
+    group: root
+    mode: 755
+
+- name: Set capability on the binary file to be able to bind to TCP port <1024
+  capabilities:
+    path: "/usr/local/bin/caddy"
+    capability: cap_net_bind_service+eip
+    state: present
+
+- name: Creates caddy directory
+  file:
+    path: '/etc/caddy/cosmosgov-page'
+    state: directory
+    owner: root
+    group: caddy
+    recurse: true
+    mode: 0755
+  changed_when: false
+
+- name: Creates web directory
+  file:
+    path: '/var/www'
+    state: directory
+    owner: caddy
+    group: caddy
+    recurse: true
+  changed_when: false
+
+- name: Copy Caddyfile
+  template:
+    src: Caddyfile
+    dest: '/etc/caddy/cosmosgov-page/'
+    owner: caddy
+    group: caddy
+    mode: '644'
+
+- name: Create cosmosgov-caddy service file
+  template:
+    src: 'cosmosgov-caddy.service.j2'
+    dest: '/etc/systemd/system/cosmosgov-caddy.service'
+    owner: root
+    group: root
+    mode: '644'
+
+- name: Start cosmosgov-caddy service
+  systemd:
+    name: cosmosgov-caddy
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  changed_when: false

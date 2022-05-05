@@ -1,7 +1,7 @@
 import 'dart:async';
 
+import 'package:cosmos_gov_web/config.dart';
 import 'package:cosmos_gov_web/f_home/services/jwt_manager.dart';
-import 'package:flutter/foundation.dart';
 import 'package:grpc/grpc.dart';
 
 class AuthInterceptor extends ClientInterceptor {
@@ -23,7 +23,7 @@ class AuthInterceptor extends ClientInterceptor {
 
   @override
   ResponseFuture<R> interceptUnary<Q, R>(ClientMethod<Q, R> method, Q request, CallOptions options, invoker) {
-    if (kDebugMode) {
+    if (cDebugMode) {
       print("interceptUnary --> ${method.path}");
     }
 
@@ -36,7 +36,7 @@ class AuthInterceptor extends ClientInterceptor {
   @override
   ResponseStream<R> interceptStreaming<Q, R>(
       ClientMethod<Q, R> method, Stream<Q> requests, CallOptions options, ClientStreamingInvoker<Q, R> invoker) {
-    if (kDebugMode) {
+    if (cDebugMode) {
       print("interceptStreaming --> ${method.path}");
     }
 

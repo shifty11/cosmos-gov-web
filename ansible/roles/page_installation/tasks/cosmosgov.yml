@@ -1,0 +1,29 @@
+---
+#- name: Clone cosmos-gov-web github repository
+#  git:
+#    repo: https://{{ github_access_token }}@github.com/shifty11/cosmos-gov-web.git
+#    dest: /tmp/cosmos-gov-web
+#    clone: yes
+#    update: yes
+#    force: yes
+
+#- name: Copy web folder
+#  copy:
+#    src: /tmp/cosmos-gov-web/build/web/
+#    dest: /var/www/cosmos-gov-web
+#    remote_src: yes
+#    owner: caddy
+#    group: caddy
+
+#- name: Remove /tmp/cosmos-gov-web directory
+#  file:
+#    path: /tmp/cosmos-gov-web
+#    state: absent
+#  changed_when: false
+
+- name: Copy web folder
+  copy:
+    src: ../build/web/
+    dest: /var/www/cosmos-gov-web
+    owner: caddy
+    group: caddy

@@ -1,0 +1,38 @@
+---
+#- name: Delete old tmp web folder
+#  shell:
+#    cmd: /bin/rm -rf /tmp/decrypto-page
+#    warn: false
+
+#- name: Clone decrypto-page github repository
+#  git:
+#    repo: https://{{ github_access_token }}@github.com/shifty11/decrypto-page.git
+#    dest: /tmp/decrypto-page
+#    clone: yes
+#    update: yes
+#    force: yes
+#
+#- name: Delete old web folder content
+#  shell:
+#    cmd: /bin/rm -rf /var/www/*
+#    warn: false
+#
+#- name: Copy web folder
+#  copy:
+#    src: /tmp/decrypto-page/build/web/
+#    dest: /var/www
+#    remote_src: yes
+#    owner: caddy
+#    group: caddy
+
+- name: Delete web folder
+  file:
+    state: absent
+    path: /var/www/cosmos-gov-web
+
+- name: Copy web folder
+  copy:
+    src: ../build/web/
+    dest: /var/www/cosmos-gov-web
+    owner: caddy
+    group: caddy

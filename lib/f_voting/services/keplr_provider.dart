@@ -1,10 +1,9 @@
 import 'package:cosmos_gov_web/api/protobuf/dart/vote_permission_service.pb.dart';
+import 'package:cosmos_gov_web/config.dart';
 import 'package:cosmos_gov_web/f_voting/services/keplr_service.dart';
 import 'package:cosmos_gov_web/f_voting/services/state/keplr_state.dart';
 import 'package:cosmos_gov_web/f_voting/services/vote_permission_provider.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 
 final keplrProvider = StateNotifierProvider<KeplrStateNotifier, KeplrState>(
   (ref) => KeplrStateNotifier(KeplrService(), ref),
@@ -19,7 +18,7 @@ class KeplrStateNotifier extends StateNotifier<KeplrState> {
 
   KeplrStateNotifier(this._keplrService, this.ref) : super(const KeplrState.initial()) {
     _keplrService.addListener(() {
-      if (kDebugMode) {
+      if (cDebugMode) {
         print("keystorage chagned");
       }
       if (_chainId != null) {
@@ -30,13 +29,13 @@ class KeplrStateNotifier extends StateNotifier<KeplrState> {
 
   Future<String?> getAddress(String chainId) async {
     try {
-      if (kDebugMode) {
+      if (cDebugMode) {
         print("getAddress");
       }
       final result = await _keplrService.getAddress(chainId);
       if (result != null && result is String) {
         _chainId = chainId;
-        if (kDebugMode) {
+        if (cDebugMode) {
           print("connected: $result");
         }
         state = KeplrState.connected(chainId: chainId, address: result);
@@ -52,18 +51,19 @@ class KeplrStateNotifier extends StateNotifier<KeplrState> {
 
   grantVotePermission(VotePermission vp, int expiration) async {
     try {
-      if (kDebugMode) {
+      if (cDebugMode) {
         print("grantVotePermission");
       }
       state = KeplrState.executing(chain: vp.chain);
-      final result = await _keplrService.grantVote(vp.chain.chainId, vp.chain.rpcAddress, vp.granter, vp.chain.grantee, expiration, vp.chain.denom);
+      final result =
+          await _keplrService.grantVote(vp.chain.chainId, vp.chain.rpcAddress, vp.granter, vp.chain.grantee, expiration, vp.chain.denom);
       if (result == null) {
-        if (kDebugMode) {
+        if (cDebugMode) {
           print("null -> probalby aborted");
         }
         state = KeplrState.error(error: "execution was aborted");
       } else if (result != null && result.transactionHash != null) {
-        if (kDebugMode) {
+        if (cDebugMode) {
           print("executed");
         }
         state = KeplrState.executed(success: result.code == 0, txHash: result.transactionHash, rawLog: result.rawLog);
@@ -81,18 +81,18 @@ class KeplrStateNotifier extends StateNotifier<KeplrState> {
 
   revokeVotePermission(VotePermission vp) async {
     try {
-      if (kDebugMode) {
+      if (cDebugMode) {
         print("revokeVotePermission");
       }
       state = KeplrState.executing(chain: vp.chain);
       final result = await _keplrService.revokeVote(vp.chain.chainId, vp.chain.rpcAddress, vp.granter, vp.chain.grantee);
       if (result == null) {
-        if (kDebugMode) {
+        if (cDebugMode) {
           print("null -> probalby aborted");
         }
         state = KeplrState.error(error: "execution was aborted");
       } else if (result != null && result.transactionHash != null) {
-        if (kDebugMode) {
+        if (cDebugMode) {
           print("executed");
         }
         state = KeplrState.executed(success: result.code == 0, txHash: result.transactionHash, rawLog: result.rawLog);
