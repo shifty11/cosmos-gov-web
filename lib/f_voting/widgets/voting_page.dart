@@ -82,7 +82,7 @@ class VotingPage extends StatelessWidget {
               return;
             }
 
-            final keplr = ref.watch(keplrProvider.notifier);
+            final keplr = ref.watch(keplrTxProvider.notifier);
             final address = await keplr.getAddress(chain.chainId);
             final int secondsSinceEpoch = DateTime.now().toUtc().millisecondsSinceEpoch ~/ Duration.millisecondsPerSecond;
             final expiration = secondsSinceEpoch + 7 * 24 * 60 * 60;
@@ -151,7 +151,7 @@ extension Formatting on VotePermission {
           builder: (BuildContext context, WidgetRef ref, Widget? child) {
             return ElevatedButton(
               onPressed: () async {
-                final keplr = ref.watch(keplrProvider.notifier);
+                final keplr = ref.watch(keplrTxProvider.notifier);
                 await keplr.revokeVotePermission(this);
               },
               child: const Text("Revoke"),

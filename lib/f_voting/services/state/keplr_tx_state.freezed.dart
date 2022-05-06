@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'keplr_state.dart';
+part of 'keplr_tx_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,11 +15,10 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$KeplrState {
+mixin _$KeplrTxState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(String chainId, String address) connected,
     required TResult Function(Chain chain) executing,
     required TResult Function(bool success, String txHash, String rawLog)
         executed,
@@ -29,7 +28,6 @@ mixin _$KeplrState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String chainId, String address)? connected,
     TResult Function(Chain chain)? executing,
     TResult Function(bool success, String txHash, String rawLog)? executed,
     TResult Function(String error)? error,
@@ -38,7 +36,6 @@ mixin _$KeplrState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String chainId, String address)? connected,
     TResult Function(Chain chain)? executing,
     TResult Function(bool success, String txHash, String rawLog)? executed,
     TResult Function(String error)? error,
@@ -48,7 +45,6 @@ mixin _$KeplrState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Initial value) initial,
-    required TResult Function(Connected value) connected,
     required TResult Function(Executing value) executing,
     required TResult Function(Executed value) executed,
     required TResult Function(Error value) error,
@@ -57,7 +53,6 @@ mixin _$KeplrState {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(Initial value)? initial,
-    TResult Function(Connected value)? connected,
     TResult Function(Executing value)? executing,
     TResult Function(Executed value)? executed,
     TResult Function(Error value)? error,
@@ -66,7 +61,6 @@ mixin _$KeplrState {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Initial value)? initial,
-    TResult Function(Connected value)? connected,
     TResult Function(Executing value)? executing,
     TResult Function(Executed value)? executed,
     TResult Function(Error value)? error,
@@ -76,19 +70,19 @@ mixin _$KeplrState {
 }
 
 /// @nodoc
-abstract class $KeplrStateCopyWith<$Res> {
-  factory $KeplrStateCopyWith(
-          KeplrState value, $Res Function(KeplrState) then) =
-      _$KeplrStateCopyWithImpl<$Res>;
+abstract class $KeplrTxStateCopyWith<$Res> {
+  factory $KeplrTxStateCopyWith(
+          KeplrTxState value, $Res Function(KeplrTxState) then) =
+      _$KeplrTxStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$KeplrStateCopyWithImpl<$Res> implements $KeplrStateCopyWith<$Res> {
-  _$KeplrStateCopyWithImpl(this._value, this._then);
+class _$KeplrTxStateCopyWithImpl<$Res> implements $KeplrTxStateCopyWith<$Res> {
+  _$KeplrTxStateCopyWithImpl(this._value, this._then);
 
-  final KeplrState _value;
+  final KeplrTxState _value;
   // ignore: unused_field
-  final $Res Function(KeplrState) _then;
+  final $Res Function(KeplrTxState) _then;
 }
 
 /// @nodoc
@@ -98,7 +92,7 @@ abstract class $InitialCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$InitialCopyWithImpl<$Res> extends _$KeplrStateCopyWithImpl<$Res>
+class _$InitialCopyWithImpl<$Res> extends _$KeplrTxStateCopyWithImpl<$Res>
     implements $InitialCopyWith<$Res> {
   _$InitialCopyWithImpl(Initial _value, $Res Function(Initial) _then)
       : super(_value, (v) => _then(v as Initial));
@@ -114,7 +108,7 @@ class _$Initial extends Initial {
 
   @override
   String toString() {
-    return 'KeplrState.initial()';
+    return 'KeplrTxState.initial()';
   }
 
   @override
@@ -130,7 +124,6 @@ class _$Initial extends Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(String chainId, String address) connected,
     required TResult Function(Chain chain) executing,
     required TResult Function(bool success, String txHash, String rawLog)
         executed,
@@ -143,7 +136,6 @@ class _$Initial extends Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String chainId, String address)? connected,
     TResult Function(Chain chain)? executing,
     TResult Function(bool success, String txHash, String rawLog)? executed,
     TResult Function(String error)? error,
@@ -155,7 +147,6 @@ class _$Initial extends Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String chainId, String address)? connected,
     TResult Function(Chain chain)? executing,
     TResult Function(bool success, String txHash, String rawLog)? executed,
     TResult Function(String error)? error,
@@ -171,7 +162,6 @@ class _$Initial extends Initial {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Initial value) initial,
-    required TResult Function(Connected value) connected,
     required TResult Function(Executing value) executing,
     required TResult Function(Executed value) executed,
     required TResult Function(Error value) error,
@@ -183,7 +173,6 @@ class _$Initial extends Initial {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(Initial value)? initial,
-    TResult Function(Connected value)? connected,
     TResult Function(Executing value)? executing,
     TResult Function(Executed value)? executed,
     TResult Function(Error value)? error,
@@ -195,7 +184,6 @@ class _$Initial extends Initial {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Initial value)? initial,
-    TResult Function(Connected value)? connected,
     TResult Function(Executing value)? executing,
     TResult Function(Executed value)? executed,
     TResult Function(Error value)? error,
@@ -208,173 +196,9 @@ class _$Initial extends Initial {
   }
 }
 
-abstract class Initial extends KeplrState {
+abstract class Initial extends KeplrTxState {
   const factory Initial() = _$Initial;
   const Initial._() : super._();
-}
-
-/// @nodoc
-abstract class $ConnectedCopyWith<$Res> {
-  factory $ConnectedCopyWith(Connected value, $Res Function(Connected) then) =
-      _$ConnectedCopyWithImpl<$Res>;
-  $Res call({String chainId, String address});
-}
-
-/// @nodoc
-class _$ConnectedCopyWithImpl<$Res> extends _$KeplrStateCopyWithImpl<$Res>
-    implements $ConnectedCopyWith<$Res> {
-  _$ConnectedCopyWithImpl(Connected _value, $Res Function(Connected) _then)
-      : super(_value, (v) => _then(v as Connected));
-
-  @override
-  Connected get _value => super._value as Connected;
-
-  @override
-  $Res call({
-    Object? chainId = freezed,
-    Object? address = freezed,
-  }) {
-    return _then(Connected(
-      chainId: chainId == freezed
-          ? _value.chainId
-          : chainId // ignore: cast_nullable_to_non_nullable
-              as String,
-      address: address == freezed
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$Connected extends Connected {
-  const _$Connected({required this.chainId, required this.address}) : super._();
-
-  @override
-  final String chainId;
-  @override
-  final String address;
-
-  @override
-  String toString() {
-    return 'KeplrState.connected(chainId: $chainId, address: $address)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is Connected &&
-            const DeepCollectionEquality().equals(other.chainId, chainId) &&
-            const DeepCollectionEquality().equals(other.address, address));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(chainId),
-      const DeepCollectionEquality().hash(address));
-
-  @JsonKey(ignore: true)
-  @override
-  $ConnectedCopyWith<Connected> get copyWith =>
-      _$ConnectedCopyWithImpl<Connected>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(String chainId, String address) connected,
-    required TResult Function(Chain chain) executing,
-    required TResult Function(bool success, String txHash, String rawLog)
-        executed,
-    required TResult Function(String error) error,
-  }) {
-    return connected(chainId, address);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(String chainId, String address)? connected,
-    TResult Function(Chain chain)? executing,
-    TResult Function(bool success, String txHash, String rawLog)? executed,
-    TResult Function(String error)? error,
-  }) {
-    return connected?.call(chainId, address);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(String chainId, String address)? connected,
-    TResult Function(Chain chain)? executing,
-    TResult Function(bool success, String txHash, String rawLog)? executed,
-    TResult Function(String error)? error,
-    required TResult orElse(),
-  }) {
-    if (connected != null) {
-      return connected(chainId, address);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(Initial value) initial,
-    required TResult Function(Connected value) connected,
-    required TResult Function(Executing value) executing,
-    required TResult Function(Executed value) executed,
-    required TResult Function(Error value) error,
-  }) {
-    return connected(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Connected value)? connected,
-    TResult Function(Executing value)? executing,
-    TResult Function(Executed value)? executed,
-    TResult Function(Error value)? error,
-  }) {
-    return connected?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Connected value)? connected,
-    TResult Function(Executing value)? executing,
-    TResult Function(Executed value)? executed,
-    TResult Function(Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (connected != null) {
-      return connected(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class Connected extends KeplrState {
-  const factory Connected(
-      {required final String chainId,
-      required final String address}) = _$Connected;
-  const Connected._() : super._();
-
-  String get chainId => throw _privateConstructorUsedError;
-  String get address => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $ConnectedCopyWith<Connected> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -385,7 +209,7 @@ abstract class $ExecutingCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ExecutingCopyWithImpl<$Res> extends _$KeplrStateCopyWithImpl<$Res>
+class _$ExecutingCopyWithImpl<$Res> extends _$KeplrTxStateCopyWithImpl<$Res>
     implements $ExecutingCopyWith<$Res> {
   _$ExecutingCopyWithImpl(Executing _value, $Res Function(Executing) _then)
       : super(_value, (v) => _then(v as Executing));
@@ -416,7 +240,7 @@ class _$Executing extends Executing {
 
   @override
   String toString() {
-    return 'KeplrState.executing(chain: $chain)';
+    return 'KeplrTxState.executing(chain: $chain)';
   }
 
   @override
@@ -440,7 +264,6 @@ class _$Executing extends Executing {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(String chainId, String address) connected,
     required TResult Function(Chain chain) executing,
     required TResult Function(bool success, String txHash, String rawLog)
         executed,
@@ -453,7 +276,6 @@ class _$Executing extends Executing {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String chainId, String address)? connected,
     TResult Function(Chain chain)? executing,
     TResult Function(bool success, String txHash, String rawLog)? executed,
     TResult Function(String error)? error,
@@ -465,7 +287,6 @@ class _$Executing extends Executing {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String chainId, String address)? connected,
     TResult Function(Chain chain)? executing,
     TResult Function(bool success, String txHash, String rawLog)? executed,
     TResult Function(String error)? error,
@@ -481,7 +302,6 @@ class _$Executing extends Executing {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Initial value) initial,
-    required TResult Function(Connected value) connected,
     required TResult Function(Executing value) executing,
     required TResult Function(Executed value) executed,
     required TResult Function(Error value) error,
@@ -493,7 +313,6 @@ class _$Executing extends Executing {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(Initial value)? initial,
-    TResult Function(Connected value)? connected,
     TResult Function(Executing value)? executing,
     TResult Function(Executed value)? executed,
     TResult Function(Error value)? error,
@@ -505,7 +324,6 @@ class _$Executing extends Executing {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Initial value)? initial,
-    TResult Function(Connected value)? connected,
     TResult Function(Executing value)? executing,
     TResult Function(Executed value)? executed,
     TResult Function(Error value)? error,
@@ -518,7 +336,7 @@ class _$Executing extends Executing {
   }
 }
 
-abstract class Executing extends KeplrState {
+abstract class Executing extends KeplrTxState {
   factory Executing({required final Chain chain}) = _$Executing;
   Executing._() : super._();
 
@@ -536,7 +354,7 @@ abstract class $ExecutedCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ExecutedCopyWithImpl<$Res> extends _$KeplrStateCopyWithImpl<$Res>
+class _$ExecutedCopyWithImpl<$Res> extends _$KeplrTxStateCopyWithImpl<$Res>
     implements $ExecutedCopyWith<$Res> {
   _$ExecutedCopyWithImpl(Executed _value, $Res Function(Executed) _then)
       : super(_value, (v) => _then(v as Executed));
@@ -583,7 +401,7 @@ class _$Executed extends Executed {
 
   @override
   String toString() {
-    return 'KeplrState.executed(success: $success, txHash: $txHash, rawLog: $rawLog)';
+    return 'KeplrTxState.executed(success: $success, txHash: $txHash, rawLog: $rawLog)';
   }
 
   @override
@@ -612,7 +430,6 @@ class _$Executed extends Executed {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(String chainId, String address) connected,
     required TResult Function(Chain chain) executing,
     required TResult Function(bool success, String txHash, String rawLog)
         executed,
@@ -625,7 +442,6 @@ class _$Executed extends Executed {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String chainId, String address)? connected,
     TResult Function(Chain chain)? executing,
     TResult Function(bool success, String txHash, String rawLog)? executed,
     TResult Function(String error)? error,
@@ -637,7 +453,6 @@ class _$Executed extends Executed {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String chainId, String address)? connected,
     TResult Function(Chain chain)? executing,
     TResult Function(bool success, String txHash, String rawLog)? executed,
     TResult Function(String error)? error,
@@ -653,7 +468,6 @@ class _$Executed extends Executed {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Initial value) initial,
-    required TResult Function(Connected value) connected,
     required TResult Function(Executing value) executing,
     required TResult Function(Executed value) executed,
     required TResult Function(Error value) error,
@@ -665,7 +479,6 @@ class _$Executed extends Executed {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(Initial value)? initial,
-    TResult Function(Connected value)? connected,
     TResult Function(Executing value)? executing,
     TResult Function(Executed value)? executed,
     TResult Function(Error value)? error,
@@ -677,7 +490,6 @@ class _$Executed extends Executed {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Initial value)? initial,
-    TResult Function(Connected value)? connected,
     TResult Function(Executing value)? executing,
     TResult Function(Executed value)? executed,
     TResult Function(Error value)? error,
@@ -690,7 +502,7 @@ class _$Executed extends Executed {
   }
 }
 
-abstract class Executed extends KeplrState {
+abstract class Executed extends KeplrTxState {
   factory Executed(
       {required final bool success,
       required final String txHash,
@@ -713,7 +525,7 @@ abstract class $ErrorCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ErrorCopyWithImpl<$Res> extends _$KeplrStateCopyWithImpl<$Res>
+class _$ErrorCopyWithImpl<$Res> extends _$KeplrTxStateCopyWithImpl<$Res>
     implements $ErrorCopyWith<$Res> {
   _$ErrorCopyWithImpl(Error _value, $Res Function(Error) _then)
       : super(_value, (v) => _then(v as Error));
@@ -744,7 +556,7 @@ class _$Error extends Error {
 
   @override
   String toString() {
-    return 'KeplrState.error(error: $error)';
+    return 'KeplrTxState.error(error: $error)';
   }
 
   @override
@@ -768,7 +580,6 @@ class _$Error extends Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(String chainId, String address) connected,
     required TResult Function(Chain chain) executing,
     required TResult Function(bool success, String txHash, String rawLog)
         executed,
@@ -781,7 +592,6 @@ class _$Error extends Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String chainId, String address)? connected,
     TResult Function(Chain chain)? executing,
     TResult Function(bool success, String txHash, String rawLog)? executed,
     TResult Function(String error)? error,
@@ -793,7 +603,6 @@ class _$Error extends Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String chainId, String address)? connected,
     TResult Function(Chain chain)? executing,
     TResult Function(bool success, String txHash, String rawLog)? executed,
     TResult Function(String error)? error,
@@ -809,7 +618,6 @@ class _$Error extends Error {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Initial value) initial,
-    required TResult Function(Connected value) connected,
     required TResult Function(Executing value) executing,
     required TResult Function(Executed value) executed,
     required TResult Function(Error value) error,
@@ -821,7 +629,6 @@ class _$Error extends Error {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(Initial value)? initial,
-    TResult Function(Connected value)? connected,
     TResult Function(Executing value)? executing,
     TResult Function(Executed value)? executed,
     TResult Function(Error value)? error,
@@ -833,7 +640,6 @@ class _$Error extends Error {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Initial value)? initial,
-    TResult Function(Connected value)? connected,
     TResult Function(Executing value)? executing,
     TResult Function(Executed value)? executed,
     TResult Function(Error value)? error,
@@ -846,7 +652,7 @@ class _$Error extends Error {
   }
 }
 
-abstract class Error extends KeplrState {
+abstract class Error extends KeplrTxState {
   factory Error({required final String error}) = _$Error;
   Error._() : super._();
 
