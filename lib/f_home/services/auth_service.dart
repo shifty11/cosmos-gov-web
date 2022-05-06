@@ -23,7 +23,11 @@ class AuthService extends AuthServiceClient with ChangeNotifier {
 
   init() async {
     if (!isAuthenticated) {
-      await _login();
+      if (canRefreshAccessToken) {
+        await _refreshAccessToken();
+      } else {
+        await _login();
+      }
     } else if (cDebugMode) {
       print("AuthService: is authenticated");
     }
@@ -31,7 +35,11 @@ class AuthService extends AuthServiceClient with ChangeNotifier {
   }
 
   bool get isAuthenticated {
-    return jwtManager.accessToken.isNotEmpty;
+    return jwtManager.isAccessTokenValid;
+  }
+
+  bool get canRefreshAccessToken {
+    return jwtManager.isRefreshTokenValid;
   }
 
   _login() async {
@@ -62,7 +70,7 @@ class AuthService extends AuthServiceClient with ChangeNotifier {
 
     try {
       var data = TelegramLoginRequest(
-          userId: fixnum.Int64(id), dataStr: dataList.join("\\n"), username: username, authDate: fixnum.Int64(authDate), hash: hash);
+          userId: fixnum.Int64(id), dataStr: dataList.join("\n"), username: username, authDate: fixnum.Int64(authDate), hash: hash);
       var response = await telegramLogin(data);
       jwtManager.accessToken = response.accessToken;
       jwtManager.refreshToken = response.refreshToken;
@@ -80,34 +88,49 @@ class AuthService extends AuthServiceClient with ChangeNotifier {
     notifyListeners();
   }
 
-  _scheduleRefreshAccessToken() {
-    int exp = jwtManager.accessTokenDecoded["exp"] ?? 0;
-    var expDateTime = DateTime.fromMillisecondsSinceEpoch(exp * 1000);
-    var sleep = expDateTime.subtract(refreshBeforeExpDuration).difference(DateTime.now()).inSeconds;
-    if (sleep <= 0) {
-      sleep = 0;
-    }
+  Future<bool> _refreshAccessToken() async {
     if (cDebugMode) {
-      print("AuthService: sleep for $sleep seconds");
+      print("AuthService: Refresh access token");
     }
-    Timer(Duration(seconds: sleep), () async {
-      try {
-        if (cDebugMode) {
-          print("AuthService: Refresh access token");
-        }
-        if (jwtManager.refreshToken.isEmpty) {
-          _logout();
-        } else {
-          var response = await refreshAccessToken(RefreshAccessTokenRequest(refreshToken: jwtManager.refreshToken));
-          jwtManager.accessToken = response.accessToken;
+    try {
+      var response = await refreshAccessToken(RefreshAccessTokenRequest(refreshToken: jwtManager.refreshToken));
+      jwtManager.accessToken = response.accessToken;
+      return true;
+    } catch (e) {
+      if (cDebugMode) {
+        print("AuthService: Error while refreshing access token: $e");
+      }
+    }
+    return false;
+  }
+
+  _scheduleRefreshAccessToken() {
+    try {
+      final int exp = jwtManager.accessTokenDecoded["exp"] ?? 0;
+      var expDateTime = DateTime.fromMillisecondsSinceEpoch(exp * 1000);
+      var sleep = expDateTime.subtract(refreshBeforeExpDuration).difference(DateTime.now()).inSeconds;
+      if (sleep <= 0) {
+        sleep = 0;
+      }
+      if (cDebugMode) {
+        print("AuthService: sleep for $sleep seconds");
+      }
+      Timer(Duration(seconds: sleep), () async {
+        bool hasRefreshed = false;
+        if (canRefreshAccessToken) {
+          hasRefreshed = await _refreshAccessToken();
           _scheduleRefreshAccessToken();
         }
-      } catch (e) {
-        if (cDebugMode) {
-          print("AuthService: Error while refreshing access token: $e");
+        if (!hasRefreshed) {
+          _logout();
         }
-        _logout();
+      });
+    } on FormatException catch (e) {
+      if (cDebugMode) {
+        print("AuthService: Error while executing _scheduleRefreshAccessToken: $e");
       }
-    });
+      _logout();
+      return;
+    }
   }
 }

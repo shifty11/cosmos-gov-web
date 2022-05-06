@@ -1,5 +1,6 @@
-import 'dart:convert';
 import 'dart:html' show window;
+
+import 'package:jwt_decode/jwt_decode.dart';
 
 class JwtManager {
   static JwtManager? _singleton;
@@ -28,8 +29,16 @@ class JwtManager {
     return _accessToken;
   }
 
+  bool get isAccessTokenValid {
+    try {
+      return _accessToken.isNotEmpty && !Jwt.isExpired(_accessToken);
+    } on FormatException {
+      return false;
+    }
+  }
+
   Map<String, dynamic> get accessTokenDecoded {
-    return json.decode(ascii.decode(base64.decode(base64.normalize(_accessToken.split(".")[1]))));
+    return Jwt.parseJwt(_accessToken);
   }
 
   set refreshToken(String refreshToken) {
@@ -45,7 +54,15 @@ class JwtManager {
     return _refreshToken;
   }
 
-  String get refreshTokenDecoded {
-    return json.decode(ascii.decode(base64.decode(base64.normalize(_refreshToken.split(".")[1]))));
+  bool get isRefreshTokenValid {
+    try {
+      return _refreshToken.isNotEmpty && !Jwt.isExpired(_refreshToken);
+    } on FormatException {
+      return false;
+    }
+  }
+
+  Map<String, dynamic> get refreshTokenDecoded {
+    return Jwt.parseJwt(_refreshToken);
   }
 }
