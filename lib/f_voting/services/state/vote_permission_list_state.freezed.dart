@@ -12,31 +12,7 @@ part of 'vote_permission_list_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$VotePermissionListStateTearOff {
-  const _$VotePermissionListStateTearOff();
-
-  Loading loading() {
-    return const Loading();
-  }
-
-  Loaded loaded([List<VotePermission> votePermissions = const []]) {
-    return Loaded(
-      votePermissions,
-    );
-  }
-
-  Error error([String? message]) {
-    return Error(
-      message,
-    );
-  }
-}
-
-/// @nodoc
-const $VotePermissionListState = _$VotePermissionListStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$VotePermissionListState {
@@ -246,11 +222,17 @@ class _$LoadedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$Loaded extends Loaded {
-  _$Loaded([this.votePermissions = const []]) : super._();
+  _$Loaded([final List<VotePermission> votePermissions = const []])
+      : _votePermissions = votePermissions,
+        super._();
 
-  @JsonKey()
+  final List<VotePermission> _votePermissions;
   @override
-  final List<VotePermission> votePermissions;
+  @JsonKey()
+  List<VotePermission> get votePermissions {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_votePermissions);
+  }
 
   @override
   String toString() {
@@ -345,10 +327,11 @@ class _$Loaded extends Loaded {
 }
 
 abstract class Loaded extends VotePermissionListState {
-  factory Loaded([List<VotePermission> votePermissions]) = _$Loaded;
+  factory Loaded([final List<VotePermission> votePermissions]) = _$Loaded;
   Loaded._() : super._();
 
-  List<VotePermission> get votePermissions;
+  List<VotePermission> get votePermissions =>
+      throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $LoadedCopyWith<Loaded> get copyWith => throw _privateConstructorUsedError;
 }
@@ -483,10 +466,10 @@ class _$Error extends Error {
 }
 
 abstract class Error extends VotePermissionListState {
-  factory Error([String? message]) = _$Error;
+  factory Error([final String? message]) = _$Error;
   Error._() : super._();
 
-  String? get message;
+  String? get message => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $ErrorCopyWith<Error> get copyWith => throw _privateConstructorUsedError;
 }

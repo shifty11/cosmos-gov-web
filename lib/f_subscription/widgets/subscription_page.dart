@@ -99,36 +99,34 @@ class SubscriptionPage extends StatelessWidget {
   }
 
   Widget chatDropdownWidget(BuildContext context) {
-    return Consumer(
-      builder: (BuildContext context, WidgetRef ref, Widget? child) {
-        final state = ref.watch(chatroomListStateProvider);
-        return state.when(
-          loading: () => Container(),
-          loaded: (chatRooms) {
-            if (chatRooms.isEmpty) {
-              return Container();
-            }
-            if (chatRooms.length == 1) {
-              return Text(chatRooms.first.name);
-            }
-            return DropdownButton<ChatRoom>(
-              value: ref.watch(chatRoomProvider) ?? chatRooms.first,
-              icon: const Icon(Icons.person),
-              onChanged: (ChatRoom? newValue) {
-                ref.watch(chatRoomProvider.notifier).state = newValue;
-              },
-              items: chatRooms.map<DropdownMenuItem<ChatRoom>>((ChatRoom chatRoom) {
-                return DropdownMenuItem<ChatRoom>(
-                  value: chatRoom,
-                  child: Text(chatRoom.name),
-                );
-              }).toList(),
-            );
-          },
-          error: (err) => ErrorWidget(err.toString()),
-        );
-      }
-    );
+    return Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
+      final state = ref.watch(chatroomListStateProvider);
+      return state.when(
+        loading: () => Container(),
+        loaded: (chatRooms) {
+          if (chatRooms.isEmpty) {
+            return Container();
+          }
+          if (chatRooms.length == 1) {
+            return Text(chatRooms.first.name);
+          }
+          return DropdownButton<ChatRoom>(
+            value: ref.watch(chatRoomProvider) ?? chatRooms.first,
+            icon: const Icon(Icons.person),
+            onChanged: (ChatRoom? newValue) {
+              ref.watch(chatRoomProvider.notifier).state = newValue;
+            },
+            items: chatRooms.map<DropdownMenuItem<ChatRoom>>((ChatRoom chatRoom) {
+              return DropdownMenuItem<ChatRoom>(
+                value: chatRoom,
+                child: Text(chatRoom.name),
+              );
+            }).toList(),
+          );
+        },
+        error: (err) => ErrorWidget(err.toString()),
+      );
+    });
   }
 
   @override

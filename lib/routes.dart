@@ -2,9 +2,9 @@ import 'package:cosmos_gov_web/config.dart';
 import 'package:cosmos_gov_web/f_home/services/auth_provider.dart';
 import 'package:cosmos_gov_web/f_home/services/state/auth_state.dart';
 import 'package:cosmos_gov_web/f_home/widgets/loading_page.dart';
+import 'package:cosmos_gov_web/f_login/widgets/login_page.dart';
 import 'package:cosmos_gov_web/f_subscription/widgets/subscription_page.dart';
 import 'package:cosmos_gov_web/f_voting/widgets/voting_page.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -30,11 +30,11 @@ class MyRouter {
         ),
       ),
       GoRoute(
-        name: rUnauthorized.name,
-        path: rUnauthorized.path,
+        name: rUnauthenticated.name,
+        path: rUnauthenticated.path,
         pageBuilder: (context, state) => MaterialPage<void>(
           key: state.pageKey,
-          child: const Text("login not implemented yet"),
+          child: const LoginPage(),
         ),
       ),
       GoRoute(
@@ -61,10 +61,21 @@ class MyRouter {
     ),
     redirect: (state) {
       return authStateListener.value.when(
-        loading: () => null,
-        authorized: () => state.subloc == rRoot.path ? state.namedLocation(rSubscriptions.name) : null,
-        unauthorized: () => state.subloc == rUnauthorized.path ? null : state.namedLocation(rUnauthorized.name),
-        error: (err) => state.subloc == rUnauthorized.path ? null : state.namedLocation(rUnauthorized.name),
+        loading: () => state.subloc != rRoot.path ? state.namedLocation(rRoot.name, queryParams: {"from": state.subloc}) : null,
+        authorized: () {
+          // if `from` is set redirect there; if current page is / or /login redirect to /subscriptions
+          final from = state.queryParams["from"] ?? "";
+          if (from.isNotEmpty && state.subloc != from && from != rUnauthenticated.path) {
+            return state.namedLocation(from);
+          }
+          if (state.subloc == rRoot.path || state.subloc == rUnauthenticated.path) {
+            return state.namedLocation(rSubscriptions.name);
+          }
+          return null;
+        },
+        expired: () => state.subloc == rUnauthenticated.path ? null : state.namedLocation(rUnauthenticated.name),
+        error: () =>
+            state.subloc == rUnauthenticated.path ? null : state.namedLocation(rUnauthenticated.name, queryParams: {"error": "true"}),
       );
     },
   );

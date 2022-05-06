@@ -12,31 +12,7 @@ part of 'chain_list_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$ChainListStateTearOff {
-  const _$ChainListStateTearOff();
-
-  Loading loading() {
-    return const Loading();
-  }
-
-  Loaded loaded({required List<Chain> chains}) {
-    return Loaded(
-      chains: chains,
-    );
-  }
-
-  Error error([String? message]) {
-    return Error(
-      message,
-    );
-  }
-}
-
-/// @nodoc
-const $ChainListState = _$ChainListStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$ChainListState {
@@ -244,10 +220,16 @@ class _$LoadedCopyWithImpl<$Res> extends _$ChainListStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$Loaded extends Loaded {
-  _$Loaded({required this.chains}) : super._();
+  _$Loaded({required final List<Chain> chains})
+      : _chains = chains,
+        super._();
 
+  final List<Chain> _chains;
   @override
-  final List<Chain> chains;
+  List<Chain> get chains {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_chains);
+  }
 
   @override
   String toString() {
@@ -341,10 +323,10 @@ class _$Loaded extends Loaded {
 }
 
 abstract class Loaded extends ChainListState {
-  factory Loaded({required List<Chain> chains}) = _$Loaded;
+  factory Loaded({required final List<Chain> chains}) = _$Loaded;
   Loaded._() : super._();
 
-  List<Chain> get chains;
+  List<Chain> get chains => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $LoadedCopyWith<Loaded> get copyWith => throw _privateConstructorUsedError;
 }
@@ -478,10 +460,10 @@ class _$Error extends Error {
 }
 
 abstract class Error extends ChainListState {
-  factory Error([String? message]) = _$Error;
+  factory Error([final String? message]) = _$Error;
   Error._() : super._();
 
-  String? get message;
+  String? get message => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $ErrorCopyWith<Error> get copyWith => throw _privateConstructorUsedError;
 }

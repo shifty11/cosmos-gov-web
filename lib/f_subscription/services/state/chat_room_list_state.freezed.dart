@@ -12,31 +12,7 @@ part of 'chat_room_list_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$ChatRoomListStateTearOff {
-  const _$ChatRoomListStateTearOff();
-
-  Loading loading() {
-    return const Loading();
-  }
-
-  Loaded loaded([List<ChatRoom> chatRooms = const []]) {
-    return Loaded(
-      chatRooms,
-    );
-  }
-
-  Error error([String? message]) {
-    return Error(
-      message,
-    );
-  }
-}
-
-/// @nodoc
-const $ChatRoomListState = _$ChatRoomListStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$ChatRoomListState {
@@ -244,11 +220,17 @@ class _$LoadedCopyWithImpl<$Res> extends _$ChatRoomListStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$Loaded extends Loaded {
-  _$Loaded([this.chatRooms = const []]) : super._();
+  _$Loaded([final List<ChatRoom> chatRooms = const []])
+      : _chatRooms = chatRooms,
+        super._();
 
-  @JsonKey()
+  final List<ChatRoom> _chatRooms;
   @override
-  final List<ChatRoom> chatRooms;
+  @JsonKey()
+  List<ChatRoom> get chatRooms {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_chatRooms);
+  }
 
   @override
   String toString() {
@@ -342,10 +324,10 @@ class _$Loaded extends Loaded {
 }
 
 abstract class Loaded extends ChatRoomListState {
-  factory Loaded([List<ChatRoom> chatRooms]) = _$Loaded;
+  factory Loaded([final List<ChatRoom> chatRooms]) = _$Loaded;
   Loaded._() : super._();
 
-  List<ChatRoom> get chatRooms;
+  List<ChatRoom> get chatRooms => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $LoadedCopyWith<Loaded> get copyWith => throw _privateConstructorUsedError;
 }
@@ -479,10 +461,10 @@ class _$Error extends Error {
 }
 
 abstract class Error extends ChatRoomListState {
-  factory Error([String? message]) = _$Error;
+  factory Error([final String? message]) = _$Error;
   Error._() : super._();
 
-  String? get message;
+  String? get message => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $ErrorCopyWith<Error> get copyWith => throw _privateConstructorUsedError;
 }

@@ -12,47 +12,7 @@ part of 'keplr_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$KeplrStateTearOff {
-  const _$KeplrStateTearOff();
-
-  Initial initial() {
-    return const Initial();
-  }
-
-  Connected connected({required String chainId, required String address}) {
-    return Connected(
-      chainId: chainId,
-      address: address,
-    );
-  }
-
-  Executing executing({required Chain chain}) {
-    return Executing(
-      chain: chain,
-    );
-  }
-
-  Executed executed(
-      {required bool success, required String txHash, required String rawLog}) {
-    return Executed(
-      success: success,
-      txHash: txHash,
-      rawLog: rawLog,
-    );
-  }
-
-  Error error({required String error}) {
-    return Error(
-      error: error,
-    );
-  }
-}
-
-/// @nodoc
-const $KeplrState = _$KeplrStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$KeplrState {
@@ -405,12 +365,13 @@ class _$Connected extends Connected {
 }
 
 abstract class Connected extends KeplrState {
-  const factory Connected({required String chainId, required String address}) =
-      _$Connected;
+  const factory Connected(
+      {required final String chainId,
+      required final String address}) = _$Connected;
   const Connected._() : super._();
 
-  String get chainId;
-  String get address;
+  String get chainId => throw _privateConstructorUsedError;
+  String get address => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $ConnectedCopyWith<Connected> get copyWith =>
       throw _privateConstructorUsedError;
@@ -558,10 +519,10 @@ class _$Executing extends Executing {
 }
 
 abstract class Executing extends KeplrState {
-  factory Executing({required Chain chain}) = _$Executing;
+  factory Executing({required final Chain chain}) = _$Executing;
   Executing._() : super._();
 
-  Chain get chain;
+  Chain get chain => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $ExecutingCopyWith<Executing> get copyWith =>
       throw _privateConstructorUsedError;
@@ -731,14 +692,14 @@ class _$Executed extends Executed {
 
 abstract class Executed extends KeplrState {
   factory Executed(
-      {required bool success,
-      required String txHash,
-      required String rawLog}) = _$Executed;
+      {required final bool success,
+      required final String txHash,
+      required final String rawLog}) = _$Executed;
   Executed._() : super._();
 
-  bool get success;
-  String get txHash;
-  String get rawLog;
+  bool get success => throw _privateConstructorUsedError;
+  String get txHash => throw _privateConstructorUsedError;
+  String get rawLog => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $ExecutedCopyWith<Executed> get copyWith =>
       throw _privateConstructorUsedError;
@@ -886,10 +847,10 @@ class _$Error extends Error {
 }
 
 abstract class Error extends KeplrState {
-  factory Error({required String error}) = _$Error;
+  factory Error({required final String error}) = _$Error;
   Error._() : super._();
 
-  String get error;
+  String get error => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $ErrorCopyWith<Error> get copyWith => throw _privateConstructorUsedError;
 }

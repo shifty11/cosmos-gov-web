@@ -27,7 +27,7 @@ class RouteData {
 }
 
 const rRoot = RouteData("root", "/");
-const rUnauthorized = RouteData("unauthorized", "/login");
+const rUnauthenticated = RouteData("unauthenticated", "/login");
 const rSubscriptions = RouteData("subscriptions", "/subscriptions");
 const rVoting = RouteData("voting", "/voting");
 

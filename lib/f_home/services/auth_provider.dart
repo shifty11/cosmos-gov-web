@@ -27,7 +27,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     login();
     _authService.addListener(() {
       if (!_authService.isAuthenticated) {
-        state = const AuthState.unauthorized();
+        state = const AuthState.expired();
       }
     });
   }
@@ -38,7 +38,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
       await _authService.init();
       state = const AuthState.authorized();
     } catch (e) {
-      state = AuthState.error(e.toString());
+      if (cDebugMode) {
+        print("AuthNotifier: error -> $e");
+      }
+      state = const AuthState.error();
     }
   }
 }

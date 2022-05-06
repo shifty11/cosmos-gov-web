@@ -12,27 +12,7 @@ part of 'subscription_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$SubscriptionStateTearOff {
-  const _$SubscriptionStateTearOff();
-
-  Loaded loaded({required Subscription subscription}) {
-    return Loaded(
-      subscription: subscription,
-    );
-  }
-
-  Error error([String? message]) {
-    return Error(
-      message,
-    );
-  }
-}
-
-/// @nodoc
-const $SubscriptionState = _$SubscriptionStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$SubscriptionState {
@@ -217,10 +197,10 @@ class _$Loaded extends Loaded {
 }
 
 abstract class Loaded extends SubscriptionState {
-  factory Loaded({required Subscription subscription}) = _$Loaded;
+  factory Loaded({required final Subscription subscription}) = _$Loaded;
   Loaded._() : super._();
 
-  Subscription get subscription;
+  Subscription get subscription => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $LoadedCopyWith<Loaded> get copyWith => throw _privateConstructorUsedError;
 }
@@ -348,10 +328,10 @@ class _$Error extends Error {
 }
 
 abstract class Error extends SubscriptionState {
-  factory Error([String? message]) = _$Error;
+  factory Error([final String? message]) = _$Error;
   Error._() : super._();
 
-  String? get message;
+  String? get message => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $ErrorCopyWith<Error> get copyWith => throw _privateConstructorUsedError;
 }
