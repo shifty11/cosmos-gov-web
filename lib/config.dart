@@ -31,6 +31,5 @@ const rUnauthenticated = RouteData("unauthenticated", "/login");
 const rSubscriptions = RouteData("subscriptions", "/subscriptions");
 const rVoting = RouteData("voting", "/voting");
 
-const textColor = Colors.black;
 
 const bool cDebugMode = true;

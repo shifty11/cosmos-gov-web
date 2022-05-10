@@ -17,7 +17,7 @@ class LoginPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(text, style: Theme.of(context).textTheme.headline3),
-            Text("Pleas login again", style: Theme.of(context).textTheme.bodyLarge),
+            Text("Please login again", style: Theme.of(context).textTheme.bodyLarge),
           ],
         ),
       ),

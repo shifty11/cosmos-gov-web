@@ -1,5 +1,6 @@
 import 'package:cosmos_gov_web/f_home/widgets/transition_builder_widget.dart';
 import 'package:cosmos_gov_web/routes.dart';
+import 'package:cosmos_gov_web/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -13,42 +14,9 @@ void main() {
   runApp(ProviderScope(
       child: MaterialApp.router(
     title: 'Cosmos Governance',
-    theme: ThemeData(
-      fontFamily: "Montserrat",
-      textTheme: TextTheme(
-        headline1: const TextStyle().copyWith(fontSize: 64),
-        headline2: const TextStyle().copyWith(fontSize: 40),
-        headline3: const TextStyle().copyWith(fontSize: 24),
-        headline4: const TextStyle().copyWith(fontSize: 22),
-        headline5: const TextStyle().copyWith(fontSize: 20),
-        headline6: const TextStyle().copyWith(fontSize: 18),
-        bodyText1: const TextStyle(),
-        bodyText2: const TextStyle(),
-        subtitle1: const TextStyle(),
-        subtitle2: const TextStyle(),
-        caption: const TextStyle(),
-        overline: const TextStyle(),
-        button: const TextStyle(),
-      ).apply(
-        bodyColor: textColor,
-        displayColor: textColor,
-      ),
-      outlinedButtonTheme: OutlinedButtonThemeData(
-        style: OutlinedButton.styleFrom(
-          primary: textColor, // Button color
-        ),
-      ),
-      pageTransitionsTheme: const PageTransitionsTheme(
-        builders: {
-          TargetPlatform.linux: NoAnimationTransitionsBuilder(),
-          TargetPlatform.android: NoAnimationTransitionsBuilder(),
-          TargetPlatform.fuchsia: NoAnimationTransitionsBuilder(),
-          TargetPlatform.iOS: NoAnimationTransitionsBuilder(),
-          TargetPlatform.macOS: NoAnimationTransitionsBuilder(),
-          TargetPlatform.windows: NoAnimationTransitionsBuilder(),
-        },
-      ),
-    ),
+    theme: Styles.themeData(false),
+    darkTheme: Styles.themeData(true),
+    themeMode: ThemeMode.system,
     builder: (context, widget) => ResponsiveWrapper.builder(
       BouncingScrollWrapper.builder(context, widget!),
       maxWidth: 1200,
@@ -60,7 +28,7 @@ void main() {
         const ResponsiveBreakpoint.autoScale(1000, name: TABLET),
         const ResponsiveBreakpoint.resize(1200, name: DESKTOP),
       ],
-      background: Container(color: const Color(0xFF7E2323)),
+      background: Container(color: MediaQuery.of(context).platformBrightness == Brightness.dark ? Colors.black : Colors.white),
     ),
     routeInformationParser: router.routeInformationParser,
     routerDelegate: router.routerDelegate,

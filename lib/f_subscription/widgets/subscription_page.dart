@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cosmos_gov_web/api/protobuf/dart/subscription_service.pb.dart';
+import 'package:cosmos_gov_web/f_home/widgets/bottom_navigation_bar_widget.dart';
 import 'package:cosmos_gov_web/f_home/widgets/sidebar_widget.dart';
 import 'package:cosmos_gov_web/f_subscription/services/subscription_provider.dart';
 import 'package:cosmos_gov_web/style.dart';
@@ -10,24 +11,22 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:tuple/tuple.dart';
 
 class SubscriptionPage extends StatelessWidget {
-  final double sideBarWith = 300;
+  final double sideBarWith = 0;
 
   const SubscriptionPage({Key? key}) : super(key: key);
 
   int getCrossAxisCount(BuildContext context) {
-    if (MediaQuery.of(context).size.width <= 800) {
-      return 2;
-    } else if (MediaQuery.of(context).size.width <= 1000) {
-      return 3;
-    } else {
-      return 4;
+    if (ResponsiveWrapper.of(context).isSmallerThan(TABLET)) {
+      return 1;
     }
+    if (ResponsiveWrapper.of(context).isSmallerThan(DESKTOP)) {
+      return 3;
+    }
+    return 4;
   }
 
   Widget subscriptionWidget(BuildContext context, ChatRoom chatRoom) {
-    return SizedBox(
-      height: 600,
-      width: ResponsiveWrapper.of(context).isLargerThan(TABLET) ? 1100 - sideBarWith : null,
+    return Expanded(
       child: GridView.builder(
         shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -47,7 +46,7 @@ class SubscriptionPage extends StatelessWidget {
                 decoration: BoxDecoration(
                     border: Border.all(
                       width: 1.5,
-                      color: subscription.isSubscribed ? Colors.green : grey,
+                      color: subscription.isSubscribed ? Styles.enabledColor : Theme.of(context).inputDecorationTheme.enabledBorder!.borderSide.color,
                     ),
                     borderRadius: const BorderRadius.all(Radius.circular(5))),
                 child: InkWell(
@@ -67,7 +66,7 @@ class SubscriptionPage extends StatelessWidget {
                       subscription.isSubscribed
                           ? const Padding(
                               padding: EdgeInsets.only(right: sidePadding),
-                              child: Icon(Icons.check_circle_rounded, color: Colors.green, size: 24),
+                              child: Icon(Icons.check_circle_rounded, color: Styles.enabledColor, size: 24),
                             )
                           : const SizedBox(width: 24),
                     ],
@@ -83,19 +82,16 @@ class SubscriptionPage extends StatelessWidget {
   }
 
   Widget searchWidget(BuildContext context) {
-    return ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 300),
-      child: Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
-        return TextField(
-          onChanged: (value) => ref.watch(searchProvider.notifier).state = value,
-          decoration: const InputDecoration(
-            prefixIcon: Icon(Icons.search),
-            border: OutlineInputBorder(),
-            hintText: "Search",
-          ),
-        );
-      }),
-    );
+    return Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
+      return TextField(
+        onChanged: (value) => ref.watch(searchProvider.notifier).state = value,
+        decoration: const InputDecoration(
+          prefixIcon: Icon(Icons.search),
+          border: OutlineInputBorder(),
+          hintText: "Search",
+        ),
+      );
+    });
   }
 
   Widget chatDropdownWidget(BuildContext context) {
@@ -135,27 +131,19 @@ class SubscriptionPage extends StatelessWidget {
     return Scaffold(
       body: Row(
         children: [
-          const SidebarWidget(),
+          // const SidebarWidget(),
           Container(
-            width: 800, // TODO fix width
+            width: MediaQuery.of(context).size.width,
             padding: const EdgeInsets.all(40),
             // margin: EdgeInsets.symmetric(horizontal: margin),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text("Subscriptions", style: Theme.of(context).textTheme.headline2),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      searchWidget(context),
-                      const Spacer(flex: 20),
-                      chatDropdownWidget(context),
-                    ],
-                  ),
-                ),
+                chatDropdownWidget(context),
+                const SizedBox(height: 20),
+                searchWidget(context),
+                const SizedBox(height: 40),
                 Consumer(
                   builder: (BuildContext context, WidgetRef ref, Widget? child) {
                     final state = ref.watch(chatroomListStateProvider);
@@ -171,6 +159,7 @@ class SubscriptionPage extends StatelessWidget {
           ),
         ],
       ),
+      bottomNavigationBar: const BottomNavigationBarWidget(),
     );
   }
 }
