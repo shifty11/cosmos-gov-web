@@ -1,8 +1,5 @@
-import 'dart:math';
-
 import 'package:cosmos_gov_web/api/protobuf/dart/subscription_service.pb.dart';
 import 'package:cosmos_gov_web/f_home/widgets/bottom_navigation_bar_widget.dart';
-import 'package:cosmos_gov_web/f_home/widgets/sidebar_widget.dart';
 import 'package:cosmos_gov_web/f_subscription/services/subscription_provider.dart';
 import 'package:cosmos_gov_web/style.dart';
 import 'package:flutter/material.dart';
@@ -25,57 +22,72 @@ class SubscriptionPage extends StatelessWidget {
     return 4;
   }
 
-  Widget subscriptionWidget(BuildContext context, ChatRoom chatRoom) {
-    return Expanded(
-      child: GridView.builder(
-        shrinkWrap: true,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: getCrossAxisCount(context),
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          mainAxisExtent: 50,
-        ),
-        itemCount: chatRoom.subscriptions.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
-            final data = Tuple2(chatRoom.subscriptions[index], chatRoom.id);
-            final state = ref.watch(subscriptionStateProvider(data));
-            const double sidePadding = 12;
-            return state.when(
-              loaded: (subscription) => Container(
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 1.5,
-                      color: subscription.isSubscribed ? Styles.enabledColor : Theme.of(context).inputDecorationTheme.enabledBorder!.borderSide.color,
-                    ),
-                    borderRadius: const BorderRadius.all(Radius.circular(5))),
-                child: InkWell(
-                  onTap: () {
-                    ref.read(subscriptionStateProvider(data).notifier).toggleSubscription();
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: sidePadding),
-                        child: Text(
-                          subscription.displayName,
-                          style: const TextStyle(fontSize: 20),
-                        ),
-                      ),
-                      subscription.isSubscribed
-                          ? const Padding(
-                              padding: EdgeInsets.only(right: sidePadding),
-                              child: Icon(Icons.check_circle_rounded, color: Styles.enabledColor, size: 24),
-                            )
-                          : const SizedBox(width: 24),
-                    ],
+  Widget subscriptionsLoaded(BuildContext context, ChatRoom chatRoom) {
+    return GridView.builder(
+      shrinkWrap: true,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: getCrossAxisCount(context),
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        mainAxisExtent: 50,
+      ),
+      itemCount: chatRoom.subscriptions.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
+          final data = Tuple2(chatRoom.subscriptions[index], chatRoom.id);
+          final state = ref.watch(subscriptionStateProvider(data));
+          const double sidePadding = 12;
+          return state.when(
+            loaded: (subscription) => Container(
+              decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 1.5,
+                    color: subscription.isSubscribed
+                        ? Styles.enabledColor
+                        : Theme.of(context).inputDecorationTheme.enabledBorder!.borderSide.color,
                   ),
+                  borderRadius: const BorderRadius.all(Radius.circular(5))),
+              child: InkWell(
+                onTap: () {
+                  ref.read(subscriptionStateProvider(data).notifier).toggleSubscription();
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: sidePadding),
+                      child: Text(
+                        subscription.displayName,
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                    ),
+                    subscription.isSubscribed
+                        ? const Padding(
+                            padding: EdgeInsets.only(right: sidePadding),
+                            child: Icon(Icons.check_circle_rounded, color: Styles.enabledColor, size: 24),
+                          )
+                        : const SizedBox(width: 24),
+                  ],
                 ),
               ),
-              error: (err) => ErrorWidget(err.toString()),
-            );
-          });
+            ),
+            error: (err) => ErrorWidget(err.toString()),
+          );
+        });
+      },
+    );
+  }
+
+  Widget subscriptionList() {
+    return Expanded(
+      child: Consumer(
+        builder: (BuildContext context, WidgetRef ref, Widget? child) {
+          final state = ref.watch(chatroomListStateProvider);
+          return state.when(
+            loading: () => const CircularProgressIndicator(),
+            loaded: (chatRooms) => subscriptionsLoaded(context, ref.watch(searchedSubsProvider)),
+            error: (err) => ErrorWidget(err.toString()),
+          );
         },
       ),
     );
@@ -127,7 +139,6 @@ class SubscriptionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double margin = max((MediaQuery.of(context).size.width - 1200) / 2, 0);
     return Scaffold(
       body: Row(
         children: [
@@ -144,16 +155,7 @@ class SubscriptionPage extends StatelessWidget {
                 const SizedBox(height: 20),
                 searchWidget(context),
                 const SizedBox(height: 40),
-                Consumer(
-                  builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                    final state = ref.watch(chatroomListStateProvider);
-                    return state.when(
-                      loading: () => const CircularProgressIndicator(),
-                      loaded: (chatRooms) => subscriptionWidget(context, ref.watch(searchedSubsProvider)),
-                      error: (err) => ErrorWidget(err.toString()),
-                    );
-                  },
-                ),
+                subscriptionList(),
               ],
             ),
           ),
