@@ -13,10 +13,11 @@ class Styles {
     final borderColor = Colors.grey;
     return ThemeData(
       fontFamily: "Montserrat",
-      primarySwatch: Colors.red,
+      primarySwatch: Colors.purple,
       // primaryColor: isDarkTheme ? Colors.purple : Colors.purple,
       // backgroundColor: isDarkTheme ? Colors.yellow : Colors.yellow,
       scaffoldBackgroundColor: isDarkTheme ? bg : Colors.white,
+      canvasColor: isDarkTheme ? bg : Colors.white,
       bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: bgLight),
       inputDecorationTheme: InputDecorationTheme(
         labelStyle: TextStyle(color: textColor),
