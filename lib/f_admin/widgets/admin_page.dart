@@ -1,10 +1,11 @@
-import 'package:cosmos_gov_web/api/protobuf/dart/admin_service.pb.dart';
 import 'package:cosmos_gov_web/f_admin/services/admin_provider.dart';
+import 'package:cosmos_gov_web/f_admin/services/message_provider.dart';
 import 'package:cosmos_gov_web/f_home/widgets/bottom_navigation_bar_widget.dart';
 import 'package:cosmos_gov_web/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:riverpod_messages/riverpod_messages.dart';
 
 class AdminPage extends StatelessWidget {
   final double sideBarWith = 0;
@@ -92,7 +93,6 @@ class AdminPage extends StatelessWidget {
                 ),
               ),
             ),
-            error: (err) => ErrorWidget(err.toString()),
           );
         });
       },
@@ -132,17 +132,20 @@ class AdminPage extends StatelessWidget {
     return Scaffold(
       body: Row(
         children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            padding: const EdgeInsets.all(40),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Admin", style: Theme.of(context).textTheme.headline2),
-                searchWidget(context),
-                const SizedBox(height: 40),
-                chainList(),
-              ],
+          MessageOverlayListener(
+            provider: adminMsgProvider,
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.all(40),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Admin", style: Theme.of(context).textTheme.headline2),
+                  searchWidget(context),
+                  const SizedBox(height: 40),
+                  chainList(),
+                ],
+              ),
             ),
           ),
         ],

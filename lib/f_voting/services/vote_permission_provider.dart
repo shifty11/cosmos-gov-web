@@ -1,6 +1,7 @@
 import 'package:cosmos_gov_web/api/protobuf/dart/google/protobuf/empty.pb.dart';
 import 'package:cosmos_gov_web/api/protobuf/dart/vote_permission_service.pbgrpc.dart';
 import 'package:cosmos_gov_web/config.dart';
+import 'package:cosmos_gov_web/f_voting/services/message_provider.dart';
 import 'package:cosmos_gov_web/f_voting/services/state/vote_permission_list_state.dart';
 import 'package:cosmos_gov_web/f_voting/services/state/vote_permission_state.dart';
 import 'package:cosmos_gov_web/f_voting/services/vote_permission_service.dart';
@@ -31,22 +32,23 @@ class VotePermissionListNotifier extends StateNotifier<VotePermissionListState> 
 }
 
 final votePermissionStateProvider = StateNotifierProvider.family<VotePermissionNotifier, VotePermissionState, VotePermission>(
-  (ref, votePermission) => VotePermissionNotifier(ref.watch(votePermissionProvider), votePermission),
+  (ref, votePermission) => VotePermissionNotifier(ref, votePermission),
 );
 
 class VotePermissionNotifier extends StateNotifier<VotePermissionState> {
-  final VotePermissionService _votePermissionService;
   final VotePermission _votePermission;
+  final StateNotifierProviderRef _ref;
 
-  VotePermissionNotifier(this._votePermissionService, this._votePermission)
+  VotePermissionNotifier(this._ref, this._votePermission)
       : super(VotePermissionState.loaded(votePermission: _votePermission));
 
   Future<void> refreshVotePermission() async {
     try {
-      final response = await _votePermissionService.refreshVotePermission(RefreshVotePermissionRequest(votePermission: _votePermission));
+      final votePermissionService = _ref.read(votePermissionProvider);
+      await votePermissionService.refreshVotePermission(RefreshVotePermissionRequest(votePermission: _votePermission));
       state = VotePermissionState.loaded(votePermission: _votePermission);
     } catch (e) {
-      state = VotePermissionState.error(e.toString());
+      _ref.read(votingMsgProvider.notifier).sendMsg(error: e.toString());
     }
   }
 }

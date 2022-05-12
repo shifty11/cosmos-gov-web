@@ -64,12 +64,13 @@ class KeplrStateNotifier extends StateNotifier<KeplrTxState> {
         if (cDebugMode) {
           print("null -> probalby aborted");
         }
-        state = KeplrTxState.error(error: "execution was aborted");
+        state = KeplrTxState.executed(success: false);
       } else if (result != null && result.transactionHash != null) {
         if (cDebugMode) {
           print("executed");
         }
-        state = KeplrTxState.executed(success: result.code == 0, txHash: result.transactionHash, rawLog: result.rawLog);
+        final info = "Added Vote Permission\nTransaction: ${result.transactionHash}";
+        state = KeplrTxState.executed(success: result.code == 0, info: info);
         if (result.code == 0) {
           await ref.read(votePermissionProvider).createVotePermission(CreateVotePermissionRequest(votePermission: vp));
           ref.read(votePermissionListStateProvider.notifier).get();
@@ -93,12 +94,13 @@ class KeplrStateNotifier extends StateNotifier<KeplrTxState> {
         if (cDebugMode) {
           print("null -> probalby aborted");
         }
-        state = KeplrTxState.error(error: "execution was aborted");
+        state = KeplrTxState.executed(success: false);
       } else if (result != null && result.transactionHash != null) {
         if (cDebugMode) {
           print("executed");
         }
-        state = KeplrTxState.executed(success: result.code == 0, txHash: result.transactionHash, rawLog: result.rawLog);
+        final info = "Removed Vote Permission\nTransaction: ${result.transactionHash}";
+        state = KeplrTxState.executed(success: result.code == 0, info: info);
         if (result.code == 0) {
           await ref.read(votePermissionProvider).refreshVotePermission(RefreshVotePermissionRequest(votePermission: vp));
           ref.read(votePermissionListStateProvider.notifier).get();

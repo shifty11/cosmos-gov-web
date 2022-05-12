@@ -1,10 +1,12 @@
 import 'package:cosmos_gov_web/api/protobuf/dart/subscription_service.pb.dart';
 import 'package:cosmos_gov_web/f_home/widgets/bottom_navigation_bar_widget.dart';
+import 'package:cosmos_gov_web/f_subscription/services/message_provider.dart';
 import 'package:cosmos_gov_web/f_subscription/services/subscription_provider.dart';
 import 'package:cosmos_gov_web/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:riverpod_messages/riverpod_messages.dart';
 import 'package:tuple/tuple.dart';
 
 class SubscriptionPage extends StatelessWidget {
@@ -71,7 +73,6 @@ class SubscriptionPage extends StatelessWidget {
                 ),
               ),
             ),
-            error: (err) => ErrorWidget(err.toString()),
           );
         });
       },
@@ -86,7 +87,7 @@ class SubscriptionPage extends StatelessWidget {
           return state.when(
             loading: () => const Center(child: CircularProgressIndicator()),
             data: (chatRooms) => subscriptionsLoaded(context, ref.watch(searchedSubsProvider)),
-            error: (err, stackTrace) => ErrorWidget(err.toString()),
+            error: (err, stackTrace) => Container(),
           );
         },
       ),
@@ -132,7 +133,7 @@ class SubscriptionPage extends StatelessWidget {
             }).toList(),
           );
         },
-        error: (err, stackTrace) => ErrorWidget(err.toString()),
+        error: (err, stackTrace) => Container(),
       );
     });
   }
@@ -142,21 +143,22 @@ class SubscriptionPage extends StatelessWidget {
     return Scaffold(
       body: Row(
         children: [
-          // const SidebarWidget(),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            padding: const EdgeInsets.all(40),
-            // margin: EdgeInsets.symmetric(horizontal: margin),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Subscriptions", style: Theme.of(context).textTheme.headline2),
-                chatDropdownWidget(context),
-                const SizedBox(height: 20),
-                searchWidget(context),
-                const SizedBox(height: 40),
-                subscriptionList(),
-              ],
+          MessageOverlayListener(
+            provider: subsMsgProvider,
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.all(40),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Subscriptions", style: Theme.of(context).textTheme.headline2),
+                  chatDropdownWidget(context),
+                  const SizedBox(height: 20),
+                  searchWidget(context),
+                  const SizedBox(height: 40),
+                  subscriptionList(),
+                ],
+              ),
             ),
           ),
         ],

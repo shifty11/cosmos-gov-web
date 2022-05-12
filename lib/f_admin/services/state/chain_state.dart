@@ -8,6 +8,4 @@ class ChainState with _$ChainState {
   const ChainState._();
 
   factory ChainState.loaded({required ChainSettings chain}) = Loaded;
-
-  factory ChainState.error([String? message]) = Error;
 }

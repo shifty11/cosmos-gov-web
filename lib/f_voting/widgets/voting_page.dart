@@ -2,6 +2,7 @@ import 'package:cosmos_gov_web/api/protobuf/dart/vote_permission_service.pb.dart
 import 'package:cosmos_gov_web/f_home/widgets/bottom_navigation_bar_widget.dart';
 import 'package:cosmos_gov_web/f_voting/services/chain_list_provider.dart';
 import 'package:cosmos_gov_web/f_voting/services/keplr_provider.dart';
+import 'package:cosmos_gov_web/f_voting/services/message_provider.dart';
 import 'package:cosmos_gov_web/f_voting/services/vote_permission_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -46,27 +47,7 @@ class VotingPage extends StatelessWidget {
   final double sidePadding = 40;
 
   const VotingPage({Key? key}) : super(key: key);
-
-  showPopUp(BuildContext context, String title, String text) {
-    showDialog<String>(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        title: Text(title),
-        content: Text(text),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.pop(context, 'Cancel'),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, 'OK'),
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
-  }
-
+  
   Widget votePermissionsLoaded(BuildContext context, List<VotePermission> votePermissions) {
     List<Widget> rows = [];
     for (var vp in votePermissions) {
@@ -104,7 +85,7 @@ class VotingPage extends StatelessWidget {
             }).toList(),
           );
         },
-        error: (err, stackTrace) => ErrorWidget(err.toString()),
+        error: (err, stackTrace) => Container(),
       );
     });
   }
@@ -138,7 +119,6 @@ class VotingPage extends StatelessWidget {
             final vp = VotePermission(chain: chain, granter: address);
 
             await keplr.grantVotePermission(vp, expiration);
-            // showPopUp(context, result.success ? "Success" : "Failure", result.success ? result.txHash : result.error);
           },
         ),
       );
@@ -151,9 +131,9 @@ class VotingPage extends StatelessWidget {
         builder: (BuildContext context, WidgetRef ref, Widget? child) {
           final state = ref.watch(votePermissionListStateProvider);
           return state.when(
-            loading: () => const CircularProgressIndicator(),
+            loading: () => const Center(child: CircularProgressIndicator()),
             loaded: (votePermissions) => votePermissionsLoaded(context, votePermissions),
-            error: (err) => ErrorWidget(err.toString()),
+            error: (err) => Container(),
           );
         },
       ),
@@ -165,20 +145,23 @@ class VotingPage extends StatelessWidget {
     return Scaffold(
       body: Container(
         padding: EdgeInsets.all(sidePadding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Voting", style: Theme.of(context).textTheme.headline2),
-            votePermissionList(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                chainDropdownWidget(context),
-                addGrantWidget(context),
-                const Spacer(),
-              ],
-            ),
-          ],
+        child: MessageOverlayListener(
+          provider: votingMsgProvider,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Voting", style: Theme.of(context).textTheme.headline2),
+              votePermissionList(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  chainDropdownWidget(context),
+                  addGrantWidget(context),
+                  const Spacer(),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: const BottomNavigationBarWidget(),

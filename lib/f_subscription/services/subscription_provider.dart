@@ -1,6 +1,7 @@
 import 'package:cosmos_gov_web/api/protobuf/dart/google/protobuf/empty.pb.dart';
 import 'package:cosmos_gov_web/api/protobuf/dart/subscription_service.pb.dart';
 import 'package:cosmos_gov_web/config.dart';
+import 'package:cosmos_gov_web/f_subscription/services/message_provider.dart';
 import 'package:cosmos_gov_web/f_subscription/services/state/subscription_state.dart';
 import 'package:cosmos_gov_web/f_subscription/services/subscription_service.dart';
 import 'package:fixnum/fixnum.dart' as fixnum;
@@ -20,26 +21,25 @@ final subscriptionStateProvider = StateNotifierProvider.family<SubscriptionNotif
   (ref, tuple) {
     final chatRoom = ref.read(chatroomListStateProvider).value!.firstWhere((c) => c.id == tuple.item1);
     final subscription = chatRoom.subscriptions[tuple.item2];
-    return SubscriptionNotifier(ref.watch(subscriptionProvider), subscription, chatRoom.id);
+    return SubscriptionNotifier(ref, subscription, chatRoom.id);
   },
 );
 
 class SubscriptionNotifier extends StateNotifier<SubscriptionState> {
-  final SubscriptionService _subscriptionService;
   final Subscription _subscription;
   final fixnum.Int64 _chatRoomId;
+  final StateNotifierProviderRef _ref;
 
-  SubscriptionNotifier(this._subscriptionService, this._subscription, this._chatRoomId)
-      : super(SubscriptionState.loaded(subscription: _subscription));
+  SubscriptionNotifier(this._ref, this._subscription, this._chatRoomId) : super(SubscriptionState.loaded(subscription: _subscription));
 
   Future<void> toggleSubscription() async {
     try {
-      final response =
-          await _subscriptionService.toggleSubscription(ToggleSubscriptionRequest(chatRoomId: _chatRoomId, name: _subscription.name));
+      final subsService = _ref.read(subscriptionProvider);
+      final response = await subsService.toggleSubscription(ToggleSubscriptionRequest(chatRoomId: _chatRoomId, name: _subscription.name));
       _subscription.isSubscribed = response.isSubscribed;
       state = SubscriptionState.loaded(subscription: _subscription);
     } catch (e) {
-      state = SubscriptionState.error(e.toString());
+      _ref.read(subsMsgProvider.notifier).sendMsg(error: e.toString());
     }
   }
 }

@@ -2,6 +2,7 @@ import 'package:cosmos_gov_web/api/protobuf/dart/admin_service.pb.dart';
 import 'package:cosmos_gov_web/api/protobuf/dart/google/protobuf/empty.pb.dart';
 import 'package:cosmos_gov_web/config.dart';
 import 'package:cosmos_gov_web/f_admin/services/admin_service.dart';
+import 'package:cosmos_gov_web/f_admin/services/message_provider.dart';
 import 'package:cosmos_gov_web/f_admin/services/state/chain_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,23 +17,24 @@ final chainListStateProvider = FutureProvider<List<ChainSettings>>((ref) async {
 final chainStateProvider = StateNotifierProvider.family<ChainNotifier, ChainState, int>(
   (ref, index) {
     final chain = ref.read(chainListStateProvider).value![index];
-    return ChainNotifier(ref.watch(adminProvider), chain);
+    return ChainNotifier(ref, chain);
   },
 );
 
 class ChainNotifier extends StateNotifier<ChainState> {
-  final AdminService _adminService;
+  final StateNotifierProviderRef _ref;
   ChainSettings _chain;
 
-  ChainNotifier(this._adminService, this._chain) : super(ChainState.loaded(chain: _chain));
+  ChainNotifier(this._ref, this._chain) : super(ChainState.loaded(chain: _chain));
 
   Future<void> _update(UpdateChainRequest update) async {
     try {
-      final response = await _adminService.updateChain(update);
+      final adminService = _ref.read(adminProvider);
+      final response = await adminService.updateChain(update);
       _chain = response.chain;
       state = ChainState.loaded(chain: _chain);
     } catch (e) {
-      state = ChainState.error(e.toString());
+      _ref.read(adminMsgProvider.notifier).sendMsg(error: e.toString());
     }
   }
 

@@ -8,6 +8,4 @@ class VotePermissionState with _$VotePermissionState {
   const VotePermissionState._();
 
   factory VotePermissionState.loaded({required VotePermission votePermission}) = Loaded;
-
-  factory VotePermissionState.error([String? message]) = Error;
 }

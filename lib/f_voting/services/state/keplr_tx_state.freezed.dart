@@ -20,8 +20,7 @@ mixin _$KeplrTxState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(Chain chain) executing,
-    required TResult Function(bool success, String txHash, String rawLog)
-        executed,
+    required TResult Function(bool success, String? info) executed,
     required TResult Function(String error) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -29,7 +28,7 @@ mixin _$KeplrTxState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(Chain chain)? executing,
-    TResult Function(bool success, String txHash, String rawLog)? executed,
+    TResult Function(bool success, String? info)? executed,
     TResult Function(String error)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -37,7 +36,7 @@ mixin _$KeplrTxState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(Chain chain)? executing,
-    TResult Function(bool success, String txHash, String rawLog)? executed,
+    TResult Function(bool success, String? info)? executed,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) =>
@@ -125,8 +124,7 @@ class _$Initial extends Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(Chain chain) executing,
-    required TResult Function(bool success, String txHash, String rawLog)
-        executed,
+    required TResult Function(bool success, String? info) executed,
     required TResult Function(String error) error,
   }) {
     return initial();
@@ -137,7 +135,7 @@ class _$Initial extends Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(Chain chain)? executing,
-    TResult Function(bool success, String txHash, String rawLog)? executed,
+    TResult Function(bool success, String? info)? executed,
     TResult Function(String error)? error,
   }) {
     return initial?.call();
@@ -148,7 +146,7 @@ class _$Initial extends Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(Chain chain)? executing,
-    TResult Function(bool success, String txHash, String rawLog)? executed,
+    TResult Function(bool success, String? info)? executed,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -265,8 +263,7 @@ class _$Executing extends Executing {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(Chain chain) executing,
-    required TResult Function(bool success, String txHash, String rawLog)
-        executed,
+    required TResult Function(bool success, String? info) executed,
     required TResult Function(String error) error,
   }) {
     return executing(chain);
@@ -277,7 +274,7 @@ class _$Executing extends Executing {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(Chain chain)? executing,
-    TResult Function(bool success, String txHash, String rawLog)? executed,
+    TResult Function(bool success, String? info)? executed,
     TResult Function(String error)? error,
   }) {
     return executing?.call(chain);
@@ -288,7 +285,7 @@ class _$Executing extends Executing {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(Chain chain)? executing,
-    TResult Function(bool success, String txHash, String rawLog)? executed,
+    TResult Function(bool success, String? info)? executed,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -350,7 +347,7 @@ abstract class Executing extends KeplrTxState {
 abstract class $ExecutedCopyWith<$Res> {
   factory $ExecutedCopyWith(Executed value, $Res Function(Executed) then) =
       _$ExecutedCopyWithImpl<$Res>;
-  $Res call({bool success, String txHash, String rawLog});
+  $Res call({bool success, String? info});
 }
 
 /// @nodoc
@@ -365,22 +362,17 @@ class _$ExecutedCopyWithImpl<$Res> extends _$KeplrTxStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? success = freezed,
-    Object? txHash = freezed,
-    Object? rawLog = freezed,
+    Object? info = freezed,
   }) {
     return _then(Executed(
       success: success == freezed
           ? _value.success
           : success // ignore: cast_nullable_to_non_nullable
               as bool,
-      txHash: txHash == freezed
-          ? _value.txHash
-          : txHash // ignore: cast_nullable_to_non_nullable
-              as String,
-      rawLog: rawLog == freezed
-          ? _value.rawLog
-          : rawLog // ignore: cast_nullable_to_non_nullable
-              as String,
+      info: info == freezed
+          ? _value.info
+          : info // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -388,20 +380,16 @@ class _$ExecutedCopyWithImpl<$Res> extends _$KeplrTxStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$Executed extends Executed {
-  _$Executed(
-      {required this.success, required this.txHash, required this.rawLog})
-      : super._();
+  _$Executed({required this.success, this.info}) : super._();
 
   @override
   final bool success;
   @override
-  final String txHash;
-  @override
-  final String rawLog;
+  final String? info;
 
   @override
   String toString() {
-    return 'KeplrTxState.executed(success: $success, txHash: $txHash, rawLog: $rawLog)';
+    return 'KeplrTxState.executed(success: $success, info: $info)';
   }
 
   @override
@@ -410,16 +398,14 @@ class _$Executed extends Executed {
         (other.runtimeType == runtimeType &&
             other is Executed &&
             const DeepCollectionEquality().equals(other.success, success) &&
-            const DeepCollectionEquality().equals(other.txHash, txHash) &&
-            const DeepCollectionEquality().equals(other.rawLog, rawLog));
+            const DeepCollectionEquality().equals(other.info, info));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(success),
-      const DeepCollectionEquality().hash(txHash),
-      const DeepCollectionEquality().hash(rawLog));
+      const DeepCollectionEquality().hash(info));
 
   @JsonKey(ignore: true)
   @override
@@ -431,11 +417,10 @@ class _$Executed extends Executed {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(Chain chain) executing,
-    required TResult Function(bool success, String txHash, String rawLog)
-        executed,
+    required TResult Function(bool success, String? info) executed,
     required TResult Function(String error) error,
   }) {
-    return executed(success, txHash, rawLog);
+    return executed(success, info);
   }
 
   @override
@@ -443,10 +428,10 @@ class _$Executed extends Executed {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(Chain chain)? executing,
-    TResult Function(bool success, String txHash, String rawLog)? executed,
+    TResult Function(bool success, String? info)? executed,
     TResult Function(String error)? error,
   }) {
-    return executed?.call(success, txHash, rawLog);
+    return executed?.call(success, info);
   }
 
   @override
@@ -454,12 +439,12 @@ class _$Executed extends Executed {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(Chain chain)? executing,
-    TResult Function(bool success, String txHash, String rawLog)? executed,
+    TResult Function(bool success, String? info)? executed,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (executed != null) {
-      return executed(success, txHash, rawLog);
+      return executed(success, info);
     }
     return orElse();
   }
@@ -503,15 +488,12 @@ class _$Executed extends Executed {
 }
 
 abstract class Executed extends KeplrTxState {
-  factory Executed(
-      {required final bool success,
-      required final String txHash,
-      required final String rawLog}) = _$Executed;
+  factory Executed({required final bool success, final String? info}) =
+      _$Executed;
   Executed._() : super._();
 
   bool get success => throw _privateConstructorUsedError;
-  String get txHash => throw _privateConstructorUsedError;
-  String get rawLog => throw _privateConstructorUsedError;
+  String? get info => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $ExecutedCopyWith<Executed> get copyWith =>
       throw _privateConstructorUsedError;
@@ -581,8 +563,7 @@ class _$Error extends Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(Chain chain) executing,
-    required TResult Function(bool success, String txHash, String rawLog)
-        executed,
+    required TResult Function(bool success, String? info) executed,
     required TResult Function(String error) error,
   }) {
     return error(this.error);
@@ -593,7 +574,7 @@ class _$Error extends Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(Chain chain)? executing,
-    TResult Function(bool success, String txHash, String rawLog)? executed,
+    TResult Function(bool success, String? info)? executed,
     TResult Function(String error)? error,
   }) {
     return error?.call(this.error);
@@ -604,7 +585,7 @@ class _$Error extends Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(Chain chain)? executing,
-    TResult Function(bool success, String txHash, String rawLog)? executed,
+    TResult Function(bool success, String? info)? executed,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {

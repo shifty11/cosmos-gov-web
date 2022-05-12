@@ -11,7 +11,7 @@ class KeplrTxState with _$KeplrTxState {
 
   factory KeplrTxState.executing({required Chain chain}) = Executing;
 
-  factory KeplrTxState.executed({required bool success, required String txHash, required String rawLog}) = Executed;
+  factory KeplrTxState.executed({required bool success, String? info}) = Executed;
 
   factory KeplrTxState.error({required String error}) = Error;
 }
