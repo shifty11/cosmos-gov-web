@@ -5,8 +5,8 @@ async function getAccountJs(chainId) {
     return accounts[0].address;
 }
 
-function buildGrant(granter, grantee, expiration, denom) {
-    return [{
+function buildGrant(granter, grantee, expiration, denom, isFeegrantUsed) {
+    const msgs = [{
         "typeUrl": "/cosmos.authz.v1beta1.MsgGrant",
         "value": {
           "granter": granter,
@@ -20,33 +20,36 @@ function buildGrant(granter, grantee, expiration, denom) {
           },
         }
       },
-       {
-         "typeUrl": "/cosmos.feegrant.v1beta1.MsgGrantAllowance",
-         "value": {
-           "granter": granter,
-           "grantee": grantee,
-           "allowance": {
-             "typeUrl": "/cosmos.feegrant.v1beta1.AllowedMsgAllowance",
-             "value": {
-               "allowance": {
-                 "typeUrl": "/cosmos.feegrant.v1beta1.BasicAllowance",
-                 "value": {
-                   "spendLimit": [
-                     {"denom": denom, "amount": "5000"}
-                   ],
-                   "expiration": {"seconds": expiration}
-                 }
-               },
-               "allowedMessages": ["/cosmos.gov.v1beta1.MsgVote"]
-             },
-           },
-         }
-       },
     ];
+    if (isFeegrantUsed) {
+        msgs.push({
+                   "typeUrl": "/cosmos.feegrant.v1beta1.MsgGrantAllowance",
+                   "value": {
+                     "granter": granter,
+                     "grantee": grantee,
+                     "allowance": {
+                       "typeUrl": "/cosmos.feegrant.v1beta1.AllowedMsgAllowance",
+                       "value": {
+                         "allowance": {
+                           "typeUrl": "/cosmos.feegrant.v1beta1.BasicAllowance",
+                           "value": {
+                             "spendLimit": [
+                               {"denom": denom, "amount": "5000"}
+                             ],
+                             "expiration": {"seconds": expiration}
+                           }
+                         },
+                         "allowedMessages": ["/cosmos.gov.v1beta1.MsgVote"]
+                       },
+                     },
+                   }
+                 });
+    }
+    return msgs;
 }
 
-function buildRevoke(granter, grantee) {
-    return [
+function buildRevoke(granter, grantee, isFeegrantUsed) {
+    const msgs = [
       {
         "typeUrl": "/cosmos.authz.v1beta1.MsgRevoke",
         "value": {
@@ -55,14 +58,17 @@ function buildRevoke(granter, grantee) {
           "msgTypeUrl": "/cosmos.gov.v1beta1.MsgVote",
         },
       },
-       {
-         "typeUrl": "/cosmos.feegrant.v1beta1.MsgRevokeAllowance",
-         "value": {
-           "granter": granter,
-           "grantee": grantee,
-         },
-       }
     ];
+    if (isFeegrantUsed) {
+        msgs.push({
+                   "typeUrl": "/cosmos.feegrant.v1beta1.MsgRevokeAllowance",
+                   "value": {
+                     "granter": granter,
+                     "grantee": grantee,
+                   },
+                 });
+    }
+    return msgs;
 }
 
 function buildFee() {
@@ -77,7 +83,7 @@ function buildFee() {
     };
 }
 
-async function grantMsgVoteJs(chainId, rpcAddress, granter, grantee, expiration, denom, debug) {
+async function grantMsgVoteJs(chainId, rpcAddress, granter, grantee, expiration, denom, isFeegrantUsed, debug) {
     await window.keplr.enable(chainId);
     const offlineSigner = window.getOfflineSigner(chainId);
     const accounts = await offlineSigner.getAccounts();
@@ -87,7 +93,7 @@ async function grantMsgVoteJs(chainId, rpcAddress, granter, grantee, expiration,
     client.registry.register("/cosmos.authz.v1beta1.MsgGrant", window.MsgGrant)
     client.registry.register("/cosmos.feegrant.v1beta1.MsgGrantAllowance", window.MsgGrantAllowance)
 
-    messages = buildGrant(granter, grantee, expiration, denom);
+    messages = buildGrant(granter, grantee, expiration, denom, isFeegrantUsed);
     fee = buildFee();
 
     if (debug) console.log(messages);
@@ -97,14 +103,16 @@ async function grantMsgVoteJs(chainId, rpcAddress, granter, grantee, expiration,
         window.GenericAuthorization.fromPartial({msg: genericAuthorization})
     ).finish();
 
-    const basicAllowanceValue = messages[1].value.allowance.value.allowance.value;
-    const basicAllowance = window.BasicAllowance.fromPartial(basicAllowanceValue);
-    const basicAllowanceEncoded = BasicAllowance.encode(basicAllowance).finish()
+    if (isFeegrantUsed) {
+        const basicAllowanceValue = messages[1].value.allowance.value.allowance.value;
+        const basicAllowance = window.BasicAllowance.fromPartial(basicAllowanceValue);
+        const basicAllowanceEncoded = BasicAllowance.encode(basicAllowance).finish()
 
-    const allowedMessageAllowanceValue = messages[1].value.allowance.value
-    allowedMessageAllowanceValue.allowance.value = basicAllowanceEncoded
-    const allowedMessageAllowanceEncoded = AllowedMsgAllowance.encode(allowedMessageAllowanceValue).finish();
-    messages[1].value.allowance.value = allowedMessageAllowanceEncoded
+        const allowedMessageAllowanceValue = messages[1].value.allowance.value
+        allowedMessageAllowanceValue.allowance.value = basicAllowanceEncoded
+        const allowedMessageAllowanceEncoded = AllowedMsgAllowance.encode(allowedMessageAllowanceValue).finish();
+        messages[1].value.allowance.value = allowedMessageAllowanceEncoded
+    }
 
     try {
         const result = await client.signAndBroadcast(accounts[0].address, messages, fee, "")
@@ -116,7 +124,7 @@ async function grantMsgVoteJs(chainId, rpcAddress, granter, grantee, expiration,
     }
 }
 
-async function revokeMsgVoteJs(chainId, rpcAddress, granter, grantee, debug) {
+async function revokeMsgVoteJs(chainId, rpcAddress, granter, grantee, isFeegrantUsed, debug) {
     await window.keplr.enable(chainId);
     const offlineSigner = window.getOfflineSigner(chainId);
     const accounts = await offlineSigner.getAccounts();
@@ -126,7 +134,7 @@ async function revokeMsgVoteJs(chainId, rpcAddress, granter, grantee, debug) {
     client.registry.register("/cosmos.authz.v1beta1.MsgRevoke", window.MsgRevoke)
     client.registry.register("/cosmos.feegrant.v1beta1.MsgRevokeAllowance", window.MsgRevokeAllowance)
 
-    messages = buildRevoke(granter, grantee);
+    messages = buildRevoke(granter, grantee, isFeegrantUsed);
     fee = buildFee();
 
     if (debug) console.log(messages);

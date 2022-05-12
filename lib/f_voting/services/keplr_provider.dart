@@ -59,7 +59,7 @@ class KeplrStateNotifier extends StateNotifier<KeplrTxState> {
       }
       state = KeplrTxState.executing(chain: vp.chain);
       final result =
-          await _keplrService.grantVote(vp.chain.chainId, vp.chain.rpcAddress, vp.granter, vp.chain.grantee, expiration, vp.chain.denom);
+          await _keplrService.grantVote(vp.chain, vp.granter, expiration);
       if (result == null) {
         if (cDebugMode) {
           print("null -> probalby aborted");
@@ -88,7 +88,7 @@ class KeplrStateNotifier extends StateNotifier<KeplrTxState> {
         print("revokeVotePermission");
       }
       state = KeplrTxState.executing(chain: vp.chain);
-      final result = await _keplrService.revokeVote(vp.chain.chainId, vp.chain.rpcAddress, vp.granter, vp.chain.grantee);
+      final result = await _keplrService.revokeVote(vp.chain, vp.granter);
       if (result == null) {
         if (cDebugMode) {
           print("null -> probalby aborted");

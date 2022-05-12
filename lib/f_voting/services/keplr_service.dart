@@ -6,6 +6,7 @@ import 'dart:html';
 import 'dart:js' as js;
 import 'dart:js_util';
 
+import 'package:cosmos_gov_web/api/protobuf/dart/vote_permission_service.pbgrpc.dart';
 import 'package:cosmos_gov_web/config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:js/js.dart';
@@ -14,10 +15,10 @@ import 'package:js/js.dart';
 external dynamic getAccountJs(String chainId);
 
 @JS()
-external dynamic grantMsgVoteJs(String chainId, String rpcAddress, String granter, String grantee, int expiration, String denom, bool debug);
+external dynamic grantMsgVoteJs(String chainId, String rpcAddress, String granter, String grantee, int expiration, String denom, bool isFeegrantUsed, bool debug);
 
 @JS()
-external dynamic revokeMsgVoteJs(String chainId, String rpcAddress, String granter, String grantee, bool debug);
+external dynamic revokeMsgVoteJs(String chainId, String rpcAddress, String granter, String grantee, bool isFeegrantUsed, bool debug);
 
 class KeplrService with ChangeNotifier {
   static KeplrService? _singleton;
@@ -37,11 +38,11 @@ class KeplrService with ChangeNotifier {
     return await promiseToFuture(getAccountJs(chainId));
   }
 
-  Future<dynamic> grantVote(String chainId, String rpcAddress, String granter, String grantee, int expiration, String denom) async {
-    return await promiseToFuture(grantMsgVoteJs(chainId, rpcAddress, granter, grantee, expiration, denom, cDebugMode));
+  Future<dynamic> grantVote(Chain chain, String granter, int expiration) async {
+    return await promiseToFuture(grantMsgVoteJs(chain.chainId, chain.rpcAddress, granter, chain.grantee, expiration, chain.denom, chain.isFeegrantUsed, cDebugMode));
   }
 
-  Future<dynamic> revokeVote(String chainId, String rpcAddress, String granter, String grantee) async {
-    return await promiseToFuture(revokeMsgVoteJs(chainId, rpcAddress, granter, grantee, cDebugMode));
+  Future<dynamic> revokeVote(Chain chain, String granter) async {
+    return await promiseToFuture(revokeMsgVoteJs(chain.chainId, chain.rpcAddress, granter, chain.grantee, chain.isFeegrantUsed, cDebugMode));
   }
 }
