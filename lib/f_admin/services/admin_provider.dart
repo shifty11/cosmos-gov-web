@@ -62,14 +62,14 @@ final searchChainProvider = StateProvider((ref) => "");
 
 final chainProvider = StateProvider<ChainSettings?>((ref) => null);
 
-final searchedChainProvider = Provider<List<ChainSettings>>((ref) {
+final searchedChainProvider = Provider<List<int>>((ref) {
   final search = ref.watch(searchChainProvider).toLowerCase();
   final chainList = ref.watch(chainListStateProvider);
   return chainList.whenOrNull(data: (chains) {
         if (search.isEmpty) {
-          return chains.toList();
+          return List.generate(chains.length, (index) => index);
         }
-        return chains.where((c) => c.displayName.toLowerCase().contains(search)).toList();
+        return chains.asMap().entries.where((entry) => entry.value.displayName.toLowerCase().contains(search)).map((e) => e.key).toList();
       }) ??
       [];
 });

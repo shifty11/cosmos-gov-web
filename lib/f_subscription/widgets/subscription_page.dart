@@ -84,7 +84,7 @@ class SubscriptionPage extends StatelessWidget {
         builder: (BuildContext context, WidgetRef ref, Widget? child) {
           final state = ref.watch(chatroomListStateProvider);
           return state.when(
-            loading: () => const CircularProgressIndicator(),
+            loading: () => const Center(child: CircularProgressIndicator()),
             data: (chatRooms) => subscriptionsLoaded(context, ref.watch(searchedSubsProvider)),
             error: (err, stackTrace) => ErrorWidget(err.toString()),
           );

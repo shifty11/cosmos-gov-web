@@ -21,7 +21,7 @@ class AdminPage extends StatelessWidget {
     return 4;
   }
 
-  Widget chainsLoaded(BuildContext context, List<ChainSettings> chains) {
+  Widget chainsLoaded(BuildContext context, WidgetRef ref) {
     const double sidePadding = 12;
     const double iconSize = 24;
     final disabledColor = Theme.of(context).inputDecorationTheme.enabledBorder!.borderSide.color;
@@ -33,9 +33,11 @@ class AdminPage extends StatelessWidget {
         mainAxisSpacing: 10,
         mainAxisExtent: 50,
       ),
-      itemCount: chains.length,
-      itemBuilder: (BuildContext context, int index) {
+      itemCount: ref.watch(searchedChainProvider).length,
+      itemBuilder: (BuildContext context, int arrayIndex) {
         return Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
+          final index = ref.read(searchedChainProvider)[arrayIndex];
+          final chainNotifier = ref.read(chainStateProvider(index).notifier);
           final state = ref.watch(chainStateProvider(index));
           return state.when(
             loaded: (chain) => Container(
@@ -47,9 +49,7 @@ class AdminPage extends StatelessWidget {
                   borderRadius: const BorderRadius.all(Radius.circular(5))),
               child: InkWell(
                 onTap: () {
-                  // if (!chain.isEnabled) {
-                  ref.read(chainStateProvider(index).notifier).setEnabled();
-                  // }
+                  chainNotifier.setEnabled();
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -69,7 +69,7 @@ class AdminPage extends StatelessWidget {
                             iconSize: iconSize,
                             padding: const EdgeInsets.symmetric(horizontal: sidePadding),
                             tooltip: chain.isVotingEnabled ? "Voting is enabled" : "Voting is disabled",
-                            onPressed: () => ref.read(chainStateProvider(index).notifier).setVotingEnabled(),
+                            onPressed: () => chainNotifier.setVotingEnabled(),
                           )
                         : Container(),
                     chain.isEnabled
@@ -79,7 +79,7 @@ class AdminPage extends StatelessWidget {
                             iconSize: iconSize,
                             padding: const EdgeInsets.only(right: sidePadding),
                             tooltip: chain.isFeegrantUsed ? "User will pay the fees for votes" : "Bot will pay the fees for votes",
-                            onPressed: () => ref.read(chainStateProvider(index).notifier).setFeegrantUsed(),
+                            onPressed: () => chainNotifier.setFeegrantUsed(),
                           )
                         : Container(),
                     chain.isEnabled
@@ -105,8 +105,8 @@ class AdminPage extends StatelessWidget {
         builder: (BuildContext context, WidgetRef ref, Widget? child) {
           final state = ref.watch(chainListStateProvider);
           return state.when(
-            loading: () => const CircularProgressIndicator(),
-            data: (chains) => chainsLoaded(context, ref.watch(searchedChainProvider)),
+            loading: () => const Center(child: CircularProgressIndicator()),
+            data: (chains) => chainsLoaded(context, ref),
             error: (err, stackTrace) => ErrorWidget(err.toString()),
           );
         },

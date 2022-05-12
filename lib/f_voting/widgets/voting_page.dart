@@ -6,6 +6,7 @@ import 'package:cosmos_gov_web/f_voting/services/vote_permission_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:riverpod_messages/riverpod_messages.dart';
 
 extension Formatting on VotePermission {
   Widget row() {
@@ -115,7 +116,7 @@ class VotingPage extends StatelessWidget {
         padding: const EdgeInsets.only(left: 40),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            minimumSize: const Size(200, 64),
+            minimumSize: const Size(200, 48),
           ),
           child: keplrState.whenOrNull(
                   executing: (chain) => CircularProgressIndicator(
