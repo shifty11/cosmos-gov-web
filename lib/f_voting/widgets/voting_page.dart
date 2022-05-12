@@ -85,12 +85,12 @@ class VotingPage extends StatelessWidget {
       final state = ref.watch(chainListStateProvider);
       return state.when(
         loading: () => Container(),
-        loaded: (chains) {
+        data: (chains) {
           if (chains.isEmpty) {
             return Container();
           }
           return DropdownButton<Chain>(
-            value: ref.watch(selectedChainProvider) ?? (chains.isNotEmpty ? chains.first : null),
+            value: ref.watch(selectedChainProvider),
             // icon: const Icon(Icons.person),
             onChanged: (Chain? newValue) {
               ref.watch(selectedChainProvider.notifier).state = newValue;
@@ -103,16 +103,28 @@ class VotingPage extends StatelessWidget {
             }).toList(),
           );
         },
-        error: (err) => ErrorWidget(err.toString()),
+        error: (err, stackTrace) => ErrorWidget(err.toString()),
       );
     });
   }
 
   Widget addGrantWidget(BuildContext context) {
     return Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
-      return ElevatedButton(
+      final keplrState = ref.watch(keplrTxProvider);
+      return Padding(
+        padding: const EdgeInsets.only(left: 40),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            minimumSize: const Size(200, 64),
+          ),
+          child: keplrState.whenOrNull(
+                  executing: (chain) => CircularProgressIndicator(
+                        color: Theme.of(context).textTheme.bodyText1!.color,
+                      )) ??
+              const Text("Add Vote Permission"),
           onPressed: () async {
             final chain = ref.watch(selectedChainProvider);
+            print(chain);
             if (chain == null) {
               return;
             }
@@ -127,7 +139,8 @@ class VotingPage extends StatelessWidget {
             await keplr.grantVotePermission(vp, expiration);
             // showPopUp(context, result.success ? "Success" : "Failure", result.success ? result.txHash : result.error);
           },
-          child: const Text("Add Vote Permission"));
+        ),
+      );
     });
   }
 
@@ -159,11 +172,9 @@ class VotingPage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Spacer(flex: 2),
                 chainDropdownWidget(context),
-                const Spacer(),
                 addGrantWidget(context),
-                const Spacer(flex: 2),
+                const Spacer(),
               ],
             ),
           ],

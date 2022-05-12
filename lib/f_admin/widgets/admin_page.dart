@@ -68,6 +68,7 @@ class AdminPage extends StatelessWidget {
                             color: chain.isVotingEnabled ? Styles.enabledColor : disabledColor,
                             iconSize: iconSize,
                             padding: const EdgeInsets.symmetric(horizontal: sidePadding),
+                            tooltip: chain.isVotingEnabled ? "Voting is enabled" : "Voting is disabled",
                             onPressed: () => ref.read(chainStateProvider(index).notifier).setVotingEnabled(),
                           )
                         : Container(),
@@ -77,6 +78,7 @@ class AdminPage extends StatelessWidget {
                             color: chain.isFeegrantUsed ? Styles.enabledColor : disabledColor,
                             iconSize: iconSize,
                             padding: const EdgeInsets.only(right: sidePadding),
+                            tooltip: chain.isFeegrantUsed ? "User will pay the fees for votes" : "Bot will pay the fees for votes",
                             onPressed: () => ref.read(chainStateProvider(index).notifier).setFeegrantUsed(),
                           )
                         : Container(),
