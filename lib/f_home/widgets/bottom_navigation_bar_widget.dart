@@ -5,53 +5,36 @@ import 'package:go_router/go_router.dart';
 class NavigationData {
   final int index;
   final RouteData routerData;
+  final Icon icon;
+  final String label;
 
-  const NavigationData(this.index, this.routerData);
+  const NavigationData(this.index, this.routerData, this.icon, this.label);
 }
 
 class BottomNavigationBarWidget extends StatelessWidget {
   final double sideBarWith = 300;
 
-  const BottomNavigationBarWidget({Key? key}) : super(key: key);
+  static const List<NavigationData> menu = [
+    NavigationData(0, rSubscriptions, Icon(Icons.bookmarks), 'Subscriptions'),
+    NavigationData(1, rVoting, Icon(Icons.how_to_vote), 'Voting'),
+    NavigationData(2, rAdmin, Icon(Icons.settings), 'Admin'),
+  ];
 
-  Widget button(BuildContext context, String name, RouteData routeData) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: OutlinedButton(
-        style: OutlinedButton.styleFrom(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-          minimumSize: const Size.fromHeight(40),
-          backgroundColor: GoRouter.of(context).location == routeData.path ? Colors.grey[400] : null,
-        ),
-        onPressed: () {
-          context.goNamed(routeData.name);
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Text(name, style: Theme.of(context).textTheme.titleLarge),
-        ),
-      ),
-    );
-  }
+  const BottomNavigationBarWidget({Key? key}) : super(key: key);
 
   int getIndex(BuildContext context) {
     final location = GoRouter.of(context).location;
-    if (location == rSubscriptions.path) {
-      return 0;
-    }
-    if (location == rVoting.path) {
-      return 1;
+    for (var d in BottomNavigationBarWidget.menu) {
+      if (d.routerData.path == location) {
+        return d.index;
+      }
     }
     return -1;
   }
 
   goTo(BuildContext context, int index) {
-    switch (index) {
-      case 0:
-        return context.goNamed(rSubscriptions.name);
-      case 1:
-        return context.goNamed(rVoting.name);
-    }
+    final routerData = BottomNavigationBarWidget.menu.firstWhere((d) => d.index == index).routerData;
+    context.goNamed(routerData.name);
   }
 
   BottomNavigationBarItem navigationItem(Icon icon, String label) {
@@ -61,20 +44,14 @@ class BottomNavigationBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      onTap: (index) => goTo(context, index),
-      currentIndex: getIndex(context),
-      items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(Icons.bookmarks),
-          label: 'Subscriptions',
-          tooltip: '',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.how_to_vote),
-          label: 'Voting',
-          tooltip: '',
-        ),
-      ],
-    );
+        onTap: (index) => goTo(context, index),
+        currentIndex: getIndex(context),
+        items: BottomNavigationBarWidget.menu
+            .map((d) => BottomNavigationBarItem(
+                  icon: d.icon,
+                  label: d.label,
+                  tooltip: '',
+                ))
+            .toList());
   }
 }

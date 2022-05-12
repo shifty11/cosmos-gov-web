@@ -1,4 +1,5 @@
 import 'package:cosmos_gov_web/config.dart';
+import 'package:cosmos_gov_web/f_admin/widgets/admin_page.dart';
 import 'package:cosmos_gov_web/f_home/services/auth_provider.dart';
 import 'package:cosmos_gov_web/f_home/services/state/auth_state.dart';
 import 'package:cosmos_gov_web/f_home/widgets/loading_page.dart';
@@ -51,6 +52,14 @@ class MyRouter {
         pageBuilder: (context, state) => MaterialPage<void>(
           key: state.pageKey,
           child: const VotingPage(),
+        ),
+      ),
+      GoRoute(
+        name: rAdmin.name,
+        path: rAdmin.path,
+        pageBuilder: (context, state) => MaterialPage<void>(
+          key: state.pageKey,
+          child: const AdminPage(),
         ),
       ),
     ],
