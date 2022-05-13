@@ -84,19 +84,19 @@ class _$AuthStateCopyWithImpl<$Res> implements $AuthStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class $LoadingCopyWith<$Res> {
-  factory $LoadingCopyWith(Loading value, $Res Function(Loading) then) =
-      _$LoadingCopyWithImpl<$Res>;
+abstract class _$$LoadingCopyWith<$Res> {
+  factory _$$LoadingCopyWith(_$Loading value, $Res Function(_$Loading) then) =
+      __$$LoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$LoadingCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
-    implements $LoadingCopyWith<$Res> {
-  _$LoadingCopyWithImpl(Loading _value, $Res Function(Loading) _then)
-      : super(_value, (v) => _then(v as Loading));
+class __$$LoadingCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
+    implements _$$LoadingCopyWith<$Res> {
+  __$$LoadingCopyWithImpl(_$Loading _value, $Res Function(_$Loading) _then)
+      : super(_value, (v) => _then(v as _$Loading));
 
   @override
-  Loading get _value => super._value as Loading;
+  _$Loading get _value => super._value as _$Loading;
 }
 
 /// @nodoc
@@ -118,7 +118,7 @@ class _$Loading extends Loading with DiagnosticableTreeMixin {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is Loading);
+        (other.runtimeType == runtimeType && other is _$Loading);
   }
 
   @override
@@ -205,20 +205,21 @@ abstract class Loading extends AuthState {
 }
 
 /// @nodoc
-abstract class $AuthorizedCopyWith<$Res> {
-  factory $AuthorizedCopyWith(
-          Authorized value, $Res Function(Authorized) then) =
-      _$AuthorizedCopyWithImpl<$Res>;
+abstract class _$$AuthorizedCopyWith<$Res> {
+  factory _$$AuthorizedCopyWith(
+          _$Authorized value, $Res Function(_$Authorized) then) =
+      __$$AuthorizedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$AuthorizedCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
-    implements $AuthorizedCopyWith<$Res> {
-  _$AuthorizedCopyWithImpl(Authorized _value, $Res Function(Authorized) _then)
-      : super(_value, (v) => _then(v as Authorized));
+class __$$AuthorizedCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
+    implements _$$AuthorizedCopyWith<$Res> {
+  __$$AuthorizedCopyWithImpl(
+      _$Authorized _value, $Res Function(_$Authorized) _then)
+      : super(_value, (v) => _then(v as _$Authorized));
 
   @override
-  Authorized get _value => super._value as Authorized;
+  _$Authorized get _value => super._value as _$Authorized;
 }
 
 /// @nodoc
@@ -240,7 +241,7 @@ class _$Authorized extends Authorized with DiagnosticableTreeMixin {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is Authorized);
+        (other.runtimeType == runtimeType && other is _$Authorized);
   }
 
   @override
@@ -327,19 +328,19 @@ abstract class Authorized extends AuthState {
 }
 
 /// @nodoc
-abstract class $ExpiredCopyWith<$Res> {
-  factory $ExpiredCopyWith(Expired value, $Res Function(Expired) then) =
-      _$ExpiredCopyWithImpl<$Res>;
+abstract class _$$ExpiredCopyWith<$Res> {
+  factory _$$ExpiredCopyWith(_$Expired value, $Res Function(_$Expired) then) =
+      __$$ExpiredCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ExpiredCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
-    implements $ExpiredCopyWith<$Res> {
-  _$ExpiredCopyWithImpl(Expired _value, $Res Function(Expired) _then)
-      : super(_value, (v) => _then(v as Expired));
+class __$$ExpiredCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
+    implements _$$ExpiredCopyWith<$Res> {
+  __$$ExpiredCopyWithImpl(_$Expired _value, $Res Function(_$Expired) _then)
+      : super(_value, (v) => _then(v as _$Expired));
 
   @override
-  Expired get _value => super._value as Expired;
+  _$Expired get _value => super._value as _$Expired;
 }
 
 /// @nodoc
@@ -361,7 +362,7 @@ class _$Expired extends Expired with DiagnosticableTreeMixin {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is Expired);
+        (other.runtimeType == runtimeType && other is _$Expired);
   }
 
   @override
@@ -448,19 +449,19 @@ abstract class Expired extends AuthState {
 }
 
 /// @nodoc
-abstract class $ErrorCopyWith<$Res> {
-  factory $ErrorCopyWith(Error value, $Res Function(Error) then) =
-      _$ErrorCopyWithImpl<$Res>;
+abstract class _$$ErrorCopyWith<$Res> {
+  factory _$$ErrorCopyWith(_$Error value, $Res Function(_$Error) then) =
+      __$$ErrorCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ErrorCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
-    implements $ErrorCopyWith<$Res> {
-  _$ErrorCopyWithImpl(Error _value, $Res Function(Error) _then)
-      : super(_value, (v) => _then(v as Error));
+class __$$ErrorCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
+    implements _$$ErrorCopyWith<$Res> {
+  __$$ErrorCopyWithImpl(_$Error _value, $Res Function(_$Error) _then)
+      : super(_value, (v) => _then(v as _$Error));
 
   @override
-  Error get _value => super._value as Error;
+  _$Error get _value => super._value as _$Error;
 }
 
 /// @nodoc
@@ -482,7 +483,7 @@ class _$Error extends Error with DiagnosticableTreeMixin {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is Error);
+        (other.runtimeType == runtimeType && other is _$Error);
   }
 
   @override

@@ -85,19 +85,19 @@ class _$KeplrTxStateCopyWithImpl<$Res> implements $KeplrTxStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class $InitialCopyWith<$Res> {
-  factory $InitialCopyWith(Initial value, $Res Function(Initial) then) =
-      _$InitialCopyWithImpl<$Res>;
+abstract class _$$InitialCopyWith<$Res> {
+  factory _$$InitialCopyWith(_$Initial value, $Res Function(_$Initial) then) =
+      __$$InitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$InitialCopyWithImpl<$Res> extends _$KeplrTxStateCopyWithImpl<$Res>
-    implements $InitialCopyWith<$Res> {
-  _$InitialCopyWithImpl(Initial _value, $Res Function(Initial) _then)
-      : super(_value, (v) => _then(v as Initial));
+class __$$InitialCopyWithImpl<$Res> extends _$KeplrTxStateCopyWithImpl<$Res>
+    implements _$$InitialCopyWith<$Res> {
+  __$$InitialCopyWithImpl(_$Initial _value, $Res Function(_$Initial) _then)
+      : super(_value, (v) => _then(v as _$Initial));
 
   @override
-  Initial get _value => super._value as Initial;
+  _$Initial get _value => super._value as _$Initial;
 }
 
 /// @nodoc
@@ -113,7 +113,7 @@ class _$Initial extends Initial {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is Initial);
+        (other.runtimeType == runtimeType && other is _$Initial);
   }
 
   @override
@@ -200,26 +200,28 @@ abstract class Initial extends KeplrTxState {
 }
 
 /// @nodoc
-abstract class $ExecutingCopyWith<$Res> {
-  factory $ExecutingCopyWith(Executing value, $Res Function(Executing) then) =
-      _$ExecutingCopyWithImpl<$Res>;
+abstract class _$$ExecutingCopyWith<$Res> {
+  factory _$$ExecutingCopyWith(
+          _$Executing value, $Res Function(_$Executing) then) =
+      __$$ExecutingCopyWithImpl<$Res>;
   $Res call({Chain chain});
 }
 
 /// @nodoc
-class _$ExecutingCopyWithImpl<$Res> extends _$KeplrTxStateCopyWithImpl<$Res>
-    implements $ExecutingCopyWith<$Res> {
-  _$ExecutingCopyWithImpl(Executing _value, $Res Function(Executing) _then)
-      : super(_value, (v) => _then(v as Executing));
+class __$$ExecutingCopyWithImpl<$Res> extends _$KeplrTxStateCopyWithImpl<$Res>
+    implements _$$ExecutingCopyWith<$Res> {
+  __$$ExecutingCopyWithImpl(
+      _$Executing _value, $Res Function(_$Executing) _then)
+      : super(_value, (v) => _then(v as _$Executing));
 
   @override
-  Executing get _value => super._value as Executing;
+  _$Executing get _value => super._value as _$Executing;
 
   @override
   $Res call({
     Object? chain = freezed,
   }) {
-    return _then(Executing(
+    return _then(_$Executing(
       chain: chain == freezed
           ? _value.chain
           : chain // ignore: cast_nullable_to_non_nullable
@@ -245,7 +247,7 @@ class _$Executing extends Executing {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is Executing &&
+            other is _$Executing &&
             const DeepCollectionEquality().equals(other.chain, chain));
   }
 
@@ -255,8 +257,8 @@ class _$Executing extends Executing {
 
   @JsonKey(ignore: true)
   @override
-  $ExecutingCopyWith<Executing> get copyWith =>
-      _$ExecutingCopyWithImpl<Executing>(this, _$identity);
+  _$$ExecutingCopyWith<_$Executing> get copyWith =>
+      __$$ExecutingCopyWithImpl<_$Executing>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -339,32 +341,33 @@ abstract class Executing extends KeplrTxState {
 
   Chain get chain => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ExecutingCopyWith<Executing> get copyWith =>
+  _$$ExecutingCopyWith<_$Executing> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ExecutedCopyWith<$Res> {
-  factory $ExecutedCopyWith(Executed value, $Res Function(Executed) then) =
-      _$ExecutedCopyWithImpl<$Res>;
+abstract class _$$ExecutedCopyWith<$Res> {
+  factory _$$ExecutedCopyWith(
+          _$Executed value, $Res Function(_$Executed) then) =
+      __$$ExecutedCopyWithImpl<$Res>;
   $Res call({bool success, String? info});
 }
 
 /// @nodoc
-class _$ExecutedCopyWithImpl<$Res> extends _$KeplrTxStateCopyWithImpl<$Res>
-    implements $ExecutedCopyWith<$Res> {
-  _$ExecutedCopyWithImpl(Executed _value, $Res Function(Executed) _then)
-      : super(_value, (v) => _then(v as Executed));
+class __$$ExecutedCopyWithImpl<$Res> extends _$KeplrTxStateCopyWithImpl<$Res>
+    implements _$$ExecutedCopyWith<$Res> {
+  __$$ExecutedCopyWithImpl(_$Executed _value, $Res Function(_$Executed) _then)
+      : super(_value, (v) => _then(v as _$Executed));
 
   @override
-  Executed get _value => super._value as Executed;
+  _$Executed get _value => super._value as _$Executed;
 
   @override
   $Res call({
     Object? success = freezed,
     Object? info = freezed,
   }) {
-    return _then(Executed(
+    return _then(_$Executed(
       success: success == freezed
           ? _value.success
           : success // ignore: cast_nullable_to_non_nullable
@@ -396,7 +399,7 @@ class _$Executed extends Executed {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is Executed &&
+            other is _$Executed &&
             const DeepCollectionEquality().equals(other.success, success) &&
             const DeepCollectionEquality().equals(other.info, info));
   }
@@ -409,8 +412,8 @@ class _$Executed extends Executed {
 
   @JsonKey(ignore: true)
   @override
-  $ExecutedCopyWith<Executed> get copyWith =>
-      _$ExecutedCopyWithImpl<Executed>(this, _$identity);
+  _$$ExecutedCopyWith<_$Executed> get copyWith =>
+      __$$ExecutedCopyWithImpl<_$Executed>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -495,31 +498,31 @@ abstract class Executed extends KeplrTxState {
   bool get success => throw _privateConstructorUsedError;
   String? get info => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ExecutedCopyWith<Executed> get copyWith =>
+  _$$ExecutedCopyWith<_$Executed> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ErrorCopyWith<$Res> {
-  factory $ErrorCopyWith(Error value, $Res Function(Error) then) =
-      _$ErrorCopyWithImpl<$Res>;
+abstract class _$$ErrorCopyWith<$Res> {
+  factory _$$ErrorCopyWith(_$Error value, $Res Function(_$Error) then) =
+      __$$ErrorCopyWithImpl<$Res>;
   $Res call({String error});
 }
 
 /// @nodoc
-class _$ErrorCopyWithImpl<$Res> extends _$KeplrTxStateCopyWithImpl<$Res>
-    implements $ErrorCopyWith<$Res> {
-  _$ErrorCopyWithImpl(Error _value, $Res Function(Error) _then)
-      : super(_value, (v) => _then(v as Error));
+class __$$ErrorCopyWithImpl<$Res> extends _$KeplrTxStateCopyWithImpl<$Res>
+    implements _$$ErrorCopyWith<$Res> {
+  __$$ErrorCopyWithImpl(_$Error _value, $Res Function(_$Error) _then)
+      : super(_value, (v) => _then(v as _$Error));
 
   @override
-  Error get _value => super._value as Error;
+  _$Error get _value => super._value as _$Error;
 
   @override
   $Res call({
     Object? error = freezed,
   }) {
-    return _then(Error(
+    return _then(_$Error(
       error: error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -545,7 +548,7 @@ class _$Error extends Error {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is Error &&
+            other is _$Error &&
             const DeepCollectionEquality().equals(other.error, error));
   }
 
@@ -555,8 +558,8 @@ class _$Error extends Error {
 
   @JsonKey(ignore: true)
   @override
-  $ErrorCopyWith<Error> get copyWith =>
-      _$ErrorCopyWithImpl<Error>(this, _$identity);
+  _$$ErrorCopyWith<_$Error> get copyWith =>
+      __$$ErrorCopyWithImpl<_$Error>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -639,5 +642,5 @@ abstract class Error extends KeplrTxState {
 
   String get error => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ErrorCopyWith<Error> get copyWith => throw _privateConstructorUsedError;
+  _$$ErrorCopyWith<_$Error> get copyWith => throw _privateConstructorUsedError;
 }

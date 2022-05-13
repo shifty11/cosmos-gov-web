@@ -73,19 +73,19 @@ class _$MessageStateCopyWithImpl<$Res> implements $MessageStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class $InitialCopyWith<$Res> {
-  factory $InitialCopyWith(Initial value, $Res Function(Initial) then) =
-      _$InitialCopyWithImpl<$Res>;
+abstract class _$$InitialCopyWith<$Res> {
+  factory _$$InitialCopyWith(_$Initial value, $Res Function(_$Initial) then) =
+      __$$InitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$InitialCopyWithImpl<$Res> extends _$MessageStateCopyWithImpl<$Res>
-    implements $InitialCopyWith<$Res> {
-  _$InitialCopyWithImpl(Initial _value, $Res Function(Initial) _then)
-      : super(_value, (v) => _then(v as Initial));
+class __$$InitialCopyWithImpl<$Res> extends _$MessageStateCopyWithImpl<$Res>
+    implements _$$InitialCopyWith<$Res> {
+  __$$InitialCopyWithImpl(_$Initial _value, $Res Function(_$Initial) _then)
+      : super(_value, (v) => _then(v as _$Initial));
 
   @override
-  Initial get _value => super._value as Initial;
+  _$Initial get _value => super._value as _$Initial;
 }
 
 /// @nodoc
@@ -101,7 +101,7 @@ class _$Initial extends Initial {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is Initial);
+        (other.runtimeType == runtimeType && other is _$Initial);
   }
 
   @override
@@ -176,27 +176,28 @@ abstract class Initial extends MessageState {
 }
 
 /// @nodoc
-abstract class $ReceivedCopyWith<$Res> {
-  factory $ReceivedCopyWith(Received value, $Res Function(Received) then) =
-      _$ReceivedCopyWithImpl<$Res>;
+abstract class _$$ReceivedCopyWith<$Res> {
+  factory _$$ReceivedCopyWith(
+          _$Received value, $Res Function(_$Received) then) =
+      __$$ReceivedCopyWithImpl<$Res>;
   $Res call({String? info, String? error});
 }
 
 /// @nodoc
-class _$ReceivedCopyWithImpl<$Res> extends _$MessageStateCopyWithImpl<$Res>
-    implements $ReceivedCopyWith<$Res> {
-  _$ReceivedCopyWithImpl(Received _value, $Res Function(Received) _then)
-      : super(_value, (v) => _then(v as Received));
+class __$$ReceivedCopyWithImpl<$Res> extends _$MessageStateCopyWithImpl<$Res>
+    implements _$$ReceivedCopyWith<$Res> {
+  __$$ReceivedCopyWithImpl(_$Received _value, $Res Function(_$Received) _then)
+      : super(_value, (v) => _then(v as _$Received));
 
   @override
-  Received get _value => super._value as Received;
+  _$Received get _value => super._value as _$Received;
 
   @override
   $Res call({
     Object? info = freezed,
     Object? error = freezed,
   }) {
-    return _then(Received(
+    return _then(_$Received(
       info: info == freezed
           ? _value.info
           : info // ignore: cast_nullable_to_non_nullable
@@ -228,7 +229,7 @@ class _$Received extends Received {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is Received &&
+            other is _$Received &&
             const DeepCollectionEquality().equals(other.info, info) &&
             const DeepCollectionEquality().equals(other.error, error));
   }
@@ -241,8 +242,8 @@ class _$Received extends Received {
 
   @JsonKey(ignore: true)
   @override
-  $ReceivedCopyWith<Received> get copyWith =>
-      _$ReceivedCopyWithImpl<Received>(this, _$identity);
+  _$$ReceivedCopyWith<_$Received> get copyWith =>
+      __$$ReceivedCopyWithImpl<_$Received>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -314,6 +315,6 @@ abstract class Received extends MessageState {
   String? get info => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ReceivedCopyWith<Received> get copyWith =>
+  _$$ReceivedCopyWith<_$Received> get copyWith =>
       throw _privateConstructorUsedError;
 }

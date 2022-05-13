@@ -10,7 +10,7 @@ final votingMsgProvider = StateNotifierProvider<MessageNotifier, MessageState>((
 class MessageNotifier extends MessageNotifierBase {
   MessageNotifier(StateNotifierProviderRef<MessageNotifierBase, MessageState> ref) : super(ref) {
     ref.watch(chainListStateProvider).whenOrNull(error: (err, _) => sendMsg(error: err.toString()));
-    ref.watch(votePermissionListStateProvider).whenOrNull(error: (err) => sendMsg(error: err.toString()));
+    ref.watch(walletListProvider).whenOrNull(error: (err, stackTrace) => sendMsg(error: err.toString()));
     ref.watch(keplrTxProvider).whenOrNull(executed: (success, info) => sendMsg(info: info), error: (err) => sendMsg(error: err.toString()));
   }
 }

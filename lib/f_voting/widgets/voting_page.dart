@@ -9,37 +9,43 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_messages/riverpod_messages.dart';
 
-extension Formatting on VotePermission {
-  Widget row() {
-    var date = DateTime.fromMillisecondsSinceEpoch(expiresAt.seconds.toInt() * 1000);
-    var df = DateFormat('dd-MM-yyyy (HH:mm:ss)').format(date);
-    return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(chain.displayName),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text("${granter.substring(0, chain.accountPrefix.length + 3)}...${granter.substring(granter.length - 5, granter.length)}"),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(df),
-        ),
-        Consumer(
-          builder: (BuildContext context, WidgetRef ref, Widget? child) {
-            return ElevatedButton(
-              onPressed: () async {
-                final keplr = ref.watch(keplrTxProvider.notifier);
-                await keplr.revokeVotePermission(this);
-              },
-              child: const Text("Revoke"),
-            );
-          },
-        ),
-      ],
-    );
+extension Formatting on Wallet {
+  DataRow row(WidgetRef ref) {
+    var df = "";
+    if (votePermissions.isNotEmpty) {
+      var date = DateTime.fromMillisecondsSinceEpoch(votePermissions.first.expiresAt.seconds.toInt() * 1000);
+      df = DateFormat('dd-MM-yyyy').format(date);
+    }
+    const double iconSize = 24;
+    return DataRow(cells: <DataCell>[
+      DataCell(Text(chain.displayName)),
+      DataCell(Text("${address.substring(0, 12)}...${address.substring(address.length - 5, address.length)}")),
+      DataCell(Text(df)),
+      DataCell(Row(
+        children: [
+          votePermissions.isEmpty ? IconButton(
+            icon: const Icon(Icons.add_circle),
+            color: Colors.blue,
+            iconSize: iconSize,
+            tooltip: "Grant vote permission",
+            onPressed: () => ref.read(keplrTxProvider.notifier).grantVotePermission(this),
+          ) : IconButton(
+            icon: const Icon(Icons.cancel),
+            color: Colors.orange,
+            iconSize: iconSize,
+            tooltip: "Revoke vote permission",
+            onPressed: () => ref.read(keplrTxProvider.notifier).revokeVotePermission(this),
+          ),
+          IconButton(
+            icon: const Icon(Icons.delete),
+            color: Colors.red,
+            iconSize: iconSize,
+            tooltip: "Remove wallet",
+            onPressed: () => ref.read(keplrTxProvider.notifier).removeWallet(this),
+          )
+        ],
+      )),
+    ]);
   }
 }
 
@@ -47,19 +53,19 @@ class VotingPage extends StatelessWidget {
   final double sidePadding = 40;
 
   const VotingPage({Key? key}) : super(key: key);
-  
-  Widget votePermissionsLoaded(BuildContext context, List<VotePermission> votePermissions) {
-    List<Widget> rows = [];
-    for (var vp in votePermissions) {
-      rows.add(vp.row());
-    }
-    return ConstrainedBox(
-      constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width - 2 * sidePadding),
-      child: ListView(
-        scrollDirection: Axis.vertical,
-        children: rows,
-      ),
-    );
+
+  Widget walletsLoaded(BuildContext context, List<Wallet> wallets) {
+    return Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
+      return DataTable(
+        columns: const <DataColumn>[
+          DataColumn(label: Text("Chain", style: TextStyle(fontStyle: FontStyle.italic))),
+          DataColumn(label: Text("Address", style: TextStyle(fontStyle: FontStyle.italic))),
+          DataColumn(label: Text("Expiry", style: TextStyle(fontStyle: FontStyle.italic))),
+          DataColumn(label: Text("Actions", style: TextStyle(fontStyle: FontStyle.italic))),
+        ],
+        rows: wallets.map((w) => w.row(ref)).toList(),
+      );
+    });
   }
 
   Widget chainDropdownWidget(BuildContext context) {
@@ -90,50 +96,43 @@ class VotingPage extends StatelessWidget {
     });
   }
 
-  Widget addGrantWidget(BuildContext context) {
+  Widget addWalletWidget(BuildContext context) {
     return Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
       final keplrState = ref.watch(keplrTxProvider);
       return Padding(
         padding: const EdgeInsets.only(left: 40),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            minimumSize: const Size(200, 48),
+            minimumSize: const Size(200, 32),
           ),
           child: keplrState.whenOrNull(
                   executing: (chain) => CircularProgressIndicator(
                         color: Theme.of(context).textTheme.bodyText1!.color,
                       )) ??
-              const Text("Add Vote Permission"),
+              const Text("Add Wallet"),
           onPressed: () async {
             final chain = ref.watch(selectedChainProvider);
-            print(chain);
             if (chain == null) {
               return;
             }
 
             final keplr = ref.watch(keplrTxProvider.notifier);
-            final address = await keplr.getAddress(chain.chainId);
-            final int secondsSinceEpoch = DateTime.now().toUtc().millisecondsSinceEpoch ~/ Duration.millisecondsPerSecond;
-            final expiration = secondsSinceEpoch + 7 * 24 * 60 * 60;
-
-            final vp = VotePermission(chain: chain, granter: address);
-
-            await keplr.grantVotePermission(vp, expiration);
+            await keplr.registerWallet(chain);
           },
         ),
       );
     });
   }
 
-  Widget votePermissionList() {
+  Widget walletList() {
     return Expanded(
       child: Consumer(
         builder: (BuildContext context, WidgetRef ref, Widget? child) {
-          final state = ref.watch(votePermissionListStateProvider);
+          final state = ref.watch(walletListProvider);
           return state.when(
             loading: () => const Center(child: CircularProgressIndicator()),
-            loaded: (votePermissions) => votePermissionsLoaded(context, votePermissions),
-            error: (err) => Container(),
+            data: (wallets) => walletsLoaded(context, wallets),
+            error: (err, stackTrace) => Container(),
           );
         },
       ),
@@ -151,15 +150,15 @@ class VotingPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text("Voting", style: Theme.of(context).textTheme.headline2),
-              votePermissionList(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   chainDropdownWidget(context),
-                  addGrantWidget(context),
+                  addWalletWidget(context),
                   const Spacer(),
                 ],
               ),
+              walletList(),
             ],
           ),
         ),

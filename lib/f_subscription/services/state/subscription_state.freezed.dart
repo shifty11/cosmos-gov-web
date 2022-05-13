@@ -86,28 +86,28 @@ class _$SubscriptionStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $LoadedCopyWith<$Res>
+abstract class _$$LoadedCopyWith<$Res>
     implements $SubscriptionStateCopyWith<$Res> {
-  factory $LoadedCopyWith(Loaded value, $Res Function(Loaded) then) =
-      _$LoadedCopyWithImpl<$Res>;
+  factory _$$LoadedCopyWith(_$Loaded value, $Res Function(_$Loaded) then) =
+      __$$LoadedCopyWithImpl<$Res>;
   @override
   $Res call({Subscription subscription});
 }
 
 /// @nodoc
-class _$LoadedCopyWithImpl<$Res> extends _$SubscriptionStateCopyWithImpl<$Res>
-    implements $LoadedCopyWith<$Res> {
-  _$LoadedCopyWithImpl(Loaded _value, $Res Function(Loaded) _then)
-      : super(_value, (v) => _then(v as Loaded));
+class __$$LoadedCopyWithImpl<$Res> extends _$SubscriptionStateCopyWithImpl<$Res>
+    implements _$$LoadedCopyWith<$Res> {
+  __$$LoadedCopyWithImpl(_$Loaded _value, $Res Function(_$Loaded) _then)
+      : super(_value, (v) => _then(v as _$Loaded));
 
   @override
-  Loaded get _value => super._value as Loaded;
+  _$Loaded get _value => super._value as _$Loaded;
 
   @override
   $Res call({
     Object? subscription = freezed,
   }) {
-    return _then(Loaded(
+    return _then(_$Loaded(
       subscription: subscription == freezed
           ? _value.subscription
           : subscription // ignore: cast_nullable_to_non_nullable
@@ -133,7 +133,7 @@ class _$Loaded extends Loaded {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is Loaded &&
+            other is _$Loaded &&
             const DeepCollectionEquality()
                 .equals(other.subscription, subscription));
   }
@@ -144,8 +144,8 @@ class _$Loaded extends Loaded {
 
   @JsonKey(ignore: true)
   @override
-  $LoadedCopyWith<Loaded> get copyWith =>
-      _$LoadedCopyWithImpl<Loaded>(this, _$identity);
+  _$$LoadedCopyWith<_$Loaded> get copyWith =>
+      __$$LoadedCopyWithImpl<_$Loaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -212,5 +212,6 @@ abstract class Loaded extends SubscriptionState {
   Subscription get subscription => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  $LoadedCopyWith<Loaded> get copyWith => throw _privateConstructorUsedError;
+  _$$LoadedCopyWith<_$Loaded> get copyWith =>
+      throw _privateConstructorUsedError;
 }

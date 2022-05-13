@@ -74,19 +74,19 @@ class _$KeplrWalletStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $InitialCopyWith<$Res> {
-  factory $InitialCopyWith(Initial value, $Res Function(Initial) then) =
-      _$InitialCopyWithImpl<$Res>;
+abstract class _$$InitialCopyWith<$Res> {
+  factory _$$InitialCopyWith(_$Initial value, $Res Function(_$Initial) then) =
+      __$$InitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$InitialCopyWithImpl<$Res> extends _$KeplrWalletStateCopyWithImpl<$Res>
-    implements $InitialCopyWith<$Res> {
-  _$InitialCopyWithImpl(Initial _value, $Res Function(Initial) _then)
-      : super(_value, (v) => _then(v as Initial));
+class __$$InitialCopyWithImpl<$Res> extends _$KeplrWalletStateCopyWithImpl<$Res>
+    implements _$$InitialCopyWith<$Res> {
+  __$$InitialCopyWithImpl(_$Initial _value, $Res Function(_$Initial) _then)
+      : super(_value, (v) => _then(v as _$Initial));
 
   @override
-  Initial get _value => super._value as Initial;
+  _$Initial get _value => super._value as _$Initial;
 }
 
 /// @nodoc
@@ -102,7 +102,7 @@ class _$Initial extends Initial {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is Initial);
+        (other.runtimeType == runtimeType && other is _$Initial);
   }
 
   @override
@@ -177,27 +177,30 @@ abstract class Initial extends KeplrWalletState {
 }
 
 /// @nodoc
-abstract class $ConnectedCopyWith<$Res> {
-  factory $ConnectedCopyWith(Connected value, $Res Function(Connected) then) =
-      _$ConnectedCopyWithImpl<$Res>;
+abstract class _$$ConnectedCopyWith<$Res> {
+  factory _$$ConnectedCopyWith(
+          _$Connected value, $Res Function(_$Connected) then) =
+      __$$ConnectedCopyWithImpl<$Res>;
   $Res call({String chainId, String address});
 }
 
 /// @nodoc
-class _$ConnectedCopyWithImpl<$Res> extends _$KeplrWalletStateCopyWithImpl<$Res>
-    implements $ConnectedCopyWith<$Res> {
-  _$ConnectedCopyWithImpl(Connected _value, $Res Function(Connected) _then)
-      : super(_value, (v) => _then(v as Connected));
+class __$$ConnectedCopyWithImpl<$Res>
+    extends _$KeplrWalletStateCopyWithImpl<$Res>
+    implements _$$ConnectedCopyWith<$Res> {
+  __$$ConnectedCopyWithImpl(
+      _$Connected _value, $Res Function(_$Connected) _then)
+      : super(_value, (v) => _then(v as _$Connected));
 
   @override
-  Connected get _value => super._value as Connected;
+  _$Connected get _value => super._value as _$Connected;
 
   @override
   $Res call({
     Object? chainId = freezed,
     Object? address = freezed,
   }) {
-    return _then(Connected(
+    return _then(_$Connected(
       chainId: chainId == freezed
           ? _value.chainId
           : chainId // ignore: cast_nullable_to_non_nullable
@@ -229,7 +232,7 @@ class _$Connected extends Connected {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is Connected &&
+            other is _$Connected &&
             const DeepCollectionEquality().equals(other.chainId, chainId) &&
             const DeepCollectionEquality().equals(other.address, address));
   }
@@ -242,8 +245,8 @@ class _$Connected extends Connected {
 
   @JsonKey(ignore: true)
   @override
-  $ConnectedCopyWith<Connected> get copyWith =>
-      _$ConnectedCopyWithImpl<Connected>(this, _$identity);
+  _$$ConnectedCopyWith<_$Connected> get copyWith =>
+      __$$ConnectedCopyWithImpl<_$Connected>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -317,6 +320,6 @@ abstract class Connected extends KeplrWalletState {
   String get chainId => throw _privateConstructorUsedError;
   String get address => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ConnectedCopyWith<Connected> get copyWith =>
+  _$$ConnectedCopyWith<_$Connected> get copyWith =>
       throw _privateConstructorUsedError;
 }
