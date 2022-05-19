@@ -4,9 +4,9 @@ import 'package:cosmos_gov_web/config.dart';
 import 'package:cosmos_gov_web/f_subscription/services/message_provider.dart';
 import 'package:cosmos_gov_web/f_subscription/services/state/subscription_state.dart';
 import 'package:cosmos_gov_web/f_subscription/services/subscription_service.dart';
+import 'package:cosmos_gov_web/f_subscription/services/type/subscription_data_type.dart';
 import 'package:fixnum/fixnum.dart' as fixnum;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:protobuf/protobuf.dart';
 import 'package:tuple/tuple.dart';
 
 final subscriptionProvider = Provider<SubscriptionService>((ref) => subsService);
@@ -48,7 +48,7 @@ final searchSubsProvider = StateProvider((ref) => "");
 
 final chatRoomProvider = StateProvider<ChatRoom?>((ref) => null);
 
-final searchedSubsProvider = Provider<ChatRoom>((ref) {
+final searchedSubsProvider = Provider<ChatroomData>((ref) {
   final search = ref.watch(searchSubsProvider);
   final chatRoom = ref.watch(chatRoomProvider);
   final subs = ref.watch(chatroomListStateProvider);
@@ -56,14 +56,26 @@ final searchedSubsProvider = Provider<ChatRoom>((ref) {
         for (var cr in chatRooms) {
           if (cr == chatRoom || chatRoom == null) {
             if (search.isEmpty) {
-              return cr;
+              return ChatroomData(
+                cr.id,
+                cr.name,
+                cr.subscriptions,
+                cr.subscriptions.asMap().entries.map((e) => SubscriptionData(e.value, e.key)).toList(),
+              );
             }
-            final copy = GeneratedMessageGenericExtensions<ChatRoom>(cr).deepCopy();
-            copy.subscriptions.removeWhere((sub) => !sub.displayName.toLowerCase().contains(search.toLowerCase()));
-            return copy;
+            return ChatroomData(
+                cr.id,
+                cr.name,
+                cr.subscriptions,
+                cr.subscriptions
+                    .asMap()
+                    .entries
+                    .where((e) => e.value.displayName.toLowerCase().contains(search.toLowerCase()))
+                    .map((e) => SubscriptionData(e.value, e.key))
+                    .toList());
           }
         }
-        return ChatRoom();
+        return ChatroomData(fixnum.Int64(), "", [], []);
       }) ??
-      ChatRoom();
+      ChatroomData(fixnum.Int64(), "", [], []);
 });

@@ -2,6 +2,7 @@ import 'package:cosmos_gov_web/api/protobuf/dart/subscription_service.pb.dart';
 import 'package:cosmos_gov_web/f_home/widgets/bottom_navigation_bar_widget.dart';
 import 'package:cosmos_gov_web/f_subscription/services/message_provider.dart';
 import 'package:cosmos_gov_web/f_subscription/services/subscription_provider.dart';
+import 'package:cosmos_gov_web/f_subscription/services/type/subscription_data_type.dart';
 import 'package:cosmos_gov_web/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,7 +25,7 @@ class SubscriptionPage extends StatelessWidget {
     return 4;
   }
 
-  Widget subscriptionsLoaded(BuildContext context, ChatRoom chatRoom) {
+  Widget subscriptionsLoaded(BuildContext context, ChatroomData chatRoom) {
     return GridView.builder(
       shrinkWrap: true,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -33,10 +34,10 @@ class SubscriptionPage extends StatelessWidget {
         mainAxisSpacing: 10,
         mainAxisExtent: 50,
       ),
-      itemCount: chatRoom.subscriptions.length,
+      itemCount: chatRoom.filtered.length,
       itemBuilder: (BuildContext context, int index) {
         return Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
-          final data = Tuple2(chatRoom.id, index);
+          final data = Tuple2(chatRoom.chatRoomId, chatRoom.getUnfilteredIndex(index));
           final state = ref.watch(subscriptionStateProvider(data));
           const double sidePadding = 12;
           return state.when(
