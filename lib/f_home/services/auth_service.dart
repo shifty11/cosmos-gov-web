@@ -1,12 +1,19 @@
+@JS()
+library script.js;
+
 import 'dart:async';
 
 import 'package:cosmos_gov_web/api/protobuf/dart/auth_service.pbgrpc.dart';
 import 'package:cosmos_gov_web/config.dart';
 import 'package:cosmos_gov_web/f_home/services/jwt_manager.dart';
-import 'package:fixnum/fixnum.dart' as fixnum;
+import 'package:cosmos_gov_web/f_home/services/type/login_data.dart';
 import 'package:flutter/foundation.dart';
 import 'package:grpc/grpc.dart';
 import 'package:grpc/grpc_connection_interface.dart';
+import 'package:js/js.dart';
+
+@JS()
+external String getTelegramInitData();
 
 class AuthService extends AuthServiceClient with ChangeNotifier {
   static AuthService? _singleton;
@@ -42,35 +49,36 @@ class AuthService extends AuthServiceClient with ChangeNotifier {
     return jwtManager.isRefreshTokenValid;
   }
 
+  LoginData _getLoginData() {
+    final loginData = LoginData(Uri.base.queryParameters.entries.map((e) => "${e.key}=${e.value}").join("\n"));
+    if (loginData.isValid) {
+      return loginData;
+    }
+    final data = getTelegramInitData();
+    if (data.isNotEmpty) {
+      final loginData = LoginData(Uri.decodeComponent(data));
+      if (loginData.isValid) {
+        return loginData;
+      }
+    } else {
+      throw Exception("Login information are not available");
+    }
+    throw Exception("Login information are not available");
+  }
+
   _login() async {
     if (cDebugMode) {
       print("AuthService: login");
     }
-    var idStr = Uri.base.queryParameters['id'] ?? "";
-    var username = Uri.base.queryParameters['username'] ?? "";
-    var authDateStr = Uri.base.queryParameters['auth_date'] ?? "";
-    var hash = Uri.base.queryParameters['hash'] ?? "";
-    if (idStr.isEmpty || username.isEmpty || authDateStr.isEmpty || hash.isEmpty) {
-      throw Exception("Login information are not available");
-    }
-
-    var id = int.tryParse(idStr);
-    var authDate = int.tryParse(authDateStr);
-    if (id == null || authDate == null) {
-      throw Exception("Login information could not be parsed");
-    }
-
-    List<String> dataList = [];
-    Uri.base.queryParameters.forEach((key, value) {
-      if (key != "hash") {
-        dataList.add("$key=$value");
-      }
-    });
-    dataList.sort(((a, b) => a.compareTo(b)));
-
+    final loginData = _getLoginData();
     try {
       var data = TelegramLoginRequest(
-          userId: fixnum.Int64(id), dataStr: dataList.join("\n"), username: username, authDate: fixnum.Int64(authDate), hash: hash);
+        userId: loginData.id,
+        dataStr: loginData.data,
+        username: loginData.username,
+        authDate: loginData.authDate,
+        hash: loginData.hash,
+      );
       var response = await telegramLogin(data);
       jwtManager.accessToken = response.accessToken;
       jwtManager.refreshToken = response.refreshToken;

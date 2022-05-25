@@ -1,3 +1,8 @@
+function getTelegramInitData() {
+    window.Telegram.WebApp.ready();
+    return window.Telegram.WebApp.initData;
+}
+
 async function getAccountJs(chainId) {
     await window.keplr.enable(chainId);
     const offlineSigner = window.getOfflineSigner(chainId);
