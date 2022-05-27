@@ -46,13 +46,15 @@ class SubscriptionPage extends StatelessWidget {
               decoration: BoxDecoration(
                   border: Border.all(
                     width: Styles.selectCardBorderWith,
-                    color: subscription.isSubscribed
-                        ? Styles.enabledColor
-                        : Theme.of(context).inputDecorationTheme.enabledBorder!.borderSide.color,
+                    color: Theme.of(context).inputDecorationTheme.enabledBorder!.borderSide.color,
                   ),
                   borderRadius: const BorderRadius.all(Radius.circular(5))),
               child: InkWell(
                 onTap: () {
+                  FocusScopeNode currentFocus = FocusScope.of(context);
+                  if (!currentFocus.hasPrimaryFocus) {
+                    currentFocus.focusedChild?.unfocus();
+                  }
                   ref.read(subscriptionStateProvider(data).notifier).toggleSubscription();
                 },
                 child: Row(
