@@ -1,4 +1,5 @@
 import 'package:cosmos_gov_web/api/protobuf/dart/subscription_service.pb.dart';
+import 'package:cosmos_gov_web/config.dart';
 import 'package:cosmos_gov_web/f_home/widgets/bottom_navigation_bar_widget.dart';
 import 'package:cosmos_gov_web/f_subscription/services/message_provider.dart';
 import 'package:cosmos_gov_web/f_subscription/services/subscription_provider.dart';
@@ -164,7 +165,7 @@ class SubscriptionPage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: const BottomNavigationBarWidget(),
+      bottomNavigationBar: BottomNavigationBarWidget(jwtManager: jwtManager),
     );
   }
 }

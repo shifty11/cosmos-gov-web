@@ -29,14 +29,17 @@ class AuthService extends AuthServiceClient with ChangeNotifier {
       : super(channel, interceptors: interceptors);
 
   init() async {
-    if (!isAuthenticated) {
-      if (canRefreshAccessToken) {
-        await _refreshAccessToken();
-      } else {
+    if (canRefreshAccessToken) {
+      try {
         await _login();
+      } catch (e) {
+        await _refreshAccessToken();
+        if (!isAuthenticated) {
+          rethrow;
+        }
       }
-    } else if (cDebugMode) {
-      print("AuthService: is authenticated");
+    } else {
+      await _login();
     }
     _scheduleRefreshAccessToken();
   }
@@ -71,20 +74,16 @@ class AuthService extends AuthServiceClient with ChangeNotifier {
       print("AuthService: login");
     }
     final loginData = _getLoginData();
-    try {
-      var data = TelegramLoginRequest(
-        userId: loginData.id,
-        dataStr: loginData.data,
-        username: loginData.username,
-        authDate: loginData.authDate,
-        hash: loginData.hash,
-      );
-      var response = await telegramLogin(data);
-      jwtManager.accessToken = response.accessToken;
-      jwtManager.refreshToken = response.refreshToken;
-    } catch (e) {
-      rethrow;
-    }
+    var data = TelegramLoginRequest(
+      userId: loginData.id,
+      dataStr: loginData.data,
+      username: loginData.username,
+      authDate: loginData.authDate,
+      hash: loginData.hash,
+    );
+    var response = await telegramLogin(data);
+    jwtManager.accessToken = response.accessToken;
+    jwtManager.refreshToken = response.refreshToken;
   }
 
   _logout() {

@@ -1,4 +1,5 @@
 import 'package:cosmos_gov_web/config.dart';
+import 'package:cosmos_gov_web/f_home/services/jwt_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -11,20 +12,30 @@ class NavigationData {
   const NavigationData(this.index, this.routerData, this.icon, this.label);
 }
 
+List<NavigationData> buildMenu(JwtManager jwtManager) {
+  List<NavigationData> menu = [
+    const NavigationData(0, rSubscriptions, Icon(Icons.bookmarks), 'Subscriptions'),
+  ];
+  if (jwtManager.isAdmin) {
+    menu.add(const NavigationData(1, rVoting, Icon(Icons.how_to_vote), 'Voting'));
+    menu.add(const NavigationData(2, rAdmin, Icon(Icons.settings), 'Admin'));
+  }
+  return menu;
+}
+
 class BottomNavigationBarWidget extends StatelessWidget {
   final double sideBarWith = 300;
+  final JwtManager jwtManager;
 
-  static const List<NavigationData> menu = [
-    NavigationData(0, rSubscriptions, Icon(Icons.bookmarks), 'Subscriptions'),
-    NavigationData(1, rVoting, Icon(Icons.how_to_vote), 'Voting'),
-    NavigationData(2, rAdmin, Icon(Icons.settings), 'Admin'),
-  ];
+  final List<NavigationData> menu;
 
-  const BottomNavigationBarWidget({Key? key}) : super(key: key);
+  BottomNavigationBarWidget({Key? key, required this.jwtManager})
+      : menu = buildMenu(jwtManager),
+        super(key: key);
 
   int getIndex(BuildContext context) {
     final location = GoRouter.of(context).location;
-    for (var d in BottomNavigationBarWidget.menu) {
+    for (var d in menu) {
       if (d.routerData.path == location) {
         return d.index;
       }
@@ -33,7 +44,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
   }
 
   goTo(BuildContext context, int index) {
-    final routerData = BottomNavigationBarWidget.menu.firstWhere((d) => d.index == index).routerData;
+    final routerData = menu.firstWhere((d) => d.index == index).routerData;
     context.goNamed(routerData.name);
   }
 
@@ -43,10 +54,13 @@ class BottomNavigationBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (!jwtManager.isAdmin) {
+      return Container();
+    }
     return BottomNavigationBar(
         onTap: (index) => goTo(context, index),
         currentIndex: getIndex(context),
-        items: BottomNavigationBarWidget.menu
+        items: menu
             .map((d) => BottomNavigationBarItem(
                   icon: d.icon,
                   label: d.label,

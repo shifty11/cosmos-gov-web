@@ -1,3 +1,4 @@
+import 'package:cosmos_gov_web/config.dart';
 import 'package:cosmos_gov_web/f_admin/services/admin_provider.dart';
 import 'package:cosmos_gov_web/f_admin/services/message_provider.dart';
 import 'package:cosmos_gov_web/f_home/widgets/bottom_navigation_bar_widget.dart';
@@ -150,7 +151,7 @@ class AdminPage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: const BottomNavigationBarWidget(),
+      bottomNavigationBar: BottomNavigationBarWidget(jwtManager: jwtManager),
     );
   }
 }

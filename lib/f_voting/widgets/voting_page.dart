@@ -1,4 +1,5 @@
 import 'package:cosmos_gov_web/api/protobuf/dart/vote_permission_service.pb.dart';
+import 'package:cosmos_gov_web/config.dart';
 import 'package:cosmos_gov_web/f_home/widgets/bottom_navigation_bar_widget.dart';
 import 'package:cosmos_gov_web/f_voting/services/chain_list_provider.dart';
 import 'package:cosmos_gov_web/f_voting/services/keplr_provider.dart';
@@ -163,7 +164,7 @@ class VotingPage extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: const BottomNavigationBarWidget(),
+      bottomNavigationBar: BottomNavigationBarWidget(jwtManager: jwtManager),
     );
   }
 }

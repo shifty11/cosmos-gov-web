@@ -1,3 +1,4 @@
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:html' show window;
 
 import 'package:jwt_decode/jwt_decode.dart';
@@ -64,5 +65,9 @@ class JwtManager {
 
   Map<String, dynamic> get refreshTokenDecoded {
     return Jwt.parseJwt(_refreshToken);
+  }
+
+  bool get isAdmin {
+    return (accessTokenDecoded["role"] ?? "").toString().toLowerCase() == "admin";
   }
 }
