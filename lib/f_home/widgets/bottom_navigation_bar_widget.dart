@@ -34,9 +34,9 @@ class BottomNavigationBarWidget extends StatelessWidget {
         super(key: key);
 
   int getIndex(BuildContext context) {
-    final location = GoRouter.of(context).location;
+    final location = GoRouter.of(context).location;   // format: /subscriptions?chat_id=123
     for (var d in menu) {
-      if (d.routerData.path == location) {
+      if (location.startsWith(d.routerData.path)) {
         return d.index;
       }
     }

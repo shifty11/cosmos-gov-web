@@ -6,6 +6,7 @@ import 'package:cosmos_gov_web/f_subscription/services/state/subscription_state.
 import 'package:cosmos_gov_web/f_subscription/services/subscription_service.dart';
 import 'package:cosmos_gov_web/f_subscription/services/type/subscription_data_type.dart';
 import 'package:fixnum/fixnum.dart' as fixnum;
+import 'package:fixnum/fixnum.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tuple/tuple.dart';
 
@@ -14,6 +15,27 @@ final subscriptionProvider = Provider<SubscriptionService>((ref) => subsService)
 final chatroomListStateProvider = FutureProvider<List<ChatRoom>>((ref) async {
   final subsService = ref.read(subscriptionProvider);
   final response = await subsService.getSubscriptions(Empty());
+
+  if (response.chatRooms.length > 1) {  // if query params contain `chat_id` put that one first
+    final chatIdStr = Uri.base.queryParameters['chat_id'];
+    var chatId = Int64();
+    if (chatIdStr != null) {
+      try {
+        chatId = Int64.parseInt(chatIdStr);
+      } on FormatException {
+        // ignore exceptions since the query param could be anything
+      }
+    }
+    response.chatRooms.sort(((a, b) {
+      if (a.id == chatId) {
+        return -1;
+      }
+      if (b.id == chatId) {
+        return 1;
+      }
+      return a.name.compareTo(b.name);
+    }));
+  }
   return response.chatRooms;
 });
 

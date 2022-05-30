@@ -78,7 +78,7 @@ class MyRouter {
             return state.namedLocation(from);
           }
           if (state.subloc == rRoot.path || state.subloc == rUnauthenticated.path) {
-            return state.namedLocation(rSubscriptions.name);
+            return state.namedLocation(rSubscriptions.name, queryParams: {...state.queryParams}..removeWhere((key, value) => key != "chat_id"));
           }
           return null;
         },
