@@ -66,7 +66,7 @@ class MyRouter {
     errorPageBuilder: (context, state) => MaterialPage<void>(
       key: state.pageKey,
       // child: ErrorPage(error: state.error),
-      child: const Text("Error not implemented yet"),
+      child: Scaffold(body: Center(child: Text("There was an error ${state.error}")),),
     ),
     redirect: (state) {
       return authStateListener.value.when(
