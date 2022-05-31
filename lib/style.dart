@@ -1,3 +1,4 @@
+import 'package:cosmos_gov_web/f_home/services/type/custom_theme_data.dart';
 import 'package:cosmos_gov_web/f_home/widgets/transition_builder_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -7,27 +8,36 @@ class Styles {
 
   static const selectCardBorderWith = 1.5;
 
-  static ThemeData themeData(bool isDarkTheme) {
-    final bg = isDarkTheme ? const Color(0xFF322F37) : Colors.white;
-    final bgLight = isDarkTheme ? const Color(0xFF4B4555) : Colors.white;
+  static ThemeData customTheme(CustomThemeData themeParams) {
+    return _defaultTheme(themeParams.bgColor, themeParams.bgColor, themeParams.textColor, themeParams.hintColor, themeParams.buttonColor);
+  }
+
+  static ThemeData defaultTheme(bool isDarkTheme) {
+    final bgColor = isDarkTheme ? const Color(0xFF322F37) : Colors.white;
+    final bgColorLight = isDarkTheme ? const Color(0xFF4B4555) : Colors.white;
     final textColor = isDarkTheme ? Colors.white : Colors.black;
-    final textColorLight = isDarkTheme ? Colors.grey : Colors.black;
-    final borderColor = Colors.grey;
+    final textColorHint = isDarkTheme ? Colors.grey : Colors.black;
+    return _defaultTheme(bgColor, bgColorLight, textColor, textColorHint, Colors.blueAccent);
+  }
+
+  static ThemeData _defaultTheme(Color bgColor, Color bgColorLight, Color textColor, Color textColorHint, Color primaryColor) {
+    const borderColor = Colors.grey;
     return ThemeData(
       fontFamily: "Montserrat",
-      primarySwatch: Colors.purple,
+      primaryColor: primaryColor,
+      // primarySwatch: Colors.purple,
       // primaryColor: isDarkTheme ? Colors.purple : Colors.purple,
       // backgroundColor: isDarkTheme ? Colors.yellow : Colors.yellow,
-      scaffoldBackgroundColor: isDarkTheme ? bg : Colors.white,
-      canvasColor: isDarkTheme ? bg : Colors.white,
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: bgLight, unselectedItemColor: borderColor),
+      scaffoldBackgroundColor: bgColor,
+      canvasColor: bgColor,
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: bgColorLight, unselectedItemColor: borderColor),
       inputDecorationTheme: InputDecorationTheme(
         labelStyle: TextStyle(color: textColor),
-        hintStyle: TextStyle(color: textColorLight),
+        hintStyle: TextStyle(color: textColorHint),
         iconColor: borderColor,
-        enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: borderColor))
+        enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: borderColor))
       ),
-      dialogBackgroundColor: bg,
+      dialogBackgroundColor: bgColor,
       textTheme: TextTheme(
         headline1: const TextStyle().copyWith(fontSize: 64),
         headline2: const TextStyle().copyWith(fontSize: 40),
