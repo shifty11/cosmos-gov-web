@@ -8,6 +8,5 @@ class MessageNotifierBase extends StateNotifier<MessageState> {
 
   sendMsg({String? info, String? error}) {
     state = MessageState.received(info: info, error: error);
-    state = const MessageState.initial();
   }
 }
