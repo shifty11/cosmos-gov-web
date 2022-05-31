@@ -142,6 +142,7 @@ class AdminPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("Admin", style: Theme.of(context).textTheme.headline2),
+                  const SizedBox(height: 10),
                   searchWidget(context),
                   const SizedBox(height: 40),
                   chainList(),

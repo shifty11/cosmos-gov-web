@@ -161,7 +161,7 @@ class SubscriptionPage extends StatelessWidget {
                   const Text("Select the projects that you want to follow. You will receive notifications about new governance proposals once they enter the voting period."),
                   const SizedBox(height: 20),
                   searchWidget(context),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 20),
                   subscriptionList(),
                 ],
               ),
