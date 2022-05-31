@@ -17,7 +17,7 @@ class LoginData with _$LoginData {
   }
 
   Iterable<List<String>> get _fields {
-    return dataStr.replaceAll("&", "\n").split("\n").map((e) => e.split("=")).where((e) => e.length == 2);
+    return dataStr.replaceAll("&", "\n").split("\n").map((e) => e.split("=")).where((e) => e.length == 2 && e[0] != "chat_id");
   }
 
   String get _user {
