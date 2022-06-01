@@ -124,7 +124,7 @@ class SubscriptionPage extends StatelessWidget {
             return Text(chatRooms.first.name);
           }
           return DropdownButton<ChatRoom>(
-            value: ref.watch(chatRoomProvider) ?? chatRooms.first,
+            value: ref.watch(chatRoomProvider),
             icon: const Icon(Icons.person),
             onChanged: (ChatRoom? newValue) {
               ref.watch(chatRoomProvider.notifier).state = newValue;
@@ -142,6 +142,33 @@ class SubscriptionPage extends StatelessWidget {
     });
   }
 
+  Widget settingsRow(BuildContext context) {
+    return Row(
+      children: [
+        chatDropdownWidget(context),
+        const Spacer(),
+        Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
+          return Checkbox(
+            value: ref.watch(wantsPreVotePropsProvider),
+            onChanged: (value) => ref.read(wantsPreVotePropsStateProvider.notifier).toggleWantsPreVoteProps(),
+            tristate: true,
+          );
+        }),
+        const Text("Pre-vote proposals"),
+        const SizedBox(
+          height: 24,
+          width: 24,
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: Tooltip(
+                message: "You will receive proposals that are being discussed and will soon be on-chain (currently only on Cosmoshub)",
+                child: Icon(Icons.info, size: 16)),
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -156,9 +183,10 @@ class SubscriptionPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("Subscriptions", style: Theme.of(context).textTheme.headline2),
-                  chatDropdownWidget(context),
                   const SizedBox(height: 10),
-                  const Text("Select the projects that you want to follow. You will receive notifications about new governance proposals once they enter the voting period."),
+                  settingsRow(context),
+                  const Text(
+                      "Select the projects that you want to follow. You will receive notifications about new governance proposals once they enter the voting period."),
                   const SizedBox(height: 20),
                   searchWidget(context),
                   const SizedBox(height: 20),

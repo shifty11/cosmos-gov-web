@@ -28,6 +28,7 @@ class Styles {
       // primarySwatch: Colors.purple,
       // primaryColor: isDarkTheme ? Colors.purple : Colors.purple,
       // backgroundColor: isDarkTheme ? Colors.yellow : Colors.yellow,
+      iconTheme: const IconThemeData(color: borderColor),
       scaffoldBackgroundColor: bgColor,
       canvasColor: bgColor,
       bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: bgColorLight, unselectedItemColor: borderColor),

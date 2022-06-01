@@ -16,7 +16,8 @@ final chatroomListStateProvider = FutureProvider<List<ChatRoom>>((ref) async {
   final subsService = ref.read(subscriptionProvider);
   final response = await subsService.getSubscriptions(Empty());
 
-  if (response.chatRooms.length > 1) {  // if query params contain `chat_id` put that one first
+  if (response.chatRooms.length > 1) {
+    // if query params contain `chat_id` put that one first
     final chatIdStr = Uri.base.queryParameters['chat_id'];
     var chatId = Int64();
     if (chatIdStr != null) {
@@ -36,6 +37,7 @@ final chatroomListStateProvider = FutureProvider<List<ChatRoom>>((ref) async {
       return a.name.compareTo(b.name);
     }));
   }
+  ref.read(chatRoomProvider.notifier).state = response.chatRooms.first;
   return response.chatRooms;
 });
 
@@ -100,4 +102,33 @@ final searchedSubsProvider = Provider<ChatroomData>((ref) {
         return ChatroomData(fixnum.Int64(), "", [], []);
       }) ??
       ChatroomData(fixnum.Int64(), "", [], []);
+});
+
+final wantsPreVotePropsStateProvider = StateNotifierProvider<WantsPreVotePropsNotifier, bool>((ref) => WantsPreVotePropsNotifier(ref));
+
+class WantsPreVotePropsNotifier extends StateNotifier<bool> {
+  final StateNotifierProviderRef _ref;
+
+  WantsPreVotePropsNotifier(this._ref) : super(_ref.read(chatRoomProvider)?.wantsDraftProposals ?? false);
+
+  Future<void> toggleWantsPreVoteProps() async {
+    try {
+      final subsService = _ref.read(subscriptionProvider);
+      final chatRoom = _ref.read(chatRoomProvider);
+      if (chatRoom == null) {
+        return;
+      }
+      final response = await subsService.updateSettings(UpdateSettingsRequest(chatRoomId: chatRoom.id, wantsDraftProposals: !chatRoom.wantsDraftProposals));
+      chatRoom.wantsDraftProposals = response.wantsDraftProposals;
+      state = response.wantsDraftProposals;
+    } catch (e) {
+      _ref.read(subsMsgProvider.notifier).sendMsg(error: e.toString());
+    }
+  }
+}
+
+final wantsPreVotePropsProvider = Provider<bool>((ref) {
+  final chatRoom = ref.watch(chatRoomProvider);
+  ref.watch(wantsPreVotePropsStateProvider);
+  return chatRoom?.wantsDraftProposals ?? false;
 });
