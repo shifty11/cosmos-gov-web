@@ -18,15 +18,15 @@ class AdminPage extends StatelessWidget {
       return 1;
     }
     if (ResponsiveWrapper.of(context).isSmallerThan(DESKTOP)) {
-      return 3;
+      return 2;
     }
-    return 4;
+    return 3;
   }
 
   Widget chainsLoaded(BuildContext context, WidgetRef ref) {
     const double sidePadding = 12;
     const double iconSize = 24;
-    final disabledColor = Theme.of(context).inputDecorationTheme.enabledBorder!.borderSide.color;
+    final disabledColor = Theme.of(context).unselectedWidgetColor;
     return GridView.builder(
       shrinkWrap: true,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -46,7 +46,7 @@ class AdminPage extends StatelessWidget {
               decoration: BoxDecoration(
                   border: Border.all(
                     width: Styles.selectCardBorderWith,
-                    color: chain.isEnabled ? Styles.enabledColor : disabledColor,
+                    color: disabledColor,
                   ),
                   borderRadius: const BorderRadius.all(Radius.circular(5))),
               child: InkWell(
