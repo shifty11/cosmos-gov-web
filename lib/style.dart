@@ -25,13 +25,11 @@ class Styles {
     return ThemeData(
       fontFamily: "Montserrat",
       primaryColor: primaryColor,
-      // primarySwatch: Colors.purple,
-      // primaryColor: isDarkTheme ? Colors.purple : Colors.purple,
-      // backgroundColor: isDarkTheme ? Colors.yellow : Colors.yellow,
       iconTheme: const IconThemeData(color: borderColor),
       scaffoldBackgroundColor: bgColor,
       canvasColor: bgColor,
       bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: bgColorLight, unselectedItemColor: borderColor),
+      unselectedWidgetColor: borderColor,
       inputDecorationTheme: InputDecorationTheme(
         labelStyle: TextStyle(color: textColor),
         hintStyle: TextStyle(color: textColorHint),
