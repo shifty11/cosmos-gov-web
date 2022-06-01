@@ -34,7 +34,7 @@ function buildGrant(granter, grantee, expiration, denom, isFeegrantUsed) {
                            "typeUrl": "/cosmos.feegrant.v1beta1.BasicAllowance",
                            "value": {
                              "spendLimit": [
-                               {"denom": denom, "amount": "5000"}
+                               {"denom": denom, "amount": "50000"}
                              ],
                              "expiration": {"seconds": expiration}
                            }
