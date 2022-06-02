@@ -17,14 +17,18 @@ final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeState>(
 @JS()
 external String getTelegramThemeParams();
 
+@JS()
+external String getTelegramColorScheme();
+
 class ThemeNotifier extends StateNotifier<ThemeState> {
   ThemeNotifier() : super(ThemeState.initial(darkStyle: Styles.defaultTheme(true), lightStyle: Styles.defaultTheme(false))) {
     final data = getTelegramThemeParams();
+    final isDarkTheme = getTelegramColorScheme() == "dark";
     if (data.isNotEmpty) {
       try {
         Map<String, dynamic> decoded = json.decode(data);
         final themeParams = CustomThemeData.fromJson(decoded);
-        final style = Styles.customTheme(themeParams);
+        final style = Styles.customTheme(themeParams, isDarkTheme);
         state = ThemeState.custom(style: style);
       } catch (e) {
         if (cDebugMode) {

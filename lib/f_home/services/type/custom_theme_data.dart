@@ -21,7 +21,7 @@ class CustomThemeData with _$CustomThemeData {
 }
 
 Color colorFromJson(String color) {
-  return Color(StringToHex.toColor(color));
+  return Color(int.parse('FF${color.replaceAll("#", "")}', radix: 16));
 }
 
 String colorToJson(Color color) => StringToHex.toHexString(color.value);

@@ -2,20 +2,47 @@ import 'package:cosmos_gov_web/f_home/services/type/custom_theme_data.dart';
 import 'package:cosmos_gov_web/f_home/widgets/transition_builder_widget.dart';
 import 'package:flutter/material.dart';
 
+extension ColorBrightness on Color {
+  Color darken([double amount = .1]) {
+    assert(amount >= 0 && amount <= 1);
+
+    final hsl = HSLColor.fromColor(this);
+    final hslDark = hsl.withLightness((hsl.lightness - amount).clamp(0.0, 1.0));
+
+    return hslDark.toColor();
+  }
+
+  Color lighten([double amount = .1]) {
+    assert(amount >= 0 && amount <= 1);
+
+    final hsl = HSLColor.fromColor(this);
+    final hslLight =
+    hsl.withLightness((hsl.lightness + amount).clamp(0.0, 1.0));
+
+    return hslLight.toColor();
+  }
+}
 
 class Styles {
   static const selectCardBorderWith = 1.5;
 
-  static ThemeData customTheme(CustomThemeData themeParams) {
-    return _defaultTheme(themeParams.bgColor, themeParams.bgColor, themeParams.textColor, themeParams.hintColor, themeParams.buttonColor);
+  static ThemeData customTheme(CustomThemeData themeParams, bool isDarkTheme) {
+    return _defaultTheme(
+        themeParams.bgColor,
+        isDarkTheme ? themeParams.bgColor.lighten() : themeParams.bgColor.darken(),
+        themeParams.textColor,
+        themeParams.hintColor,
+        themeParams.buttonColor,
+    );
   }
 
   static ThemeData defaultTheme(bool isDarkTheme) {
-    final bgColor = isDarkTheme ? const Color(0xFF322F37) : Colors.white;
-    final bgColorLight = isDarkTheme ? const Color(0xFF4B4555) : Colors.white;
+    final bgColor = isDarkTheme ? const Color(0xff1d2733) : Colors.white;
+    final bgColorLight = isDarkTheme ? bgColor.lighten() : Colors.white.darken();
     final textColor = isDarkTheme ? Colors.white : Colors.black;
-    final textColorHint = isDarkTheme ? Colors.grey : Colors.black;
-    return _defaultTheme(bgColor, bgColorLight, textColor, textColorHint, Colors.blueAccent);
+    final textColorHint = isDarkTheme ? const Color(0xff7d8b99) : Colors.black;
+    const primaryColor = Color(0xff50a8eb);
+    return _defaultTheme(bgColor, bgColorLight, textColor, textColorHint, primaryColor);
   }
 
   static ThemeData _defaultTheme(Color bgColor, Color bgColorLight, Color textColor, Color textColorHint, Color primaryColor) {
@@ -28,6 +55,7 @@ class Styles {
       canvasColor: bgColor,
       bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: bgColorLight, unselectedItemColor: borderColor),
       unselectedWidgetColor: borderColor,
+      toggleableActiveColor: primaryColor,
       inputDecorationTheme: InputDecorationTheme(
         labelStyle: TextStyle(color: textColor),
         hintStyle: TextStyle(color: textColorHint),
