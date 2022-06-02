@@ -147,24 +147,28 @@ class SubscriptionPage extends StatelessWidget {
       children: [
         chatDropdownWidget(context),
         const Spacer(),
-        Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
-          return Checkbox(
-            value: ref.watch(wantsPreVotePropsProvider),
-            onChanged: (value) => ref.read(wantsPreVotePropsStateProvider.notifier).toggleWantsPreVoteProps(),
-            tristate: true,
-          );
-        }),
-        const Text("Pre-vote proposals"),
-        const SizedBox(
-          height: 24,
-          width: 24,
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: Tooltip(
-                message: "You will receive proposals that are being discussed and will soon be on-chain (currently only on Cosmoshub)",
-                child: Icon(Icons.info, size: 16)),
+        Tooltip(
+          message: "You will receive proposals that are being discussed and will soon be on-chain (currently only on Cosmoshub)",
+          child: Row(
+            children: const [
+              Text("Pre-vote proposals"),
+              SizedBox(
+                height: 24,
+                width: 24,
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Icon(Icons.info, size: 16),
+                ),
+              ),
+            ],
           ),
         ),
+        Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
+          return Switch(
+            value: ref.watch(wantsPreVotePropsProvider),
+            onChanged: (value) => ref.read(wantsPreVotePropsStateProvider.notifier).toggleWantsPreVoteProps(),
+          );
+        }),
       ],
     );
   }
