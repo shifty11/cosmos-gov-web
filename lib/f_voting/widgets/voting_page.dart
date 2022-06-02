@@ -1,9 +1,9 @@
 import 'package:cosmos_gov_web/api/protobuf/dart/vote_permission_service.pb.dart';
 import 'package:cosmos_gov_web/config.dart';
+import 'package:cosmos_gov_web/f_home/services/message_provider.dart';
 import 'package:cosmos_gov_web/f_home/widgets/bottom_navigation_bar_widget.dart';
 import 'package:cosmos_gov_web/f_voting/services/chain_list_provider.dart';
 import 'package:cosmos_gov_web/f_voting/services/keplr_provider.dart';
-import 'package:cosmos_gov_web/f_voting/services/message_provider.dart';
 import 'package:cosmos_gov_web/f_voting/services/vote_permission_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -146,7 +146,7 @@ class VotingPage extends StatelessWidget {
       body: Container(
         padding: EdgeInsets.all(sidePadding),
         child: MessageOverlayListener(
-          provider: votingMsgProvider,
+          provider: messageProvider,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

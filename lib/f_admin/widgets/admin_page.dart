@@ -1,6 +1,6 @@
 import 'package:cosmos_gov_web/config.dart';
 import 'package:cosmos_gov_web/f_admin/services/admin_provider.dart';
-import 'package:cosmos_gov_web/f_admin/services/message_provider.dart';
+import 'package:cosmos_gov_web/f_home/services/message_provider.dart';
 import 'package:cosmos_gov_web/f_home/widgets/bottom_navigation_bar_widget.dart';
 import 'package:cosmos_gov_web/style.dart';
 import 'package:flutter/material.dart';
@@ -134,7 +134,7 @@ class AdminPage extends StatelessWidget {
       body: Row(
         children: [
           MessageOverlayListener(
-            provider: adminMsgProvider,
+            provider: messageProvider,
             child: Container(
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.all(40),

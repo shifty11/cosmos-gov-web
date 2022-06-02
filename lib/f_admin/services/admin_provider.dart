@@ -2,8 +2,9 @@ import 'package:cosmos_gov_web/api/protobuf/dart/admin_service.pb.dart';
 import 'package:cosmos_gov_web/api/protobuf/dart/google/protobuf/empty.pb.dart';
 import 'package:cosmos_gov_web/config.dart';
 import 'package:cosmos_gov_web/f_admin/services/admin_service.dart';
-import 'package:cosmos_gov_web/f_admin/services/message_provider.dart';
 import 'package:cosmos_gov_web/f_admin/services/state/chain_state.dart';
+import 'package:cosmos_gov_web/f_home/services/message_provider.dart';
+import 'package:cosmos_gov_web/f_subscription/services/subscription_provider.dart';
 import 'package:cosmos_gov_web/f_voting/services/vote_permission_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cosmos_gov_web/f_voting/services/chain_list_provider.dart' as subs_chain_list_provider;
@@ -35,10 +36,11 @@ class ChainNotifier extends StateNotifier<ChainState> {
       final response = await adminService.updateChain(update);
       _chain = response.chain;
       state = ChainState.loaded(chain: _chain);
+      _ref.refresh(chatroomListStateProvider);
       _ref.refresh(subs_chain_list_provider.chainListStateProvider);
       _ref.refresh(walletListProvider);
     } catch (e) {
-      _ref.read(adminMsgProvider.notifier).sendMsg(error: e.toString());
+      _ref.read(messageProvider.notifier).sendMsg(error: e.toString());
     }
   }
 

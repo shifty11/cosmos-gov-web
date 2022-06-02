@@ -1,7 +1,7 @@
 import 'package:cosmos_gov_web/api/protobuf/dart/subscription_service.pb.dart';
 import 'package:cosmos_gov_web/config.dart';
+import 'package:cosmos_gov_web/f_home/services/message_provider.dart';
 import 'package:cosmos_gov_web/f_home/widgets/bottom_navigation_bar_widget.dart';
-import 'package:cosmos_gov_web/f_subscription/services/message_provider.dart';
 import 'package:cosmos_gov_web/f_subscription/services/subscription_provider.dart';
 import 'package:cosmos_gov_web/f_subscription/services/type/subscription_data_type.dart';
 import 'package:cosmos_gov_web/style.dart';
@@ -175,7 +175,7 @@ class SubscriptionPage extends StatelessWidget {
       body: Row(
         children: [
           MessageOverlayListener(
-            provider: subsMsgProvider,
+            provider: messageProvider,
             child: Container(
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.all(40),

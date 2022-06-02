@@ -1,7 +1,7 @@
 import 'package:cosmos_gov_web/api/protobuf/dart/google/protobuf/empty.pb.dart';
 import 'package:cosmos_gov_web/api/protobuf/dart/subscription_service.pb.dart';
 import 'package:cosmos_gov_web/config.dart';
-import 'package:cosmos_gov_web/f_subscription/services/message_provider.dart';
+import 'package:cosmos_gov_web/f_home/services/message_provider.dart';
 import 'package:cosmos_gov_web/f_subscription/services/state/subscription_state.dart';
 import 'package:cosmos_gov_web/f_subscription/services/subscription_service.dart';
 import 'package:cosmos_gov_web/f_subscription/services/type/subscription_data_type.dart';
@@ -63,7 +63,7 @@ class SubscriptionNotifier extends StateNotifier<SubscriptionState> {
       _subscription.isSubscribed = response.isSubscribed;
       state = SubscriptionState.loaded(subscription: _subscription);
     } catch (e) {
-      _ref.read(subsMsgProvider.notifier).sendMsg(error: e.toString());
+      _ref.read(messageProvider.notifier).sendMsg(error: e.toString());
     }
   }
 }
@@ -122,7 +122,7 @@ class WantsPreVotePropsNotifier extends StateNotifier<bool> {
       chatRoom.wantsDraftProposals = response.wantsDraftProposals;
       state = response.wantsDraftProposals;
     } catch (e) {
-      _ref.read(subsMsgProvider.notifier).sendMsg(error: e.toString());
+      _ref.read(messageProvider.notifier).sendMsg(error: e.toString());
     }
   }
 }
