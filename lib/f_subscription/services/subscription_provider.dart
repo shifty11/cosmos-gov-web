@@ -16,34 +16,39 @@ final chatroomListStateProvider = FutureProvider<List<ChatRoom>>((ref) async {
   final subsService = ref.read(subscriptionProvider);
   final response = await subsService.getSubscriptions(Empty());
 
-  if (response.chatRooms.length > 1) {
-    // if query params contain `chat_id` put that one first
-    final chatIdStr = Uri.base.queryParameters['chat_id'];
-    var chatId = Int64();
-    if (chatIdStr != null) {
-      try {
-        chatId = Int64.parseInt(chatIdStr);
-      } on FormatException {
-        // ignore exceptions since the query param could be anything
+  final selectedChatRoom = ref.read(chatRoomProvider.notifier).state;
+  if (selectedChatRoom != null) { // if chat room was selected before, select it again
+    ref.read(chatRoomProvider.notifier).state = response.chatRooms.where((c) => c.id == selectedChatRoom.id).first;
+  } else {
+    if (response.chatRooms.length > 1) {
+      // if query params contain `chat_id` put that one first
+      final chatIdStr = Uri.base.queryParameters['chat_id'];
+      var chatId = Int64();
+      if (chatIdStr != null) {
+        try {
+          chatId = Int64.parseInt(chatIdStr);
+        } on FormatException {
+          // ignore exceptions since the query param could be anything
+        }
       }
+      response.chatRooms.sort(((a, b) {
+        if (a.id == chatId) {
+          return -1;
+        }
+        if (b.id == chatId) {
+          return 1;
+        }
+        return a.name.compareTo(b.name);
+      }));
     }
-    response.chatRooms.sort(((a, b) {
-      if (a.id == chatId) {
-        return -1;
-      }
-      if (b.id == chatId) {
-        return 1;
-      }
-      return a.name.compareTo(b.name);
-    }));
+    ref.read(chatRoomProvider.notifier).state = response.chatRooms.first;
   }
-  ref.read(chatRoomProvider.notifier).state = response.chatRooms.first;
   return response.chatRooms;
 });
 
 final subscriptionStateProvider = StateNotifierProvider.family<SubscriptionNotifier, SubscriptionState, Tuple2<fixnum.Int64, int>>(
   (ref, tuple) {
-    final chatRoom = ref.read(chatroomListStateProvider).value!.firstWhere((c) => c.id == tuple.item1);
+    final chatRoom = ref.watch(chatroomListStateProvider).value!.firstWhere((c) => c.id == tuple.item1);
     final subscription = chatRoom.subscriptions[tuple.item2];
     return SubscriptionNotifier(ref, subscription, chatRoom.id);
   },
