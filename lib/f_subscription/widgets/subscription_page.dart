@@ -68,9 +68,9 @@ class SubscriptionPage extends StatelessWidget {
                       ),
                     ),
                     subscription.isSubscribed
-                        ? const Padding(
-                            padding: EdgeInsets.only(right: sidePadding),
-                            child: Icon(Icons.check_circle_rounded, color: Styles.enabledColor, size: 24),
+                        ? Padding(
+                            padding: const EdgeInsets.only(right: sidePadding),
+                            child: Icon(Icons.check_circle_rounded, color: Theme.of(context).primaryColor, size: 24),
                           )
                         : const SizedBox(width: 24),
                   ],

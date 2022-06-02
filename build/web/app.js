@@ -13,7 +13,7 @@ function getTelegramThemeParams() {
 //    button_text_color: "#12343F",
 //    };
 //    return JSON.stringify(style);
-    return window.Telegram.WebApp.themeParams;
+    return JSON.stringify(window.Telegram.WebApp.themeParams);
 }
 
 window.logger = (flutter_value) => {

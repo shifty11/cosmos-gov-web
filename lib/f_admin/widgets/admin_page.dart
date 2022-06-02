@@ -67,7 +67,7 @@ class AdminPage extends StatelessWidget {
                     chain.isEnabled
                         ? IconButton(
                             icon: const Icon(Icons.how_to_vote),
-                            color: chain.isVotingEnabled ? Styles.enabledColor : disabledColor,
+                            color: chain.isVotingEnabled ? Theme.of(context).primaryColor : disabledColor,
                             iconSize: iconSize,
                             padding: const EdgeInsets.symmetric(horizontal: sidePadding),
                             tooltip: chain.isVotingEnabled ? "Voting is enabled" : "Voting is disabled",
@@ -77,7 +77,7 @@ class AdminPage extends StatelessWidget {
                     chain.isEnabled
                         ? IconButton(
                             icon: const Icon(Icons.paid),
-                            color: chain.isFeegrantUsed ? Styles.enabledColor : disabledColor,
+                            color: chain.isFeegrantUsed ? Theme.of(context).primaryColor : disabledColor,
                             iconSize: iconSize,
                             padding: const EdgeInsets.only(right: sidePadding),
                             tooltip: chain.isFeegrantUsed ? "User will pay the fees for votes" : "Bot will pay the fees for votes",
@@ -85,9 +85,9 @@ class AdminPage extends StatelessWidget {
                           )
                         : Container(),
                     chain.isEnabled
-                        ? const Padding(
-                            padding: EdgeInsets.only(right: sidePadding),
-                            child: Icon(Icons.check_circle_rounded, color: Styles.enabledColor, size: iconSize),
+                        ? Padding(
+                            padding: const EdgeInsets.only(right: sidePadding),
+                            child: Icon(Icons.check_circle_rounded, color: Theme.of(context).primaryColor, size: iconSize),
                           )
                         : Container(),
                   ],

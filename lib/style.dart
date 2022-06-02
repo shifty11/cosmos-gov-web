@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 
 
 class Styles {
-  static const enabledColor = Colors.green;
-
   static const selectCardBorderWith = 1.5;
 
   static ThemeData customTheme(CustomThemeData themeParams) {
