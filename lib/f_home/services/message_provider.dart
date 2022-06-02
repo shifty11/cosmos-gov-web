@@ -22,9 +22,9 @@ class MessageNotifierBase extends StateNotifier<MessageState> {
 
   MessageNotifierBase(this.ref) : super(const MessageState.initial());
 
-  sendMsg({String? info, String? error}) {
+  sendMsg({String? info, String? error}) async {
     state = MessageState.received(info: info, error: error);
-    Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     state = const MessageState.initial();
   }
 }
