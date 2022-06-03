@@ -24,7 +24,7 @@ class ThemeNotifier extends StateNotifier<ThemeState> {
   ThemeNotifier() : super(ThemeState.initial(darkStyle: Styles.defaultTheme(true), lightStyle: Styles.defaultTheme(false))) {
     final data = getTelegramThemeParams();
     final isDarkTheme = getTelegramColorScheme() == "dark";
-    if (data.isNotEmpty && data != "Null") {
+    if (data.isNotEmpty && data != "{}") {
       try {
         Map<String, dynamic> decoded = json.decode(data);
         final themeParams = CustomThemeData.fromJson(decoded);
