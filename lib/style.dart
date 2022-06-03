@@ -50,6 +50,7 @@ class Styles {
     return ThemeData(
       fontFamily: "Montserrat",
       primaryColor: primaryColor,
+      primarySwatch: createMaterialColor(primaryColor),
       iconTheme: const IconThemeData(color: borderColor),
       scaffoldBackgroundColor: bgColor,
       canvasColor: bgColor,
