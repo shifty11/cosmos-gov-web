@@ -125,7 +125,10 @@ class SubscriptionPage extends StatelessWidget {
           }
           return DropdownButton<ChatRoom>(
             value: ref.watch(chatRoomProvider),
-            icon: const Icon(Icons.person),
+            icon: const Padding(
+              padding: EdgeInsets.only(left: 4.0),
+              child: Icon(Icons.chat, size: 20),
+            ),
             onChanged: (ChatRoom? newValue) {
               ref.watch(chatRoomProvider.notifier).state = newValue;
             },
