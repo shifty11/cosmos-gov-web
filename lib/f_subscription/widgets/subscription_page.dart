@@ -151,10 +151,10 @@ class SubscriptionPage extends StatelessWidget {
         chatDropdownWidget(context),
         const Spacer(),
         Tooltip(
-          message: "You will receive proposals that are being discussed and will soon be on-chain (currently only on Cosmoshub)",
+          message: "You will receive proposals that are being discussed in the forum and will soon be on-chain (currently only on Cosmoshub)",
           child: Row(
             children: const [
-              Text("Pre-vote proposals"),
+              Text("Upcoming proposals"),
               SizedBox(
                 height: 24,
                 width: 24,
