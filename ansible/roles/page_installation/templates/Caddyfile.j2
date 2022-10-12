@@ -8,7 +8,7 @@
 # this machine's public IP, then replace ":80" below with your
 # domain name.
 
-{{ web_url }} {
+:8081 {
         # Set this path to your site's directory.
         root * /var/www/cosmos-gov-web
         encode gzip
@@ -17,6 +17,16 @@
         file_server
 
         reverse_proxy /cosmosgov_grpc* localhost:8080
+}
+
+# This is an other project. It is just in here because I am too lazy to separate it properly
+:8082 {
+        # Set this path to your site's directory.
+        root * /var/www/decrypto-page
+        encode gzip
+
+        # Enable the static file server.
+        file_server
 }
 
 # Refer to the Caddy docs for more information:
