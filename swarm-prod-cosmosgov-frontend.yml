@@ -1,0 +1,37 @@
+version: '3.9'
+
+services:
+  envoy:
+    image: ghcr.io/shifty11/cosmosgov-envoy:latest
+    deploy:
+      placement:
+        constraints:
+          - node.role != manager
+
+  webapp:
+    image: ghcr.io/shifty11/cosmosgov-webapp:latest
+    volumes:
+      - /var/www/daodao-notifier:/app/build/web
+    networks:
+      - caddy
+      - default
+    deploy:
+      placement:
+        constraints:
+          - node.role != manager
+
+  whoami:
+    image: jwilder/whoami
+    networks:
+      - caddy
+    deploy:
+      labels:
+        caddy: daodao-notifier.decrypto.online
+        caddy.reverse_proxy: "webapp:80"
+      placement:
+        constraints:
+          - node.role != manager
+
+networks:
+  caddy:
+    external: true
